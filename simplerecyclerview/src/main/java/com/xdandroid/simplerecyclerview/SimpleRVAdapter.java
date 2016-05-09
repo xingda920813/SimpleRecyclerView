@@ -1,5 +1,6 @@
 package com.xdandroid.simplerecyclerview;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -109,5 +110,27 @@ public abstract class SimpleRVAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     private OnItemClickLitener mOnItemClickLitener;
     public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
+    public final class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
+        private int spanSize;
+
+        public ProgressSpanSizeLookup(int spanSize) {
+            this.spanSize = spanSize;
+        }
+
+        @Override
+        public int getSpanSize(int i) {
+            switch (getItemViewType(i)) {
+                case 65535:
+                    return spanSize;
+                default:
+                    return 1;
+            }
+        }
+    }
+
+    public GridLayoutManager.SpanSizeLookup getSpanSizeLookup(int spanSize) {
+        return new ProgressSpanSizeLookup(spanSize);
     }
 }
