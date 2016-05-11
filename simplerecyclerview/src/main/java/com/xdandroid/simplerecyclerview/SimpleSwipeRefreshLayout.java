@@ -14,9 +14,11 @@ public class SimpleSwipeRefreshLayout extends SwipeRefreshLayout implements AppB
     public SimpleSwipeRefreshLayout(Context context) {
         super(context);
     }
+
     public SimpleSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
     private AppBarLayout appBarLayout;
 
     @Override
@@ -42,8 +44,8 @@ public class SimpleSwipeRefreshLayout extends SwipeRefreshLayout implements AppB
     }
 
     @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        this.setEnabled(i == 0);
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        this.setEnabled(verticalOffset == 0);
     }
 
     @Override

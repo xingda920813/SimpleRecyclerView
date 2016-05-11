@@ -8,12 +8,12 @@ ext {
     libraryName = 'SimpleRecyclerView'
     artifact = 'simplerecyclerview'
 
-    libraryDescription = 'Android RecyclerView Easy-To-Use : Pull-To-Refresh, Load More, Empty View, Sticky Headers, Divider, Click Listener, Animation When Init & Insert'
+    libraryDescription = 'Android RecyclerView Easy-To-Use : Pull-To-Refresh, Load More, Empty/Error View, Sticky Headers, Divider, Click Listener, Item Animation.'
 
     siteUrl = 'https://github.com/xingda920813/SimpleRecyclerView'
     gitUrl = 'https://github.com/xingda920813/SimpleRecyclerView.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'xingda920813'
     developerName = 'Da Xing'
@@ -31,8 +31,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -52,11 +52,11 @@ dependencies {
 }
 
 task makeJar(type: Copy) {
-    delete 'build/libs/SimpleRecyclerView-1.0.0.jar'
+    delete 'build/libs/SimpleRecyclerView-1.0.1.jar'
     from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename ('classes.jar', 'SimpleRecyclerView-1.0.0.jar')
+    rename ('classes.jar', 'SimpleRecyclerView-1.0.1.jar')
 }
 
 makeJar.dependsOn(build)

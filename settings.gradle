@@ -1,1 +1,1 @@
-include ':simplerecyclerview', ':simplerecyclerview'
+include ':simplerecyclerview', ':simplerecyclerview', ':sample'
