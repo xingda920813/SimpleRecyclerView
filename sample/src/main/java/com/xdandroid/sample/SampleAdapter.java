@@ -27,7 +27,7 @@ public abstract class SampleAdapter extends SimpleRecyclerView.Adapter<SampleBea
     }
 
     @Override
-    protected int getViewType(List<SampleBean> list, int position) {
+        protected int getViewType(List<SampleBean> list, int position) {
         return 0;
     }
 

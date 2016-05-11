@@ -59,4 +59,14 @@
         android:textSize="30sp"
         android:textColor="@android:color/black"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/error_view"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="Hello Error View"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"/>
+
 </android.support.design.widget.CoordinatorLayout>
