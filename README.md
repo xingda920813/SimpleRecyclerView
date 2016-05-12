@@ -198,7 +198,7 @@ Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，�
 
 示例：
 
-	@Override
+    @Override
     public long getHeaderId(int position) {
         if (position == 0) {
             return 0;
@@ -209,23 +209,30 @@ Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，�
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        return new HeaderVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.header_chart, parent, false));
+        View view = mInflater.inflate(R.layout.header_chart, parent, false);
+        HeaderVH headerVH = new HeaderVH(view);
+        headerVH.ll_header_chart = (LinearLayout) view.findViewById(R.id.ll_header_chart);
+        headerVH.iv_header_chart = (ImageView) view.findViewById(R.id.iv_header_chart);
+        AutoUtils.auto(view);
+        return headerVH;
     }
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position == 0) {
-            ((HeaderVH) holder).iv_header_chart.setImageResource(xxx);
+            ((HeaderVH) holder).ll_header_chart.setVisibility(View.GONE);
+            ((HeaderVH) holder).iv_header_chart.setVisibility(View.GONE);
         } else {
-            ((HeaderVH) holder).iv_header_chart.setImageResource(yyy);
+            ((HeaderVH) holder).ll_header_chart.setVisibility(View.VISIBLE);
+            ((HeaderVH) holder).iv_header_chart.setVisibility(View.VISIBLE);
         }
     }
 
     public class HeaderVH extends RecyclerView.ViewHolder {
         public HeaderVH(View itemView) {
             super(itemView);
-            iv_header_chart = itemView.findViewById(R.id.iv_header_chart);
         }
+        LinearLayout ll_header_chart;
         ImageView iv_header_chart;
     }
 
