@@ -34,7 +34,7 @@
 
 - 初始化RecyclerView、添加/修改/删除条目时具有Material Design动画
 
-# 引入
+## 引入
 ### 1.添加二进制
 
 引入SimpleRecyclerView-1.0.1.jar或build.gradle中添加
@@ -100,10 +100,10 @@
 
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
-# 下拉刷新
+## 下拉刷新
 ### 解决与AppbarLayout的滑动冲突：为AppBarLayout指定id为appbar即可(android:id="@+id/appbar")
 
-# 加载更多
+## 加载更多
 ### 实例化Adapter时要实现2个方法 : 
 
 #### 1. void onLoadMore(Void v) :
@@ -124,7 +124,7 @@
     gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup(SPAN_SIZE));
     recyclerView.setLayoutManager(gridLayoutManager);
 
-# 空数据/加载错误页面
+## 空数据/加载错误页面
 ### XML准备
 
 - 将ErrorView或EmptyView与SwipeRefreshLayout元素并列，visibility设置为gone。
@@ -135,14 +135,15 @@
     recyclerView.showErrorView(findViewById(R.id.error_view));	//设置并显示错误View
     recyclerView.hideErrorView();								//隐藏错误View
 
-# onItemClickListener
+## onItemClickListener
 
     adapter.setOnItemClickLitener(new SimpleRecyclerView.Adapter.OnItemClickLitener());
 
-# 分割线
+## 分割线
 
-#### 构建Divider : 
-#### public Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, , int leftOffset, int topOffset, int rightOffset, int bottomOffset)
+构建Divider : 
+
+public Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, , int leftOffset, int topOffset, int rightOffset, int bottomOffset);
 
 - 可自定义分割线的Drawable，在Drawable XML里，可自定义粗细、颜色等参数，然后将Drawable的资源ID传入构造方法的第二个参数即可使用自定义的分割线Drawable，传入null将使用默认分割线样式
 
@@ -166,23 +167,62 @@ rv_divider.xml为一般的line形状XML，示例：
     recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
 	recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, null, false, 0, 0, 0, 0));
 
-# 初始化RecyclerView、添加/修改/删除Item时的动画
+## 初始化RecyclerView、添加/修改/删除Item时的动画
 
-#### SimpleRecyclerView.Adapter封装了对数据集操作的常用方法，使用Adapter对象的这些方法，将获得动画效果和正确的加载状态设置。
+SimpleRecyclerView.Adapter封装了对数据集操作的常用方法，使用Adapter对象的这些方法，将获得动画效果和正确的加载状态设置。这些方法如下：
 
-#### 这些方法如下：
-
-#### void setList(List<${JavaBean}> list);
-#### void add(${JavaBean} javaBean);
-#### void add(int position, ${JavaBean} javaBean);
-#### void remove(int position);
-#### void remove();
-#### void removeAll(int positionStart, int itemCount);
-#### void set(int position,${JavaBean} javaBean);
-#### void setAll(int positionStart, int itemCount, ${JavaBean} javaBean);
-#### void addAll(int position, List<${JavaBean}> newList);
-#### void addAll(List<${JavaBean}> newList);
+- void setList(List<${JavaBean}> list);
+- void add(${JavaBean} javaBean);
+- void add(int position, ${JavaBean} javaBean);
+- void remove(int position);
+- void remove();
+- void removeAll(int positionStart, int itemCount);
+- void set(int position,${JavaBean} javaBean);
+- void setAll(int positionStart, int itemCount, ${JavaBean} javaBean);
+- void addAll(int position, List<${JavaBean}> newList);
+- void addAll(List<${JavaBean}> newList);
 
 若所需的对数据集操作的方法没有在上面列出，可直接对Collection<${JavaBean}>进行操作后，调用adapter对象的notifyItem* 系列方法刷新UI，并调用void setLoadingFalse()恢复加载更多的状态。
 
-# 上下滑动时的固定Header
+## 上下滑动时的固定Header
+Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，创建自己的Header ViewHolder，重写接口里的3个方法：
+
+- long getHeaderId(int position);	//根据position返回headerId，返回headerId的数量就是固定Header的种类数
+
+- RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent);
+
+- void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position);
+
+示例：
+
+	@Override
+    public long getHeaderId(int position) {
+        if (position == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return new HeaderVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.header_chart, parent, false));
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (position == 0) {
+            ((HeaderVH) holder).iv_header_chart.setImageResource(xxx);
+        } else {
+            ((HeaderVH) holder).iv_header_chart.setImageResource(yyy);
+        }
+    }
+
+    public class HeaderVH extends RecyclerView.ViewHolder {
+        public HeaderVH(View itemView) {
+            super(itemView);
+            iv_header_chart = itemView.findViewById(R.id.iv_header_chart);
+        }
+        ImageView iv_header_chart;
+    }
+
