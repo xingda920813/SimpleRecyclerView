@@ -1,5 +1,8 @@
 # SimpleRecyclerView
-###对RecyclerView和SwipeRefreshLayout的简单封装。
+###对RecyclerView和SwipeRefreshLayout的简单封装。固定Header部分使用了timehop/sticky-headers-recyclerview。
+
+![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/video.gif)
+
 ###主要特性：
 #### 1. 下拉刷新：
 对SwipeRefreshLayout的封装。相对于原生的SwipeRefreshLayout，解决了2个问题：
