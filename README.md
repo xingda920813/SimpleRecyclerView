@@ -40,9 +40,9 @@
 ## 引入
 ### 1.添加二进制
 
-引入SimpleRecyclerView-1.0.1.jar或build.gradle中添加
+引入SimpleRecyclerView-1.0.2.jar或build.gradle中添加
 
-    compile 'com.xdandroid:simplerecyclerview:1.0.1'
+    compile 'com.xdandroid:simplerecyclerview:1.0.2'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 

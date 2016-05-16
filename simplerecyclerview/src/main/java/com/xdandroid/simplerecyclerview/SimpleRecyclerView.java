@@ -210,8 +210,7 @@ public class SimpleRecyclerView extends RecyclerView {
             }
             if (position == list.size()) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
-            }
-            if (mOnItemClickLitener != null) {
+            } else if (mOnItemClickLitener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
