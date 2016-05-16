@@ -210,16 +210,16 @@ public class SimpleRecyclerView extends RecyclerView {
             }
             if (position == list.size()) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
-            } else if (mOnItemClickLitener != null) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition());
-                    }
-                });
-            }
-            if (position != list.size()) {
+            } else {
                 onViewHolderBind(list, holder, holder.getAdapterPosition());
+                if (mOnItemClickLitener != null) {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition());
+                        }
+                    });
+                }
             }
         }
 
@@ -249,8 +249,16 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public void setList(List<T> list) {
+            if (list == null) {
+                setLoadingFalse();
+                return;
+            }
             if (this.list != null && this.list.size() > 0) {
                 changeList(list);
+                return;
+            }
+            if (list.size() <= 0) {
+                setLoadingFalse();
                 return;
             }
             this.list = list;
@@ -259,6 +267,10 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public void add(T t) {
+            if (t == null) {
+                setLoadingFalse();
+                return;
+            }
             int originalSize = list.size();
             list.add(t);
             notifyItemInserted(originalSize);
@@ -266,6 +278,10 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public void add(int position, T t) {
+            if (t == null) {
+                setLoadingFalse();
+                return;
+            }
             list.add(position,t);
             notifyItemInserted(position);
             setLoadingFalse();
@@ -307,12 +323,20 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public void addAll(int position, List<T> newList) {
+            if (newList == null || newList.size() <= 0) {
+                setLoadingFalse();
+                return;
+            }
             list.addAll(newList);
             notifyItemRangeInserted(position,newList.size());
             setLoadingFalse();
         }
 
         public void addAll(List<T> newList) {
+            if (newList == null || newList.size() <= 0) {
+                setLoadingFalse();
+                return;
+            }
             int originalSize = list.size();
             list.addAll(newList);
             notifyItemRangeInserted(originalSize,newList.size());
