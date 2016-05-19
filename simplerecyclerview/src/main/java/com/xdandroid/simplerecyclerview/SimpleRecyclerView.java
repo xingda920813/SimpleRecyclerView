@@ -251,6 +251,9 @@ public class SimpleRecyclerView extends RecyclerView {
         public void setList(List<T> list) {
             if (list == null) {
                 setLoadingFalse();
+                if (this.list != null) {
+                    notifyItemRemoved(this.list.size());
+                }
                 return;
             }
             if (this.list != null && this.list.size() > 0) {
@@ -259,6 +262,9 @@ public class SimpleRecyclerView extends RecyclerView {
             }
             if (list.size() <= 0) {
                 setLoadingFalse();
+                if (this.list != null) {
+                    notifyItemRemoved(this.list.size());
+                }
                 return;
             }
             this.list = list;
@@ -269,6 +275,9 @@ public class SimpleRecyclerView extends RecyclerView {
         public void add(T t) {
             if (t == null) {
                 setLoadingFalse();
+                if (this.list != null) {
+                    notifyItemRemoved(this.list.size());
+                }
                 return;
             }
             int originalSize = list.size();
@@ -280,6 +289,9 @@ public class SimpleRecyclerView extends RecyclerView {
         public void add(int position, T t) {
             if (t == null) {
                 setLoadingFalse();
+                if (this.list != null) {
+                    notifyItemRemoved(this.list.size());
+                }
                 return;
             }
             list.add(position,t);
@@ -325,6 +337,9 @@ public class SimpleRecyclerView extends RecyclerView {
         public void addAll(int position, List<T> newList) {
             if (newList == null || newList.size() <= 0) {
                 setLoadingFalse();
+                if (this.list != null) {
+                    notifyItemRemoved(this.list.size());
+                }
                 return;
             }
             list.addAll(newList);
@@ -335,6 +350,9 @@ public class SimpleRecyclerView extends RecyclerView {
         public void addAll(List<T> newList) {
             if (newList == null || newList.size() <= 0) {
                 setLoadingFalse();
+                if (this.list != null) {
+                    notifyItemRemoved(this.list.size());
+                }
                 return;
             }
             int originalSize = list.size();
