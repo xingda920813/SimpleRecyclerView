@@ -76,9 +76,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         adapter.setThreshold(7);
-        adapter.setOnItemClickLitener(new SimpleRecyclerView.Adapter.OnItemClickLitener() {public void onItemClick(View view, int position) {
-            Toast.makeText(MainActivity.this, "Clicked " + position, Toast.LENGTH_SHORT).show();
-        }});
+        adapter.setOnItemClickLitener(new SimpleRecyclerView.Adapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position, int viewType) {
+                Toast.makeText(MainActivity.this, "Clicked " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(this,SPAN_SIZE);
         //gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup(SPAN_SIZE));

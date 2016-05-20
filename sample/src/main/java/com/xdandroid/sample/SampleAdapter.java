@@ -21,13 +21,13 @@ public abstract class SampleAdapter extends SimpleRecyclerView.Adapter<SampleBea
     }
 
     @Override
-    protected void onViewHolderBind(List<SampleBean> list, RecyclerView.ViewHolder holder, int position) {
+    protected void onViewHolderBind(List<SampleBean> list, RecyclerView.ViewHolder holder, int position, int viewType) {
         ((ViewHolder)holder).title.setText(list.get(holder.getAdapterPosition()).getTitle());
         ((ViewHolder)holder).content.setText(list.get(holder.getAdapterPosition()).getContent());
     }
 
     @Override
-        protected int getViewType(List<SampleBean> list, int position) {
+    protected int getViewType(List<SampleBean> list, int position) {
         return 0;
     }
 

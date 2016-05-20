@@ -180,7 +180,7 @@ public class SimpleRecyclerView extends RecyclerView {
         protected abstract void onLoadMore(Void please_Make_Your_Adapter_Class_As_Abstract_Class);
         protected abstract boolean hasMoreElements(Void let_Activity_Or_Fragment_Implement_These_Methods);
         protected abstract ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent, int viewType);
-        protected abstract void onViewHolderBind(List<T> list, ViewHolder holder, int position);
+        protected abstract void onViewHolderBind(List<T> list, ViewHolder holder, int position, int viewType);
         protected abstract int getViewType(List<T> list, int position);
 
         @Override
@@ -211,12 +211,12 @@ public class SimpleRecyclerView extends RecyclerView {
             if (position == list.size()) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else {
-                onViewHolderBind(list, holder, holder.getAdapterPosition());
+                onViewHolderBind(list, holder, holder.getAdapterPosition(), getViewType(list,holder.getAdapterPosition()));
                 if (mOnItemClickLitener != null) {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition());
+                            mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition(), getViewType(list,holder.getAdapterPosition()));
                         }
                     });
                 }
@@ -362,7 +362,7 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public interface OnItemClickLitener {
-            public void onItemClick(View view, int position);
+            public void onItemClick(View view, int position, int viewType);
         }
         private OnItemClickLitener mOnItemClickLitener;
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
