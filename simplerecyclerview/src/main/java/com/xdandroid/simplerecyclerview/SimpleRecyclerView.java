@@ -186,10 +186,11 @@ public class SimpleRecyclerView extends RecyclerView {
         @Override
         public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             FrameLayout frameLayout = new FrameLayout(parent.getContext());
-            ViewGroup.LayoutParams outerParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+            outerParams.setMargins(0, SimpleUIUtils.dp2px(parent.getContext(), 6), 0, SimpleUIUtils.dp2px(parent.getContext(), 6));
             frameLayout.setLayoutParams(outerParams);
             ProgressBar progressBar = new ProgressBar(parent.getContext());
-            FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(SimpleUIUtils.dp2px(parent.getContext(), 40), SimpleUIUtils.dp2px(parent.getContext(), 40));
             innerParams.gravity = Gravity.CENTER;
             progressBar.setLayoutParams(innerParams);
             progressBar.setId(android.R.id.progress);
