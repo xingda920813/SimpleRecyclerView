@@ -19,7 +19,7 @@ public class SimpleSwipeRefreshLayout extends SwipeRefreshLayout implements AppB
         super(context, attrs);
     }
 
-    private AppBarLayout appBarLayout;
+    protected AppBarLayout appBarLayout;
 
     @Override
     protected void onAttachedToWindow() {

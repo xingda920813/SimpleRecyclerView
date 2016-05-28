@@ -25,20 +25,20 @@ import java.util.List;
  */
 public class SimpleRecyclerView extends RecyclerView {
 
-    private boolean hasAddedItemDecor = false;
-    private View emptyView,errorView;
+    protected boolean hasAddedItemDecor = false;
+    protected View emptyView,errorView;
 
     public SimpleRecyclerView(Context context) {
         super(context);
     }
-    public SimpleRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public SimpleRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    public SimpleRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public SimpleRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    private AdapterDataObserver emptyObserver = new AdapterDataObserver() {
+    protected AdapterDataObserver emptyObserver = new AdapterDataObserver() {
         @Override
         public void onChanged() {
             RecyclerView.Adapter<?> adapter =  (RecyclerView.Adapter<?>)getAdapter();
@@ -101,9 +101,9 @@ public class SimpleRecyclerView extends RecyclerView {
     // TODO: This is Divider.
     public static class Divider extends RecyclerView.ItemDecoration {
 
-        private Drawable mDivider;
-        private boolean mIsHorizontal;
-        private int leftOffset,topOffset,rightOffset,bottomOffset;
+        protected Drawable mDivider;
+        protected boolean mIsHorizontal;
+        protected int leftOffset,topOffset,rightOffset,bottomOffset;
 
         public Divider(Context context, @Nullable Integer dividerDrawableResId, boolean isHorizontal, int leftOffset, int topOffset, int rightOffset, int bottomOffset) {
             if (dividerDrawableResId != null && dividerDrawableResId > 0) {
@@ -129,7 +129,7 @@ public class SimpleRecyclerView extends RecyclerView {
             }
         }
 
-        public void drawVertical(Canvas c, RecyclerView parent) {
+        protected void drawVertical(Canvas c, RecyclerView parent) {
             final int left = parent.getPaddingLeft();
             final int right = parent.getWidth() - parent.getPaddingRight();
             final int childCount = parent.getChildCount();
@@ -143,7 +143,7 @@ public class SimpleRecyclerView extends RecyclerView {
             }
         }
 
-        public void drawHorizontal(Canvas c, RecyclerView parent) {
+        protected void drawHorizontal(Canvas c, RecyclerView parent) {
             final int top = parent.getPaddingTop();
             final int bottom = parent.getHeight() - parent.getPaddingBottom();
             final int childCount = parent.getChildCount();
@@ -167,24 +167,27 @@ public class SimpleRecyclerView extends RecyclerView {
         }
     }
 
-    // TODO: This is Adapter.
-    public static abstract class Adapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final class Please_Make_Your_Adapter_Class_As_Abstract_Class {private Please_Make_Your_Adapter_Class_As_Abstract_Class(){}}
+    public static final class Let_Activity_Or_Fragment_Implement_These_Methods {private Let_Activity_Or_Fragment_Implement_These_Methods(){}}
 
-        private List<T> list;
-        private boolean mIsLoading;
-        private int mThreshold = 7;
+    // TODO: This is MultiViewTypeAdapter.
+    public static abstract class MultiViewTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        protected boolean mIsLoading;
+        protected int mThreshold = 7;
         public void setThreshold(int threshold) {
             this.mThreshold = threshold;
         }
 
-        protected abstract void onLoadMore(Void please_Make_Your_Adapter_Class_As_Abstract_Class);
-        protected abstract boolean hasMoreElements(Void let_Activity_Or_Fragment_Implement_These_Methods);
-        protected abstract ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent, int viewType);
-        protected abstract void onViewHolderBind(List<T> list, ViewHolder holder, int position, int viewType);
-        protected abstract int getViewType(List<T> list, int position);
+        protected abstract void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void);
+        protected abstract boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void);
+        protected abstract ViewHolder onViewHolderCreate(ViewGroup parent, int viewType);
+        protected abstract void onViewHolderBind(ViewHolder holder, int position, int viewType);
+        protected abstract int getViewType(int position);
+        protected abstract int getCount();
 
         @Override
-        public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             FrameLayout frameLayout = new FrameLayout(parent.getContext());
             ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
             outerParams.setMargins(0, SimpleUIUtils.dp2px(parent.getContext(), 6), 0, SimpleUIUtils.dp2px(parent.getContext(), 6));
@@ -195,39 +198,146 @@ public class SimpleRecyclerView extends RecyclerView {
             progressBar.setLayoutParams(innerParams);
             progressBar.setId(android.R.id.progress);
             frameLayout.addView(progressBar);
-            return viewType == 65535 ? new ProgressViewHolder(frameLayout) : onViewHolderCreate(list, parent, viewType);
+            return viewType == 65535 ? new ProgressViewHolder(frameLayout) : onViewHolderCreate(parent, viewType);
         }
 
         @Override
-        public final int getItemViewType(int position) {
-            return position == list.size() ? 65535 : getViewType(list, position);
+        public int getItemViewType(int position) {
+            return position == getCount() ? 65535 : getViewType(position);
         }
 
         @Override
-        public final void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (!mIsLoading && position >= list.size() - mThreshold && hasMoreElements(null) && list.size() > 0) {
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+            if (!mIsLoading && getCount() > 0 && position >= getCount() - mThreshold && hasMoreElements(null)) {
                 mIsLoading = true;
                 onLoadMore(null);
             }
-            if (position == list.size()) {
+            if (position == getCount()) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else {
-                onViewHolderBind(list, holder, holder.getAdapterPosition(), getViewType(list,holder.getAdapterPosition()));
+                onViewHolderBind(holder, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
                 if (mOnItemClickLitener != null) {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition(), getViewType(list,holder.getAdapterPosition()));
+                            mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
                         }
                     });
                 }
             }
         }
 
-        public static final class ProgressViewHolder extends RecyclerView.ViewHolder {
-            public ProgressBar mProgressBar;
-            public FrameLayout mFrameLayout;
-            public ProgressViewHolder(final View view) {
+        protected static class ProgressViewHolder extends RecyclerView.ViewHolder {
+            protected ProgressBar mProgressBar;
+            protected FrameLayout mFrameLayout;
+            protected ProgressViewHolder(View view) {
+                super(view);
+                mFrameLayout = (FrameLayout) view;
+                mProgressBar = (ProgressBar) mFrameLayout.findViewById(android.R.id.progress);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return getCount() + 1;
+        }
+
+        public void setLoadingFalse() {
+            mIsLoading = false;
+        }
+
+        public interface OnItemClickLitener {
+            public void onItemClick(View view, int position, int viewType);
+        }
+        protected OnItemClickLitener mOnItemClickLitener;
+        public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+            this.mOnItemClickLitener = mOnItemClickLitener;
+        }
+
+        protected class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
+
+            protected int spanSize;
+
+            protected ProgressSpanSizeLookup(int spanSize) {
+                this.spanSize = spanSize;
+            }
+
+            @Override
+            public int getSpanSize(int i) {
+                switch (getItemViewType(i)) {
+                    case 65535:
+                        return spanSize;
+                    default:
+                        return 1;
+                }
+            }
+        }
+
+        public GridLayoutManager.SpanSizeLookup getSpanSizeLookup(int spanSize) {
+            return new ProgressSpanSizeLookup(spanSize);
+        }
+    }
+
+    // TODO: This is SingleViewTypeAdapter.
+    public static abstract class SingleViewTypeAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        protected List<T> list;
+        protected boolean mIsLoading;
+        protected int mThreshold = 7;
+        public void setThreshold(int threshold) {
+            this.mThreshold = threshold;
+        }
+
+        protected abstract void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void);
+        protected abstract boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void);
+        protected abstract ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent);
+        protected abstract void onViewHolderBind(List<T> list, ViewHolder holder, int position);
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            FrameLayout frameLayout = new FrameLayout(parent.getContext());
+            ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+            outerParams.setMargins(0, SimpleUIUtils.dp2px(parent.getContext(), 6), 0, SimpleUIUtils.dp2px(parent.getContext(), 6));
+            frameLayout.setLayoutParams(outerParams);
+            ProgressBar progressBar = new ProgressBar(parent.getContext());
+            FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(SimpleUIUtils.dp2px(parent.getContext(), 40), SimpleUIUtils.dp2px(parent.getContext(), 40));
+            innerParams.gravity = Gravity.CENTER;
+            progressBar.setLayoutParams(innerParams);
+            progressBar.setId(android.R.id.progress);
+            frameLayout.addView(progressBar);
+            return viewType == 65535 ? new ProgressViewHolder(frameLayout) : onViewHolderCreate(list, parent);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return position == list.size() ? 65535 : 0;
+        }
+
+        @Override
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+            if (!mIsLoading && list.size() > 0 && position >= list.size() - mThreshold && hasMoreElements(null)) {
+                mIsLoading = true;
+                onLoadMore(null);
+            }
+            if (position == list.size()) {
+                ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+            } else {
+                onViewHolderBind(list, holder, holder.getAdapterPosition());
+                if (mOnItemClickLitener != null) {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition());
+                        }
+                    });
+                }
+            }
+        }
+
+        protected static class ProgressViewHolder extends RecyclerView.ViewHolder {
+            protected ProgressBar mProgressBar;
+            protected FrameLayout mFrameLayout;
+            protected ProgressViewHolder(View view) {
                 super(view);
                 mFrameLayout = (FrameLayout) view;
                 mProgressBar = (ProgressBar) mFrameLayout.findViewById(android.R.id.progress);
@@ -243,7 +353,7 @@ public class SimpleRecyclerView extends RecyclerView {
             mIsLoading = false;
         }
 
-        private void changeList(List<T> list) {
+        protected void changeList(List<T> list) {
             this.list = list;
             notifyDataSetChanged();
             setLoadingFalse();
@@ -307,6 +417,10 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public void remove() {
+            removeLast();
+        }
+
+        public void removeLast() {
             int originalSize = list.size();
             list.remove(originalSize - 1);
             notifyItemRemoved(originalSize - 1);
@@ -363,17 +477,18 @@ public class SimpleRecyclerView extends RecyclerView {
         }
 
         public interface OnItemClickLitener {
-            public void onItemClick(View view, int position, int viewType);
+            public void onItemClick(View view, int position);
         }
-        private OnItemClickLitener mOnItemClickLitener;
+        protected OnItemClickLitener mOnItemClickLitener;
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
         }
 
-        public final class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
-            private int spanSize;
+        protected class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
 
-            public ProgressSpanSizeLookup(int spanSize) {
+            protected int spanSize;
+
+            protected ProgressSpanSizeLookup(int spanSize) {
                 this.spanSize = spanSize;
             }
 

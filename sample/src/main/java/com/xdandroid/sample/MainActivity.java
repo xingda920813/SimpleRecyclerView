@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SimpleRecyclerView recyclerView;
     private SimpleSwipeRefreshLayout swipeRefreshLayout;
-    private SampleAdapter adapter;
+    private SampleSingleViewTypeAdapter adapter;
     private List<SampleBean> list, addition;
     private Handler handler = new Handler();
     private static final int SPAN_SIZE = 2;
@@ -67,18 +67,18 @@ public class MainActivity extends AppCompatActivity {
     private void setupRecyclerView() {
         //recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
         recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, null, false, 0, 0, 0, 0));
-        adapter = new SampleAdapter() {
-            protected void onLoadMore(Void v) {handler.postDelayed(new Runnable() {public void run() {
+        adapter = new SampleSingleViewTypeAdapter() {
+            protected void onLoadMore(SimpleRecyclerView.Please_Make_Your_Adapter_Class_As_Abstract_Class Void) {handler.postDelayed(new Runnable() {public void run() {
                 addAll(addition);
             }}, 1000);}
-            protected boolean hasMoreElements(Void v) {
+            protected boolean hasMoreElements(SimpleRecyclerView.Let_Activity_Or_Fragment_Implement_These_Methods Void) {
                 return list.size() <= 260;
             }
         };
         adapter.setThreshold(7);
-        adapter.setOnItemClickLitener(new SimpleRecyclerView.Adapter.OnItemClickLitener() {
+        adapter.setOnItemClickLitener(new SimpleRecyclerView.SingleViewTypeAdapter.OnItemClickLitener() {
             @Override
-            public void onItemClick(View view, int position, int viewType) {
+            public void onItemClick(View view, int position) {
                 Toast.makeText(MainActivity.this, "Clicked " + position, Toast.LENGTH_SHORT).show();
             }
         });

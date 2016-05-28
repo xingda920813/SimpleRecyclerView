@@ -13,22 +13,17 @@ import java.util.List;
 /**
  * Created by XingDa on 2016/5/11.
  */
-public abstract class SampleAdapter extends SimpleRecyclerView.Adapter<SampleBean> {
+public abstract class SampleSingleViewTypeAdapter extends SimpleRecyclerView.SingleViewTypeAdapter<SampleBean> {
 
     @Override
-    protected RecyclerView.ViewHolder onViewHolderCreate(List<SampleBean> list, ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder onViewHolderCreate(List<SampleBean> list, ViewGroup parent) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false));
     }
 
     @Override
-    protected void onViewHolderBind(List<SampleBean> list, RecyclerView.ViewHolder holder, int position, int viewType) {
+    protected void onViewHolderBind(List<SampleBean> list, RecyclerView.ViewHolder holder, int position) {
         ((ViewHolder)holder).title.setText(list.get(holder.getAdapterPosition()).getTitle());
         ((ViewHolder)holder).content.setText(list.get(holder.getAdapterPosition()).getContent());
-    }
-
-    @Override
-    protected int getViewType(List<SampleBean> list, int position) {
-        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

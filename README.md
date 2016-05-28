@@ -40,11 +40,11 @@
 ## 引入
 ### 1.添加二进制
 
-通过jar包引入：引入SimpleRecyclerView-1.0.6.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
+通过jar包引入：引入SimpleRecyclerView-1.0.7.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
 
 通过jcenter引入（推荐）：直接在build.gradle中添加
 
-    compile 'com.xdandroid:simplerecyclerview:1.0.6'
+    compile 'com.xdandroid:simplerecyclerview:1.0.7'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 
@@ -54,7 +54,9 @@
 
 - 用法可参考Demo
 
-- 为Adapter设置数据源list的方法为：
+- 有多种viewType时，为Adapter设置数据源的方法与原生RecyclerView.Adapter相同，可通过构造方法传入，也可在Adapter里建立自己的设置数据的方法，在方法里面为数据对象赋值并刷新UI。
+
+- 只有1种viewType（Adapter继承SimpleRecyclerView.SingleViewTypeAdapter<${JavaBean}>）时，为Adapter设置数据源list的方法为：
 
 .
 
@@ -93,13 +95,27 @@
         android:id="@+id/error_view"
         android:visibility="gone"/>
     
-### 4. 建立Adapter抽象类，继承SimpleRecyclerView.Adapter<${JavaBean}>
+### 4. 建立Adapter抽象类
+
+#### 4.1 只有1种viewType时，继承SimpleRecyclerView.SingleViewTypeAdapter<${JavaBean}>
+
+- 重写onViewHolderCreate，对应于RecyclerView.Adapter中的onCreateViewHolder
+
+- 重写onViewHolderBind，对应于RecyclerView.Adapter中的onBindViewHolder
+
+- 建立ViewHolder
+
+- 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
+
+#### 4.2 有多种viewType时，继承SimpleRecyclerView.MultiViewTypeAdapter
 
 - 重写onViewHolderCreate，对应于RecyclerView.Adapter中的onCreateViewHolder
 
 - 重写onViewHolderBind，对应于RecyclerView.Adapter中的onBindViewHolder
 
 - 重写getViewType，对应于RecyclerView.Adapter中的getItemViewType
+
+- 重写getCount，对应于RecyclerView.Adapter中的getItemCount
 
 - 建立各个viewType对应的ViewHolder类
 
@@ -111,13 +127,13 @@
 ## 加载更多
 ### 实例化Adapter时要实现2个方法 : 
 
-#### 1. void onLoadMore(Void v) :
+#### 1. void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void) :
 
 获取到更多的数据之后，只需调用adapter对象的void addAll(List<${JavaBean}>)一个方法即可。
 
 注意不要调用数据集list的addAll方法，然后再手动刷新UI。这样做会丧失转圈消失时和项目添加时的动画效果，也使得加载状态得不到重置。
 
-#### 2. boolean hasMoreElements(Void v) : 
+#### 2. boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void) : 
 
 根据网络返回结果判断是否还有更多的数据这一批没加载完。
 
@@ -180,7 +196,7 @@ SimpleRecyclerView.Adapter封装了对数据集操作的常用方法，使用Ada
 - void add(${JavaBean} javaBean);
 - void add(int position, ${JavaBean} javaBean);
 - void remove(int position);
-- void remove();
+- void removeLast(); / void remove();
 - void removeAll(int positionStart, int itemCount);
 - void set(int position,${JavaBean} javaBean);
 - void setAll(int positionStart, int itemCount, ${JavaBean} javaBean);
