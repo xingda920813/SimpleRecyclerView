@@ -29,17 +29,21 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        FrameLayout frameLayout = new FrameLayout(parent.getContext());
-        ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-        outerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
-        frameLayout.setLayoutParams(outerParams);
-        ProgressBar progressBar = new ProgressBar(parent.getContext());
-        FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(UIUtils.dp2px(parent.getContext(), 40), UIUtils.dp2px(parent.getContext(), 40));
-        innerParams.gravity = Gravity.CENTER;
-        progressBar.setLayoutParams(innerParams);
-        progressBar.setId(android.R.id.progress);
-        frameLayout.addView(progressBar);
-        return viewType == 65535 ? new ProgressViewHolder(frameLayout) : onViewHolderCreate(parent, viewType);
+        if (viewType != 65535) {
+            return onViewHolderCreate(parent, viewType);
+        } else {
+            FrameLayout frameLayout = new FrameLayout(parent.getContext());
+            ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+            outerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
+            frameLayout.setLayoutParams(outerParams);
+            ProgressBar progressBar = new ProgressBar(parent.getContext());
+            FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(UIUtils.dp2px(parent.getContext(), 40), UIUtils.dp2px(parent.getContext(), 40));
+            innerParams.gravity = Gravity.CENTER;
+            progressBar.setLayoutParams(innerParams);
+            progressBar.setId(android.R.id.progress);
+            frameLayout.addView(progressBar);
+            return new ProgressViewHolder(frameLayout);
+        }
     }
 
     @Override

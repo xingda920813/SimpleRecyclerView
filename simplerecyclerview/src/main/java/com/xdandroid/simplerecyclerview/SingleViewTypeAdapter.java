@@ -1,11 +1,8 @@
 package com.xdandroid.simplerecyclerview;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -27,17 +24,11 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        FrameLayout frameLayout = new FrameLayout(parent.getContext());
-        ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-        outerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
-        frameLayout.setLayoutParams(outerParams);
-        ProgressBar progressBar = new ProgressBar(parent.getContext());
-        FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(UIUtils.dp2px(parent.getContext(), 40), UIUtils.dp2px(parent.getContext(), 40));
-        innerParams.gravity = Gravity.CENTER;
-        progressBar.setLayoutParams(innerParams);
-        progressBar.setId(android.R.id.progress);
-        frameLayout.addView(progressBar);
-        return viewType == 65535 ? new ProgressViewHolder(frameLayout) : onViewHolderCreate(list, parent);
+        if (viewType != 65535) {
+            return onViewHolderCreate(list, parent);
+        } else {
+            return super.onCreateViewHolder(parent, viewType);
+        }
     }
 
     @Override
