@@ -10,6 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.xdandroid.simplerecyclerview.Divider;
+import com.xdandroid.simplerecyclerview.Let_Activity_Or_Fragment_Implement_These_Methods;
+import com.xdandroid.simplerecyclerview.OnItemClickLitener;
+import com.xdandroid.simplerecyclerview.Please_Make_Your_Adapter_Class_As_Abstract_Class;
 import com.xdandroid.simplerecyclerview.SimpleRecyclerView;
 import com.xdandroid.simplerecyclerview.SimpleSwipeRefreshLayout;
 
@@ -66,19 +70,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         //recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
-        recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, null, false, 0, 0, 0, 0));
+        recyclerView.addItemDecoration(new Divider(this, null, false, 0, 0, 0, 0));
         adapter = new SampleSingleViewTypeAdapter() {
-            protected void onLoadMore(SimpleRecyclerView.Please_Make_Your_Adapter_Class_As_Abstract_Class Void) {handler.postDelayed(new Runnable() {public void run() {
+            protected void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void) {handler.postDelayed(new Runnable() {public void run() {
                 addAll(addition);
             }}, 1000);}
-            protected boolean hasMoreElements(SimpleRecyclerView.Let_Activity_Or_Fragment_Implement_These_Methods Void) {
+            protected boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void) {
                 return list.size() <= 260;
             }
         };
         adapter.setThreshold(7);
-        adapter.setOnItemClickLitener(new SimpleRecyclerView.SingleViewTypeAdapter.OnItemClickLitener() {
+        adapter.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, int position, int viewType) {
                 Toast.makeText(MainActivity.this, "Clicked " + position, Toast.LENGTH_SHORT).show();
             }
         });

@@ -6,7 +6,7 @@ import android.content.Context;
  * Created by XingDa on 2016/05/27.
  */
 
-public class SimpleUIUtils {
+public class UIUtils {
 
     public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;

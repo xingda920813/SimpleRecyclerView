@@ -6,14 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xdandroid.simplerecyclerview.SimpleRecyclerView;
+import com.xdandroid.simplerecyclerview.SingleViewTypeAdapter;
 
 import java.util.List;
 
 /**
  * Created by XingDa on 2016/5/11.
  */
-public abstract class SampleSingleViewTypeAdapter extends SimpleRecyclerView.SingleViewTypeAdapter<SampleBean> {
+public abstract class SampleSingleViewTypeAdapter extends SingleViewTypeAdapter<SampleBean> {
 
     @Override
     protected RecyclerView.ViewHolder onViewHolderCreate(List<SampleBean> list, ViewGroup parent) {

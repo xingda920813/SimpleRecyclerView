@@ -40,11 +40,11 @@
 ## 引入
 ### 1.添加二进制
 
-通过jar包引入：引入SimpleRecyclerView-1.0.8.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
+通过jar包引入：引入SimpleRecyclerView-1.0.9.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
 
 通过jcenter引入（推荐）：直接在build.gradle中添加
 
-    compile 'com.xdandroid:simplerecyclerview:1.0.8'
+    compile 'com.xdandroid:simplerecyclerview:1.0.9'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 
@@ -54,9 +54,9 @@
 
 - 用法可参考Demo
 
-- 有多种viewType时，为Adapter设置数据源的方法与原生RecyclerView.Adapter相同，可通过构造方法传入，也可在Adapter里建立自己的设置数据的方法，在方法里面为数据对象赋值并刷新UI。
+- 有多种viewType（Adapter继承com.xdandroid.simplerecyclerview.Adapter）时，为Adapter设置数据源的方法与原生RecyclerView.Adapter相同，可通过构造方法传入，也可在Adapter里建立自己的设置数据的方法，在方法里面为数据对象赋值并刷新UI。
 
-- 只有1种viewType（Adapter继承SimpleRecyclerView.SingleViewTypeAdapter<${JavaBean}>）时，为Adapter设置数据源list的方法为：
+- 只有1种viewType（Adapter继承SingleViewTypeAdapter<${JavaBean}>）时，为Adapter设置数据源list的方法为：
 
 .
 
@@ -97,7 +97,7 @@
     
 ### 4. 建立Adapter抽象类
 
-#### 4.1 只有1种viewType时，继承SimpleRecyclerView.SingleViewTypeAdapter<${JavaBean}>
+#### 4.1 只有1种viewType时，继承SingleViewTypeAdapter<${JavaBean}>
 
 - 重写onViewHolderCreate，对应于RecyclerView.Adapter中的onCreateViewHolder
 
@@ -107,7 +107,7 @@
 
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
-#### 4.2 有多种viewType时，继承SimpleRecyclerView.MultiViewTypeAdapter
+#### 4.2 有多种viewType时，继承Adapter
 
 - 重写onViewHolderCreate，对应于RecyclerView.Adapter中的onCreateViewHolder
 
@@ -158,13 +158,13 @@
 
 ## onItemClickListener/OnItemLongClickListener
 
-    adapter.setOnItemClickLitener(new SimpleRecyclerView.Adapter.OnItemClickLitener());
+    adapter.setOnItemClickLitener(new OnItemClickLitener());
 
 ## 分割线
 
 构建Divider : 
 
-public Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, , int leftOffset, int topOffset, int rightOffset, int bottomOffset);
+Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, , int leftOffset, int topOffset, int rightOffset, int bottomOffset);
 
 - 可自定义分割线的Drawable，在Drawable XML里，可自定义粗细、颜色等参数，然后将Drawable的资源ID传入构造方法的第二个参数即可使用自定义的分割线Drawable，传入null将使用默认分割线样式
 
@@ -185,12 +185,12 @@ rv_divider.xml为一般的line形状XML，示例：
 
 使用：
 
-    recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
-	recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, null, false, 0, 0, 0, 0));
+    recyclerView.addItemDecoration(new Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
+	recyclerView.addItemDecoration(new Divider(this, null, false, 0, 0, 0, 0));
 
 ## 初始化RecyclerView、添加/修改/删除Item时的动画
 
-SimpleRecyclerView.Adapter封装了对数据集操作的常用方法，使用Adapter对象的这些方法，将获得动画效果和正确的加载状态设置。这些方法如下：
+Adapter封装了对数据集操作的常用方法，使用Adapter对象的这些方法，将获得动画效果和正确的加载状态设置。这些方法如下：
 
 - void setList(List<${JavaBean}> list);
 - void add(${JavaBean} javaBean);
