@@ -20,7 +20,7 @@
 - 除了LinearLayoutManager，同样支持GridLayoutManager的加载更多动画
 
 #### 3.空数据/错误页面显示
-#### 4.onItemClickListener
+#### 4.onItemClickListener/onItemLongClickListener
 #### 5.上下滑动时的固定Header
 
 - 可设置任意数量的固定Header种类
@@ -40,11 +40,11 @@
 ## 引入
 ### 1.添加二进制
 
-通过jar包引入：引入SimpleRecyclerView-1.0.7.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
+通过jar包引入：引入SimpleRecyclerView-1.0.8.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
 
 通过jcenter引入（推荐）：直接在build.gradle中添加
 
-    compile 'com.xdandroid:simplerecyclerview:1.0.7'
+    compile 'com.xdandroid:simplerecyclerview:1.0.8'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 
@@ -122,7 +122,7 @@
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
 ## 下拉刷新
-### 解决与AppbarLayout的滑动冲突：为AppBarLayout指定id为appbar即可(android:id="@+id/appbar")
+#### 解决与AppbarLayout的滑动冲突：为AppBarLayout指定id为appbar即可(android:id="@+id/appbar")
 
 ## 加载更多
 ### 实例化Adapter时要实现2个方法 : 
@@ -156,7 +156,7 @@
     recyclerView.showErrorView(findViewById(R.id.error_view));	//设置并显示错误View
     recyclerView.hideErrorView();								//隐藏错误View
 
-## onItemClickListener
+## onItemClickListener/OnItemLongClickListener
 
     adapter.setOnItemClickLitener(new SimpleRecyclerView.Adapter.OnItemClickLitener());
 

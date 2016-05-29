@@ -224,6 +224,14 @@ public class SimpleRecyclerView extends RecyclerView {
                         }
                     });
                 }
+                if (mOnItemLongClickLitener != null) {
+                    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return mOnItemLongClickLitener.onItemLongClick(holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
+                        }
+                    });
+                }
             }
         }
 
@@ -252,6 +260,14 @@ public class SimpleRecyclerView extends RecyclerView {
         protected OnItemClickLitener mOnItemClickLitener;
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
+        }
+
+        public interface OnItemLongClickLitener {
+            public boolean onItemLongClick(View view, int position, int viewType);
+        }
+        protected OnItemLongClickLitener mOnItemLongClickLitener;
+        public void setOnItemLongClickLitener(OnItemLongClickLitener mOnItemLongClickLitener) {
+            this.mOnItemLongClickLitener = mOnItemLongClickLitener;
         }
 
         protected class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
@@ -328,6 +344,14 @@ public class SimpleRecyclerView extends RecyclerView {
                         @Override
                         public void onClick(View v) {
                             mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition());
+                        }
+                    });
+                }
+                if (mOnItemLongClickLitener != null) {
+                    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return mOnItemLongClickLitener.onItemLongClick(holder.itemView, holder.getAdapterPosition());
                         }
                     });
                 }
@@ -482,6 +506,14 @@ public class SimpleRecyclerView extends RecyclerView {
         protected OnItemClickLitener mOnItemClickLitener;
         public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
             this.mOnItemClickLitener = mOnItemClickLitener;
+        }
+
+        public interface OnItemLongClickLitener {
+            public boolean onItemLongClick(View view, int position);
+        }
+        protected OnItemLongClickLitener mOnItemLongClickLitener;
+        public void setOnItemLongClickLitener(OnItemLongClickLitener mOnItemLongClickLitener) {
+            this.mOnItemLongClickLitener = mOnItemLongClickLitener;
         }
 
         protected class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
