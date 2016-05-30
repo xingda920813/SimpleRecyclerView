@@ -15,12 +15,24 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     protected List<T> list;
 
     protected abstract RecyclerView.ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent);
+
     protected abstract void onViewHolderBind(List<T> list, RecyclerView.ViewHolder holder, int position);
 
-    protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {throw new UnsupportedOperationException();}
-    protected final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {throw new UnsupportedOperationException();}
-    protected final int getViewType(int position) {throw new UnsupportedOperationException();}
-    protected final int getCount() {throw new UnsupportedOperationException();}
+    protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected final int getViewType(int position) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected final int getCount() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -122,7 +134,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             }
             return;
         }
-        list.add(position,t);
+        list.add(position, t);
         notifyItemInserted(position);
         setLoadingFalse();
     }
@@ -152,8 +164,8 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
         setLoadingFalse();
     }
 
-    public void set(int position,T t) {
-        list.set(position,t);
+    public void set(int position, T t) {
+        list.set(position, t);
         notifyItemChanged(position);
         setLoadingFalse();
     }
@@ -175,7 +187,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             return;
         }
         list.addAll(newList);
-        notifyItemRangeInserted(position,newList.size());
+        notifyItemRangeInserted(position, newList.size());
         setLoadingFalse();
     }
 
@@ -189,7 +201,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
         }
         int originalSize = list.size();
         list.addAll(newList);
-        notifyItemRangeInserted(originalSize,newList.size());
+        notifyItemRangeInserted(originalSize, newList.size());
         setLoadingFalse();
     }
 }

@@ -5,5 +5,6 @@ package com.xdandroid.simplerecyclerview;
  */
 
 public class Please_Make_Your_Adapter_Class_As_Abstract_Class {
-    private Please_Make_Your_Adapter_Class_As_Abstract_Class(){}
+    private Please_Make_Your_Adapter_Class_As_Abstract_Class() {
+    }
 }

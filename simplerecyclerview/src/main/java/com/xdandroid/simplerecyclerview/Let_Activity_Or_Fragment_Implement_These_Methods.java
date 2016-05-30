@@ -5,5 +5,6 @@ package com.xdandroid.simplerecyclerview;
  */
 
 public class Let_Activity_Or_Fragment_Implement_These_Methods {
-    private Let_Activity_Or_Fragment_Implement_These_Methods(){}
+    private Let_Activity_Or_Fragment_Implement_These_Methods() {
+    }
 }

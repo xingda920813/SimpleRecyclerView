@@ -16,15 +16,21 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     protected boolean mIsLoading;
     protected int mThreshold = 7;
+
     public void setThreshold(int threshold) {
         this.mThreshold = threshold;
     }
 
     protected abstract void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void);
+
     protected abstract boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void);
+
     protected abstract RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType);
+
     protected abstract void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType);
+
     protected abstract int getViewType(int position);
+
     protected abstract int getCount();
 
     @Override

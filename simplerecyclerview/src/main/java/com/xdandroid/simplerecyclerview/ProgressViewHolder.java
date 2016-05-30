@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 public class ProgressViewHolder extends RecyclerView.ViewHolder {
     protected ProgressBar mProgressBar;
     protected FrameLayout mFrameLayout;
+
     protected ProgressViewHolder(View view) {
         super(view);
         mFrameLayout = (FrameLayout) view;

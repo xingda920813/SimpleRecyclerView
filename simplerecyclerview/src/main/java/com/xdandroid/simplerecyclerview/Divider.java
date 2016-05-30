@@ -17,7 +17,7 @@ public class Divider extends RecyclerView.ItemDecoration {
 
     protected Drawable mDivider;
     protected boolean mIsHorizontal;
-    protected int leftOffset,topOffset,rightOffset,bottomOffset;
+    protected int leftOffset, topOffset, rightOffset, bottomOffset;
 
     public Divider(Context context, @Nullable Integer dividerDrawableResId, boolean isHorizontal, int leftOffset, int topOffset, int rightOffset, int bottomOffset) {
         if (dividerDrawableResId != null && dividerDrawableResId > 0) {

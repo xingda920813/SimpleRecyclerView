@@ -14,14 +14,18 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 public class SimpleRecyclerView extends RecyclerView {
 
     protected boolean hasAddedItemDecor = false;
-    protected View emptyView,errorView;
+    protected boolean hasRegisteredEmptyObserver = false;
+    protected View emptyView, errorView;
+    protected StickyRecyclerHeadersDecoration headersDecoration;
 
     public SimpleRecyclerView(Context context) {
         super(context);
     }
+
     public SimpleRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
     public SimpleRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
@@ -29,9 +33,9 @@ public class SimpleRecyclerView extends RecyclerView {
     protected AdapterDataObserver emptyObserver = new AdapterDataObserver() {
         @Override
         public void onChanged() {
-            RecyclerView.Adapter<?> adapter =  (RecyclerView.Adapter<?>)getAdapter();
-            if(adapter != null && emptyView != null) {
-                if(adapter.getItemCount() <= 1) {
+            RecyclerView.Adapter<? extends ViewHolder> adapter = (RecyclerView.Adapter<? extends ViewHolder>) getAdapter();
+            if (adapter != null && emptyView != null) {
+                if (adapter.getItemCount() <= 1) {
                     emptyView.setVisibility(View.VISIBLE);
                     setVisibility(View.GONE);
                 } else {
@@ -42,25 +46,43 @@ public class SimpleRecyclerView extends RecyclerView {
         }
     };
 
+    protected AdapterDataObserver headersObserver = new AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            if (headersDecoration != null) {
+                headersDecoration.invalidateHeaders();
+            }
+        }
+    };
+
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
         super.setAdapter(adapter);
-        if(adapter != null) {
-            adapter.registerAdapterDataObserver(emptyObserver);
+        if (!hasRegisteredEmptyObserver && adapter != null) {
+            hasRegisteredEmptyObserver = true;
+            try {
+                getAdapter().unregisterAdapterDataObserver(emptyObserver);
+            } catch (Exception ignored) {
+            }
+            try {
+                getAdapter().registerAdapterDataObserver(emptyObserver);
+            } catch (Exception ignored) {
+            }
         }
         emptyObserver.onChanged();
-        if (getAdapter() instanceof StickyRecyclerHeadersAdapter) {
+        if (!hasAddedItemDecor && getAdapter() instanceof StickyRecyclerHeadersAdapter) {
+            hasAddedItemDecor = true;
             StickyRecyclerHeadersAdapter stickyHeadersRVAdapter = (StickyRecyclerHeadersAdapter) getAdapter();
-            final StickyRecyclerHeadersDecoration headersDecoration = new StickyRecyclerHeadersDecoration(stickyHeadersRVAdapter);
-            if (!hasAddedItemDecor) {
-                addItemDecoration(headersDecoration);
-                hasAddedItemDecor = true;
+            headersDecoration = new StickyRecyclerHeadersDecoration(stickyHeadersRVAdapter);
+            addItemDecoration(headersDecoration);
+            try {
+                getAdapter().unregisterAdapterDataObserver(headersObserver);
+            } catch (Exception ignored) {
             }
-            getAdapter().registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                @Override public void onChanged() {
-                    headersDecoration.invalidateHeaders();
-                }
-            });
+            try {
+                getAdapter().registerAdapterDataObserver(headersObserver);
+            } catch (Exception ignored) {
+            }
         }
     }
 
@@ -70,8 +92,8 @@ public class SimpleRecyclerView extends RecyclerView {
     }
 
     public void showErrorView(View errorView) {
-        RecyclerView.Adapter<?> adapter =  (RecyclerView.Adapter<?>)getAdapter();
-        if(adapter != null && errorView != null) {
+        RecyclerView.Adapter<? extends ViewHolder> adapter = (RecyclerView.Adapter<? extends ViewHolder>) getAdapter();
+        if (adapter != null && errorView != null) {
             this.errorView = errorView;
             this.errorView.setVisibility(View.VISIBLE);
             setVisibility(View.GONE);
@@ -79,8 +101,8 @@ public class SimpleRecyclerView extends RecyclerView {
     }
 
     public void hideErrorView() {
-        RecyclerView.Adapter<?> adapter =  (RecyclerView.Adapter<?>)getAdapter();
-        if(adapter != null && this.errorView != null) {
+        RecyclerView.Adapter<? extends ViewHolder> adapter = (RecyclerView.Adapter<? extends ViewHolder>) getAdapter();
+        if (adapter != null && this.errorView != null) {
             this.errorView.setVisibility(View.GONE);
             setVisibility(View.VISIBLE);
         }
