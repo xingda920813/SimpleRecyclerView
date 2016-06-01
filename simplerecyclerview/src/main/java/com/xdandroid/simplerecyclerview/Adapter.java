@@ -71,7 +71,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
+                        mOnItemClickLitener.onItemClick(holder, holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
                     }
                 });
             }
@@ -79,7 +79,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        return mOnItemLongClickLitener.onItemLongClick(holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
+                        return mOnItemLongClickLitener.onItemLongClick(holder, holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
                     }
                 });
             }

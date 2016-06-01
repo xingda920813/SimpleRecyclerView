@@ -1,5 +1,6 @@
 package com.xdandroid.simplerecyclerview;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
@@ -7,5 +8,5 @@ import android.view.View;
  */
 
 public interface OnItemLongClickLitener {
-    public boolean onItemLongClick(View view, int position, int viewType);
+    public boolean onItemLongClick(RecyclerView.ViewHolder holder, View v, int position, int viewType);
 }

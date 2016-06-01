@@ -1,5 +1,6 @@
 package com.xdandroid.simplerecyclerview;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
@@ -7,5 +8,5 @@ import android.view.View;
  */
 
 public interface OnItemClickLitener {
-    public void onItemClick(View view, int position, int viewType);
+    public void onItemClick(RecyclerView.ViewHolder holder, View v, int position, int viewType);
 }
