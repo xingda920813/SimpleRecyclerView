@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
@@ -63,41 +64,57 @@ public class MainActivity extends AppCompatActivity {
                 list.add(new SampleBean("Title " + String.valueOf(c), "Content " + String.valueOf(c)));
             }
             adapter.setList(list);
-            swipeRefreshLayout.setRefreshing(false);}}, 1000);
+            swipeRefreshLayout.setRefreshing(false);}}, 1777);
         }});
         swipeRefreshLayout.setRefreshing(true);
     }
 
     private void setupRecyclerView() {
+        /**
+         * 自定义Divider Drawable.
+         */
         //recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
         recyclerView.addItemDecoration(new Divider(this, null, false, 0, 0, 0, 0));
         adapter = new SampleSingleViewTypeAdapter() {
             protected void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void) {handler.postDelayed(new Runnable() {public void run() {
                 addAll(addition);
-            }}, 1000);}
+            }}, 1777);}
             protected boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void) {
-                return list.size() <= 260;
+                return list.size() <= 666;
             }
         };
         adapter.setThreshold(7);
         adapter.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
-            public void onItemClick(View view, int position, int viewType) {
+            public void onItemClick(RecyclerView.ViewHolder holder, View view, int position, int viewType) {
                 Toast.makeText(MainActivity.this, "Clicked " + position, Toast.LENGTH_SHORT).show();
             }
         });
+        /**
+         * true为使用 SwipeRefreshLayout 样式的加载更多转圈，以及设置转圈的颜色。false为使用 ProgressBar样式的加载更多转圈。
+         * SwipeRefreshLayout 样式与系统版本无关。
+         * ProgressBar的外观因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。
+         */
+        adapter.setUseMaterialProgress(true, new int[]{getResources().getColor(R.color.colorAccent)});
+        //adapter.setColorSchemeColors(new int[]{getResources().getColor(R.color.colorAccent)});
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        /**
+         * GridLayoutManager需多设置一个SpanSizeLookUp.
+         */
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(this,SPAN_SIZE);
         //gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup(SPAN_SIZE));
         //recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
+        /**
+         * 设置EmptyView和ErrorView.
+         */
         /*handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 recyclerView.setEmptyView(findViewById(R.id.empty_view));
                 swipeRefreshLayout.setRefreshing(false);
             }
-        },1000);*/
+        },1777);*/
         /*handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -105,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 //recyclerView.hideErrorView();
                 swipeRefreshLayout.setRefreshing(false);
             }
-        },1000);*/
+        },1777);*/
     }
 
     private void setupMockData() {
@@ -122,6 +139,6 @@ public class MainActivity extends AppCompatActivity {
             }
             swipeRefreshLayout.setRefreshing(false);
             adapter.setList(list);
-        }}, 1000);
+        }}, 1777);
     }
 }

@@ -3,6 +3,8 @@
 
 ![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/video.gif)
 
+![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/videomaterial.gif)
+
 ###主要特性：
 #### 1. 下拉刷新：
 对SwipeRefreshLayout的封装。相对于原生的SwipeRefreshLayout，解决了2个问题：
@@ -18,6 +20,8 @@
 - 若滑到最底部，加载仍未完成，则显示加载的转圈动画
 
 - 除了LinearLayoutManager，同样支持GridLayoutManager的加载更多动画
+
+- 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义颜色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
 
 #### 3.空数据/错误页面显示
 #### 4.onItemClickListener/onItemLongClickListener
@@ -40,11 +44,11 @@
 ## 引入
 ### 1.添加二进制
 
-通过jar包引入：引入SimpleRecyclerView-1.1.2.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
+通过jar包引入：引入SimpleRecyclerView-1.2.0.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
 
 通过jcenter引入（推荐）：直接在build.gradle中添加
 
-    compile 'com.xdandroid:simplerecyclerview:1.1.2'
+    compile 'com.xdandroid:simplerecyclerview:1.2.0'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 
@@ -105,6 +109,8 @@
 
 - 建立ViewHolder
 
+- 使用GridLayoutManager时，重写int getItemSpanSize(int position)
+
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
 #### 4.2 有多种viewType时，继承Adapter
@@ -118,6 +124,8 @@
 - 重写getCount，对应于RecyclerView.Adapter中的getItemCount
 
 - 建立各个viewType对应的ViewHolder类
+
+- 使用GridLayoutManager时，重写int getItemSpanSize(int position)
 
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
@@ -136,6 +144,16 @@
 #### 2. boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void) : 
 
 根据网络返回结果判断是否还有更多的数据这一批没加载完。
+
+### 样式选择：
+
+	adapter.setUseMaterialProgress(true, new int[]{getResources().getColor(R.color.colorAccent)});
+
+第一个参数(boolean useMaterialProgress)为false时，使用ProgressBar样式，为true时，使用SwipeRefreshLayout样式。第二个参数(int[] colors)仅在useMaterialProgress为true时有效，可设置SwipeRefreshLayout样式加载转圈的颜色。若int[]中的颜色值多于一个，将按顺序轮换显示不同颜色的转圈，每转一圈换一种颜色。
+
+	adapter.setColorSchemeColors(new int[]{getResources().getColor(R.color.colorAccent)});
+
+随时改变转圈的颜色。
 
 ### 设置Threshold : void Adapter.setThreshold(int threshold);
 
@@ -159,6 +177,7 @@
 ## onItemClickListener/OnItemLongClickListener
 
     adapter.setOnItemClickLitener(new OnItemClickLitener());
+	adapter.setOnItemLongClickLitener(new OnItemLongClickLitener());
 
 ## 分割线
 
@@ -190,7 +209,17 @@ rv_divider.xml为一般的line形状XML，示例：
 
 ## 初始化RecyclerView、添加/修改/删除Item时的动画
 
-Adapter封装了对数据集操作的常用方法，使用Adapter对象的这些方法，将获得动画效果和正确的加载状态设置。这些方法如下：
+Adapter/SingleViewTypeAdapter封装了对数据集操作的常用方法，使用这些方法，将获得动画效果和正确的加载状态设置。
+
+Adapter : 
+
+- void onAdded();
+- void onAddedAll(int newDataSize);
+- void onRemovedLast(); / void onRemoved();
+
+先对数据集进行增删操作，再调用上面的方法。
+
+SingleViewTypeAdapter : 
 
 - void setList(List<${JavaBean}> list);
 - void add(${JavaBean} javaBean);

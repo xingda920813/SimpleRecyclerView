@@ -18,22 +18,6 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     protected abstract void onViewHolderBind(List<T> list, RecyclerView.ViewHolder holder, int position);
 
-    protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
-        throw new UnsupportedOperationException();
-    }
-
-    protected final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {
-        throw new UnsupportedOperationException();
-    }
-
-    protected final int getViewType(int position) {
-        throw new UnsupportedOperationException();
-    }
-
-    protected final int getCount() {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType != 65535) {
@@ -55,7 +39,11 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             onLoadMore(null);
         }
         if (position == list.size()) {
-            ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+            if (holder instanceof ProgressViewHolder) {
+                ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+            } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
+                ((MaterialProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+            }
         } else {
             onViewHolderBind(list, holder, holder.getAdapterPosition());
             if (mOnItemClickLitener != null) {
@@ -204,4 +192,13 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
         notifyItemRangeInserted(originalSize, newList.size());
         setLoadingFalse();
     }
+
+    @Deprecated protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {throw new UnsupportedOperationException();}
+    @Deprecated protected final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {throw new UnsupportedOperationException();}
+    @Deprecated protected final int getViewType(int position) {throw new UnsupportedOperationException();}
+    @Deprecated protected final int getCount() {throw new UnsupportedOperationException();}
+    @Deprecated public final void onAdded() {super.onAdded();}
+    @Deprecated public final void onAddedAll(int newDataSize) {super.onAddedAll(newDataSize);}
+    @Deprecated public final void onRemoved() {super.onRemoved();}
+    @Deprecated public final void onRemovedLast() {super.onRemovedLast();}
 }

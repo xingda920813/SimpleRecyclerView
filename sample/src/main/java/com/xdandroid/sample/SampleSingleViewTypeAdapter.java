@@ -34,4 +34,9 @@ public abstract class SampleSingleViewTypeAdapter extends SingleViewTypeAdapter<
         }
         TextView title,content;
     }
+
+    @Override
+    protected int getItemSpanSizeForGrid(int position, int viewType) {
+        return 1;
+    }
 }
