@@ -36,7 +36,7 @@ public abstract class SampleSingleViewTypeAdapter extends SingleViewTypeAdapter<
     }
 
     @Override
-    protected int getItemSpanSizeForGrid(int position, int viewType) {
+    protected int getItemSpanSizeForGrid(int position, int viewType, int spanSize) {
         return 1;
     }
 }

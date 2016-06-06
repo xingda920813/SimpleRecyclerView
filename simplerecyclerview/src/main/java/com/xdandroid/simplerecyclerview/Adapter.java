@@ -40,7 +40,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected abstract void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType);
     protected abstract int getViewType(int position);
     protected abstract int getCount();
-    protected abstract int getItemSpanSizeForGrid(int position, int viewType);
+    protected abstract int getItemSpanSizeForGrid(int position, int viewType, int spanSize);
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -160,21 +160,21 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (viewType == 65535) {
                 return spanSize;
             } else {
-                int itemSpanSize = getItemSpanSize(position, viewType);
+                int itemSpanSize = getItemSpanSize(position, viewType, spanSize);
                 if (itemSpanSize < 1) itemSpanSize = 1;
                 if (itemSpanSize > spanSize) itemSpanSize = spanSize;
                 return itemSpanSize;
             }
         }
 
-        protected abstract int getItemSpanSize(int position, int viewType);
+        protected abstract int getItemSpanSize(int position, int viewType, int spanSize);
     }
 
     public ProgressSpanSizeLookup getSpanSizeLookup(int spanSize) {
         return new ProgressSpanSizeLookup(spanSize) {
             @Override
-            protected int getItemSpanSize(int position, int viewType) {
-                return getItemSpanSizeForGrid(position, viewType);
+            protected int getItemSpanSize(int position, int viewType, int spanSize) {
+                return getItemSpanSizeForGrid(position, viewType, spanSize);
             }
         };
     }
