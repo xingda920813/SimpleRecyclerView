@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.xdandroid.simplerecyclerview.stickyheaders.StickyRecyclerHeadersAdapter;
+import com.xdandroid.simplerecyclerview.stickyheaders.StickyRecyclerHeadersDecoration;
 
 /**
  * Created by XingDa on 2016/5/9.
