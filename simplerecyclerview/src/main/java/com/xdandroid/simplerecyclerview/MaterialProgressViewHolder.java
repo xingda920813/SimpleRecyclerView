@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.xdandroid.materialprogressview.MaterialProgressView;
+
 /**
  * Created by XingDa on 2016/05/29.
  */

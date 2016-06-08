@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.xdandroid.materialprogressview.MaterialProgressView;
+
 /**
  * Created by XingDa on 2016/05/29.
  */

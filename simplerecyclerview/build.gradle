@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/xingda920813/SimpleRecyclerView'
     gitUrl = 'https://github.com/xingda920813/SimpleRecyclerView.git'
 
-    libraryVersion = '1.2.1'
+    libraryVersion = '1.2.3'
 
     developerId = 'xingda920813'
     developerName = 'Da Xing'
@@ -26,13 +26,13 @@ ext {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 15
-        versionName "1.2.1"
+        versionCode 17
+        versionName "1.2.3"
     }
     buildTypes {
         release {
@@ -48,15 +48,16 @@ android {
 dependencies {
     provided 'com.android.support:recyclerview-v7:23.+'
     provided 'com.android.support:design:23.+'
-    compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
+    provided 'com.xdandroid:materialprogressview:+'
+    compile 'com.timehop.stickyheadersrecyclerview:library:+@aar'
 }
 
 task makeJar(type: Copy) {
-    delete 'build/libs/SimpleRecyclerView-1.2.1.jar'
+    delete 'build/libs/SimpleRecyclerView-1.2.3.jar'
     from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename ('classes.jar', 'SimpleRecyclerView-1.2.1.jar')
+    rename ('classes.jar', 'SimpleRecyclerView-1.2.3.jar')
 }
 
 makeJar.dependsOn(build)

@@ -46,11 +46,10 @@
 ## 引入
 ### 1.添加二进制
 
-通过jar包引入：引入SimpleRecyclerView-1.2.1.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:+@aar'
-
-通过jcenter引入（推荐）：直接在build.gradle中添加
+build.gradle中添加
 
     compile 'com.xdandroid:simplerecyclerview:+'
+	compile 'com.xdandroid:materialprogressview:+'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 
