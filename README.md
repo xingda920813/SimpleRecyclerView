@@ -1,5 +1,7 @@
-# SimpleRecyclerView
+﻿# SimpleRecyclerView
 ###对RecyclerView和SwipeRefreshLayout的简单封装。固定Header部分使用了timehop/sticky-headers-recyclerview。
+
+[https://github.com/timehop/sticky-headers-recyclerview](https://github.com/timehop/sticky-headers-recyclerview "timehop/sticky-headers-recyclerview")
 
 ![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/video.gif)
 
@@ -44,11 +46,11 @@
 ## 引入
 ### 1.添加二进制
 
-通过jar包引入：引入SimpleRecyclerView-1.2.1.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:latest.release@aar'
+通过jar包引入：引入SimpleRecyclerView-1.2.1.jar，同时在build.gradle中添加compile 'com.timehop.stickyheadersrecyclerview:library:+@aar'
 
 通过jcenter引入（推荐）：直接在build.gradle中添加
 
-    compile 'com.xdandroid:simplerecyclerview:1.2.1'
+    compile 'com.xdandroid:simplerecyclerview:+'
 	compile 'com.android.support:recyclerview-v7:${latest.version}'
 	compile 'com.android.support:design:${latest.version}'
 
@@ -109,7 +111,7 @@
 
 - 建立ViewHolder
 
-- 使用GridLayoutManager时，重写int getItemSpanSize(int position)
+- 使用GridLayoutManager时，重写int getItemSpanSize(int position, int viewType, int spanCount)
 
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
@@ -125,7 +127,7 @@
 
 - 建立各个viewType对应的ViewHolder类
 
-- 使用GridLayoutManager时，重写int getItemSpanSize(int position)
+- 使用GridLayoutManager时，重写int getItemSpanSize(int position, int viewType, int spanCount)
 
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
@@ -183,7 +185,7 @@
 
 构建Divider : 
 
-Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, , int leftOffset, int topOffset, int rightOffset, int bottomOffset);
+Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, int leftOffset, int topOffset, int rightOffset, int bottomOffset);
 
 - 可自定义分割线的Drawable，在Drawable XML里，可自定义粗细、颜色等参数，然后将Drawable的资源ID传入构造方法的第二个参数即可使用自定义的分割线Drawable，传入null将使用默认分割线样式
 
