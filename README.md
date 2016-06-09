@@ -1,4 +1,4 @@
-﻿# SimpleRecyclerView
+# SimpleRecyclerView
 ###对RecyclerView和SwipeRefreshLayout的简单封装。固定Header部分使用了timehop/sticky-headers-recyclerview。
 
 [https://github.com/timehop/sticky-headers-recyclerview](https://github.com/timehop/sticky-headers-recyclerview "timehop/sticky-headers-recyclerview")
@@ -136,13 +136,13 @@ build.gradle中添加
 ## 加载更多
 ### 实例化Adapter时要实现2个方法 : 
 
-#### 1. void onLoadMore(Please_Make_Your_Adapter_Class_As_Abstract_Class Void) :
+#### 1. void onLoadMore(Void please\_Make\_Your\_Adapter\_Class\_As\_Abstract\_Class) :
 
 获取到更多的数据之后，只需调用adapter对象的void addAll(List<${JavaBean}>)一个方法即可。
 
 注意不要调用数据集list的addAll方法，然后再手动刷新UI。这样做会丧失转圈消失时和项目添加时的动画效果，也使得加载状态得不到重置。
 
-#### 2. boolean hasMoreElements(Let_Activity_Or_Fragment_Implement_These_Methods Void) : 
+#### 2. boolean hasMoreElements(Void let\_Activity\_Or\_Fragment\_Implement\_These\_Methods) : 
 
 根据网络返回结果判断是否还有更多的数据这一批没加载完。
 
