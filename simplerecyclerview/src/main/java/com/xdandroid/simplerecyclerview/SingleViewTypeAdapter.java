@@ -77,7 +77,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     }
 
     public void setList(List<T> list) {
-        if (list == null) {
+        if (list == null || list.size() <= 0) {
             setLoadingFalse();
             if (this.list != null) {
                 notifyItemRemoved(this.list.size());
@@ -86,13 +86,6 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
         }
         if (this.list != null && this.list.size() > 0) {
             changeList(list);
-            return;
-        }
-        if (list.size() <= 0) {
-            setLoadingFalse();
-            if (this.list != null) {
-                notifyItemRemoved(this.list.size());
-            }
             return;
         }
         this.list = list;

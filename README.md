@@ -131,7 +131,10 @@ build.gradle中添加
 - 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
 
 ## 下拉刷新
-#### 解决与AppbarLayout的滑动冲突：为AppBarLayout指定id为appbar即可(android:id="@+id/appbar")
+
+解决与AppbarLayout的滑动冲突：为AppBarLayout指定id为appbar即可(android:id="@+id/appbar")
+
+若要自动为Toolbar留出高度而不被Toolbar挡住，需要为CoordinatorLayout下的Layout或SwipeRefreshLayout添加 app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
 ## 加载更多
 ### 实例化Adapter时要实现2个方法 : 
