@@ -141,13 +141,15 @@ build.gradle中添加
 
 #### 1. void onLoadMore(Void please\_Make\_Your\_Adapter\_Class\_As\_Abstract\_Class) :
 
-获取到更多的数据之后，只需调用adapter对象的void addAll(List<${JavaBean}>)一个方法即可。
+先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后，只需调用adapter对象的void addAll(List<${JavaBean}>)一个方法即可。
 
 注意不要调用数据集list的addAll方法，然后再手动刷新UI。这样做会丧失转圈消失时和项目添加时的动画效果，也使得加载状态得不到重置。
 
 #### 2. boolean hasMoreElements(Void let\_Activity\_Or\_Fragment\_Implement\_These\_Methods) : 
 
-根据网络返回结果判断是否还有更多的数据这一批没加载完。
+告知Adapter是否还有更多的数据需要加载，只是这一批没加载完。
+
+有需要时，可调用void Adapter.setLoadingFalse()恢复非加载更多时的状态。
 
 ### 样式选择：
 
@@ -236,7 +238,7 @@ SingleViewTypeAdapter :
 - void addAll(int position, List<${JavaBean}> newList);
 - void addAll(List<${JavaBean}> newList);
 
-若所需的对数据集操作的方法没有在上面列出，可直接对Collection<${JavaBean}>进行操作后，调用adapter对象的notifyItem* 系列方法刷新UI，并调用void setLoadingFalse()恢复加载更多的状态。
+若所需的对数据集操作的方法没有在上面列出，可直接对数据集合List<${JavaBean}>进行操作后，调用adapter对象的notifyItem* 系列方法刷新UI，并调用void setLoadingFalse()恢复非加载更多时的状态。
 
 ## 上下滑动时的固定Header
 Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，创建自己的Header ViewHolder，重写接口里的3个方法：

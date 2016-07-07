@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,45 +79,39 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     public void setList(List<T> list) {
         if (list == null || list.size() <= 0) {
-            setLoadingFalse();
-            if (this.list != null) {
-                notifyItemRemoved(this.list.size());
+            if (this.list != null && this.list.size() > 0) {
+                int originalSize = this.list.size();
+                this.list.clear();
+                notifyItemRangeRemoved(0, originalSize);
             }
+            setLoadingFalse();
             return;
         }
-        if (this.list != null && this.list.size() > 0) {
+        if (this.list == null || this.list.size() <= 0) {
+            this.list = list;
+            notifyItemRangeInserted(0, list.size());
+            setLoadingFalse();
+        } else {
             changeList(list);
-            return;
         }
-        this.list = list;
-        notifyItemRangeInserted(0, list.size());
-        setLoadingFalse();
     }
 
     public void add(T t) {
-        if (t == null) {
-            setLoadingFalse();
-            if (this.list != null) {
-                notifyItemRemoved(this.list.size());
-            }
-            return;
+        if (list == null) list = new ArrayList<>();
+        if (t != null) {
+            int originalSize = list.size();
+            list.add(t);
+            notifyItemInserted(originalSize);
         }
-        int originalSize = list.size();
-        list.add(t);
-        notifyItemInserted(originalSize);
         setLoadingFalse();
     }
 
     public void add(int position, T t) {
-        if (t == null) {
-            setLoadingFalse();
-            if (this.list != null) {
-                notifyItemRemoved(this.list.size());
-            }
-            return;
+        if (list == null) list = new ArrayList<>();
+        if (t != null) {
+            list.add(position, t);
+            notifyItemInserted(position);
         }
-        list.add(position, t);
-        notifyItemInserted(position);
         setLoadingFalse();
     }
 
@@ -160,29 +155,21 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     }
 
     public void addAll(int position, List<T> newList) {
-        if (newList == null || newList.size() <= 0) {
-            setLoadingFalse();
-            if (this.list != null) {
-                notifyItemRemoved(this.list.size());
-            }
-            return;
+        if (list == null) list = new ArrayList<>();
+        if (newList != null && newList.size() > 0) {
+            list.addAll(newList);
+            notifyItemRangeInserted(position, newList.size());
         }
-        list.addAll(newList);
-        notifyItemRangeInserted(position, newList.size());
         setLoadingFalse();
     }
 
     public void addAll(List<T> newList) {
-        if (newList == null || newList.size() <= 0) {
-            setLoadingFalse();
-            if (this.list != null) {
-                notifyItemRemoved(this.list.size());
-            }
-            return;
+        if (list == null) list = new ArrayList<>();
+        if (newList != null && newList.size() > 0) {
+            int originalSize = list.size();
+            list.addAll(newList);
+            notifyItemRangeInserted(originalSize, newList.size());
         }
-        int originalSize = list.size();
-        list.addAll(newList);
-        notifyItemRangeInserted(originalSize, newList.size());
         setLoadingFalse();
     }
 

@@ -17,6 +17,7 @@ import com.xdandroid.materialprogressview.MaterialProgressView;
 
 public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    protected ProgressViewHolder mProgressViewHolder;
     protected MaterialProgressViewHolder mMaterialProgressViewHolder;
     protected int[] mColorSchemeColors;
     protected boolean mIsLoading;
@@ -61,7 +62,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if (colorAccentId > 0) {
                         color = parent.getContext().getResources().getColor(colorAccentId);
                     } else {
-                        color = Color.parseColor("#FF4081");
+                        color = Color.parseColor("#607D8B");
                     }
                     materialProgressView.setColorSchemeColors(new int[]{color});
                 } else {
@@ -81,7 +82,8 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 progressBar.setLayoutParams(innerParams);
                 progressBar.setId(android.R.id.progress);
                 frameLayout.addView(progressBar);
-                return new ProgressViewHolder(frameLayout);
+                mProgressViewHolder = new ProgressViewHolder(frameLayout);
+                return mProgressViewHolder;
             }
         }
     }
@@ -98,7 +100,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             onLoadMore(null);
         }
         if (position == getCount()) {
-            if (holder instanceof ProgressViewHolder) {
+            if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
                 ((MaterialProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
@@ -131,7 +133,9 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setLoadingFalse() {
         mIsLoading = false;
-        if (mUseMaterialProgress && mMaterialProgressViewHolder != null) {
+        if (!mUseMaterialProgress && mProgressViewHolder != null) {
+            mProgressViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
+        } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null) {
             mMaterialProgressViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
         }
     }
