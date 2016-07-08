@@ -40,7 +40,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             onLoadMore(null);
         }
         if (position == list.size()) {
-            if (holder instanceof ProgressViewHolder) {
+            if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
                 ((MaterialProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
