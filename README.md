@@ -7,6 +7,8 @@
 
 ![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/videomaterial.gif)
 
+![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/videoloading.gif)
+
 ###主要特性：
 #### 1. 下拉刷新：
 对SwipeRefreshLayout的封装。相对于原生的SwipeRefreshLayout，解决了2个问题：
@@ -25,7 +27,7 @@
 
 - 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义颜色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
 
-#### 3.空数据/错误页面显示
+#### 3.加载中(Loading View)/空数据(Empty View)/错误页面(Error View)的显示
 #### 4.onItemClickListener/onItemLongClickListener
 #### 5.上下滑动时的固定Header
 
@@ -88,17 +90,41 @@ build.gradle中添加
 
     </com.xdandroid.simplerecyclerview.SimpleSwipeRefreshLayout>
 
+    <!--Empty View-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/empty_view"
         android:visibility="gone"/>
 
+    <!--Error View-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/error_view"
         android:visibility="gone"/>
+
+    <!--Loading View-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading_view">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Hello Loading View"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+    </FrameLayout>
     
 ### 4. 建立Adapter抽象类
 
@@ -169,12 +195,26 @@ build.gradle中添加
     gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup(SPAN_SIZE));
     recyclerView.setLayoutManager(gridLayoutManager);
 
-## 空数据/加载错误页面
-### XML准备
+## 加载中/空数据/加载错误页面
+### XML准备(详见引入-布局文件)
+
+- 将LoadingView与SwipeRefreshLayout元素并列。
 
 - 将ErrorView或EmptyView与SwipeRefreshLayout元素并列，visibility设置为gone。
 
 ### Java代码
+
+    /**
+     * 在调用setAdapter和notify*系列方法之前调用此方法来设置LoadingView。
+     * LoadingView会在setAdapter和notify*系列方法调用时自动隐藏。
+     * @param loadingView 通过findViewById找到的LoadingView.
+     */
+    void SimpleRecyclerView.setLoadingView(View loadingView);   //在调用setAdapter和notify*系列方法之前调用此方法
+    //示例 : 
+    recyclerView.setLoadingView(findViewById(R.id.loading_view));   //设置自定义LoadingView布局
+
+    View SimpleRecyclerView.hideLoadingView();                  //手动控制LoadingView的隐藏，一般情况下无需调用此方法
+    View SimpleRecyclerView.showLoadingView();                  //手动控制LoadingView的显示，一般情况下无需调用此方法
 
     recyclerView.setEmptyView(findViewById(R.id.empty_view)); 	//设置空数据View
     recyclerView.showErrorView(findViewById(R.id.error_view));	//设置并显示错误View

@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSwipeRefreshLayout() {
-        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {public void onRefresh() {handler.postDelayed(new Runnable() {public void run() {
             list = new ArrayList<>();
@@ -64,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
             adapter.setList(list);
             swipeRefreshLayout.setRefreshing(false);}}, 1777);
         }});
-        swipeRefreshLayout.setRefreshing(true);
+        /**
+         * 启动SwipeRefreshLayout样式下拉刷新转圈。
+         */
+        //swipeRefreshLayout.setRefreshing(true);
+        /**
+         * 启动自定义LoadingView布局。
+         */
+        recyclerView.setLoadingView(findViewById(R.id.loading_view));
     }
 
     private void setupRecyclerView() {

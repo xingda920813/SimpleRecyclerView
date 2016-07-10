@@ -24,20 +24,15 @@ public class SimpleSwipeRefreshLayout extends SwipeRefreshLayout implements AppB
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (getContext() instanceof Activity) {
-            appBarLayout = (AppBarLayout) ((Activity) getContext()).findViewById(getContext().getResources().getIdentifier("appbar", "id", getContext().getPackageName()));
-            if (appBarLayout == null) {
-                return;
-            }
-            appBarLayout.addOnOffsetChangedListener(this);
-        }
+        if (!(getContext() instanceof Activity)) return;
+        appBarLayout = (AppBarLayout) ((Activity) getContext()).findViewById(getContext().getResources().getIdentifier("appbar", "id", getContext().getPackageName()));
+        if (appBarLayout == null) return;
+        appBarLayout.addOnOffsetChangedListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        if (appBarLayout == null) {
-            return;
-        }
+        if (appBarLayout == null) return;
         appBarLayout.removeOnOffsetChangedListener(this);
         appBarLayout = null;
         super.onDetachedFromWindow();
