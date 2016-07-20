@@ -189,6 +189,8 @@ build.gradle中添加
 
 ### 设置Threshold : void Adapter.setThreshold(int threshold);
 
+#### 不需要加载更多功能时 , 可重写getItemSpanSize方法，使其始终返回-1.
+
 ### 对于GridLayoutManager : 
 
     GridLayoutManager gridLayoutManager = new GridLayoutManager(context,SPAN_SIZE);

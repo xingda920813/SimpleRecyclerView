@@ -23,6 +23,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
+    protected boolean mDisableLoadMore;
 
     public void setThreshold(int threshold) {
         this.mThreshold = threshold;
@@ -90,16 +91,20 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
+        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+            mDisableLoadMore = true;
+            return getViewType(position);
+        }
         return position == getCount() ? 65535 : getViewType(position);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (!mIsLoading && getCount() > 0 && position >= getCount() - mThreshold && hasMoreElements(null)) {
+        if (!mDisableLoadMore && !mIsLoading && getCount() > 0 && position >= getCount() - mThreshold && hasMoreElements(null)) {
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (position == getCount()) {
+        if (!mDisableLoadMore && position == getCount()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
@@ -128,11 +133,16 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
+        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+            mDisableLoadMore = true;
+            return getCount();
+        }
         return getCount() + 1;
     }
 
     public void setLoadingFalse() {
         mIsLoading = false;
+        if (mDisableLoadMore) return;
         if (!mUseMaterialProgress && mProgressViewHolder != null) {
             mProgressViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
         } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null) {

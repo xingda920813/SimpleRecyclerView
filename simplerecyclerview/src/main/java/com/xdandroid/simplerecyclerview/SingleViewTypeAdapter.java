@@ -30,16 +30,20 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+            mDisableLoadMore = true;
+            return 0;
+        }
         return position == list.size() ? 65535 : 0;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (!mIsLoading && list.size() > 0 && position >= list.size() - mThreshold && hasMoreElements(null)) {
+        if (!mDisableLoadMore && !mIsLoading && list.size() > 0 && position >= list.size() - mThreshold && hasMoreElements(null)) {
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (position == list.size()) {
+        if (!mDisableLoadMore && position == list.size()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
@@ -68,6 +72,10 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemCount() {
+        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+            mDisableLoadMore = true;
+            return list == null ? 0 : list.size();
+        }
         return (list == null) ? 0 : (list.size() + 1);
     }
 
