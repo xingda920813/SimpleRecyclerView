@@ -30,7 +30,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
             mDisableLoadMore = true;
             return 0;
         }
@@ -72,7 +72,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemCount() {
-        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
             mDisableLoadMore = true;
             return list == null ? 0 : list.size();
         }

@@ -91,7 +91,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
             mDisableLoadMore = true;
             return getViewType(position);
         }
@@ -133,7 +133,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        if (getItemSpanSizeForGrid(-1, -1, -1) == -1) {
+        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
             mDisableLoadMore = true;
             return getCount();
         }
