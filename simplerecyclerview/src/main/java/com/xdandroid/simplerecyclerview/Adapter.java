@@ -53,7 +53,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             FrameLayout frameLayout = new FrameLayout(parent.getContext());
             ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-            outerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
             frameLayout.setLayoutParams(outerParams);
             if (mUseMaterialProgress) {
                 MaterialProgressView materialProgressView = new MaterialProgressView(parent.getContext());
@@ -70,6 +69,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     materialProgressView.setColorSchemeColors(mColorSchemeColors);
                 }
                 FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                innerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
                 innerParams.gravity = Gravity.CENTER;
                 materialProgressView.setLayoutParams(innerParams);
                 materialProgressView.setId(android.R.id.secondaryProgress);
@@ -79,6 +79,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             } else {
                 ProgressBar progressBar = new ProgressBar(parent.getContext());
                 FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(UIUtils.dp2px(parent.getContext(), 40), UIUtils.dp2px(parent.getContext(), 40));
+                innerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
                 innerParams.gravity = Gravity.CENTER;
                 progressBar.setLayoutParams(innerParams);
                 progressBar.setId(android.R.id.progress);
