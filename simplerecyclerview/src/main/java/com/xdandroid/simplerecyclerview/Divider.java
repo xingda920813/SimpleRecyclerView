@@ -1,13 +1,12 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.content.*;
+import android.content.res.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
+import android.support.annotation.*;
+import android.support.v7.widget.*;
+import android.view.*;
 
 /**
  * Created by XingDa on 2016/05/29.
@@ -47,9 +46,6 @@ public class Divider extends RecyclerView.ItemDecoration {
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();
         int childCount = parent.getChildCount();
-        if (parent.getAdapter() instanceof Adapter && ((Adapter) parent.getAdapter()).getItemSpanSizeForGrid(0, 0, 1) == -1) {
-            childCount = childCount - 1;
-        }
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
@@ -64,9 +60,6 @@ public class Divider extends RecyclerView.ItemDecoration {
         final int top = parent.getPaddingTop();
         final int bottom = parent.getHeight() - parent.getPaddingBottom();
         int childCount = parent.getChildCount();
-        if (parent.getAdapter() instanceof Adapter && ((Adapter) parent.getAdapter()).getItemSpanSizeForGrid(0, 0, 1) == -1) {
-            childCount = childCount - 1;
-        }
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();

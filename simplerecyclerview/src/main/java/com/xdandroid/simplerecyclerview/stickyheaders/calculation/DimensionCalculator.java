@@ -1,10 +1,9 @@
 package com.xdandroid.simplerecyclerview.stickyheaders.calculation;
 
-import android.graphics.Rect;
-import android.view.View;
+import android.graphics.*;
+import android.view.*;
 
-import static android.view.ViewGroup.LayoutParams;
-import static android.view.ViewGroup.MarginLayoutParams;
+import static android.view.ViewGroup.*;
 
 /**
  * Helper to calculate various view dimensions

@@ -1,7 +1,7 @@
 package com.xdandroid.simplerecyclerview.stickyheaders.caching;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.v7.widget.*;
+import android.view.*;
 
 /**
  * Implemented by objects that provide header views for decoration

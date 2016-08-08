@@ -1,15 +1,13 @@
 package com.xdandroid.simplerecyclerview.stickyheaders;
 
-import android.graphics.Rect;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.graphics.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
 
-import com.xdandroid.simplerecyclerview.stickyheaders.caching.HeaderProvider;
-import com.xdandroid.simplerecyclerview.stickyheaders.calculation.DimensionCalculator;
-import com.xdandroid.simplerecyclerview.stickyheaders.util.OrientationProvider;
+import com.xdandroid.simplerecyclerview.stickyheaders.caching.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.calculation.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.util.*;
 
 /**
  * Calculates the position and location of header views

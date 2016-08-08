@@ -1,12 +1,11 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.view.View;
+import android.content.*;
+import android.support.v7.widget.*;
+import android.util.*;
+import android.view.*;
 
-import com.xdandroid.simplerecyclerview.stickyheaders.StickyRecyclerHeadersAdapter;
-import com.xdandroid.simplerecyclerview.stickyheaders.StickyRecyclerHeadersDecoration;
+import com.xdandroid.simplerecyclerview.stickyheaders.*;
 
 /**
  * Created by XingDa on 2016/5/9.
@@ -86,12 +85,7 @@ public class SimpleRecyclerView extends RecyclerView {
         super.setAdapter(adapter);
         if (!hasRegisteredEmptyObserver && adapter != null) {
             hasRegisteredEmptyObserver = true;
-            try {
-                getAdapter().unregisterAdapterDataObserver(emptyObserver);
-            } catch (Exception ignored) {}
-            try {
-                getAdapter().registerAdapterDataObserver(emptyObserver);
-            } catch (Exception ignored) {}
+            UIUtils.registerObserver(this, emptyObserver);
         }
         emptyObserver.onChanged();
         if (!hasAddedItemDecor && getAdapter() instanceof StickyRecyclerHeadersAdapter) {
@@ -99,19 +93,9 @@ public class SimpleRecyclerView extends RecyclerView {
             StickyRecyclerHeadersAdapter stickyHeadersRVAdapter = (StickyRecyclerHeadersAdapter) getAdapter();
             headersDecoration = new StickyRecyclerHeadersDecoration(stickyHeadersRVAdapter);
             addItemDecoration(headersDecoration);
-            try {
-                getAdapter().unregisterAdapterDataObserver(headersObserver);
-            } catch (Exception ignored) {}
-            try {
-                getAdapter().registerAdapterDataObserver(headersObserver);
-            } catch (Exception ignored) {}
+            UIUtils.registerObserver(this, headersObserver);
         }
-        try {
-            getAdapter().unregisterAdapterDataObserver(loadingObserver);
-        } catch (Exception ignored) {}
-        try {
-            getAdapter().registerAdapterDataObserver(loadingObserver);
-        } catch (Exception ignored) {}
+        UIUtils.registerObserver(this, loadingObserver);
         if (adapter != null && adapter.getItemCount() > 1) {
             hideLoadingView();
         }
@@ -140,6 +124,7 @@ public class SimpleRecyclerView extends RecyclerView {
     /**
      * 在调用setAdapter和notify*系列方法之前调用此方法来设置LoadingView。
      * LoadingView会在setAdapter和notify*系列方法调用时自动隐藏。
+     *
      * @param loadingView 通过findViewById找到的LoadingView.
      */
     public void setLoadingView(View loadingView) {

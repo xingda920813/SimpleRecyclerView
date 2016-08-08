@@ -1,7 +1,7 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.v7.widget.*;
+import android.view.*;
 
 /**
  * Created by XingDa on 2016/05/29.

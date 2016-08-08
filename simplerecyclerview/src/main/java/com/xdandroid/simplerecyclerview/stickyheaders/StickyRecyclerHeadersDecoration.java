@@ -1,18 +1,14 @@
 package com.xdandroid.simplerecyclerview.stickyheaders;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
-import android.view.View;
+import android.graphics.*;
+import android.support.v7.widget.*;
+import android.util.*;
+import android.view.*;
 
-import com.xdandroid.simplerecyclerview.stickyheaders.caching.HeaderProvider;
-import com.xdandroid.simplerecyclerview.stickyheaders.caching.HeaderViewCache;
-import com.xdandroid.simplerecyclerview.stickyheaders.calculation.DimensionCalculator;
-import com.xdandroid.simplerecyclerview.stickyheaders.rendering.HeaderRenderer;
-import com.xdandroid.simplerecyclerview.stickyheaders.util.LinearLayoutOrientationProvider;
-import com.xdandroid.simplerecyclerview.stickyheaders.util.OrientationProvider;
+import com.xdandroid.simplerecyclerview.stickyheaders.caching.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.calculation.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.rendering.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.util.*;
 
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
 

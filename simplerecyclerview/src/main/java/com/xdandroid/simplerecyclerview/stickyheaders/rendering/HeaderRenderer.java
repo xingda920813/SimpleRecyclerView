@@ -1,13 +1,12 @@
 package com.xdandroid.simplerecyclerview.stickyheaders.rendering;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.graphics.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
 
-import com.xdandroid.simplerecyclerview.stickyheaders.calculation.DimensionCalculator;
-import com.xdandroid.simplerecyclerview.stickyheaders.util.OrientationProvider;
+import com.xdandroid.simplerecyclerview.stickyheaders.calculation.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.util.*;
 
 /**
  * Responsible for drawing headers to the canvas provided by the item decoration

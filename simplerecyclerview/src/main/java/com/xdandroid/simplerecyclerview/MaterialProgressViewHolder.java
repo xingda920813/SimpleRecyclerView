@@ -1,10 +1,10 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.FrameLayout;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
 
-import com.xdandroid.materialprogressview.MaterialProgressView;
+import com.xdandroid.materialprogressview.*;
 
 /**
  * Created by XingDa on 2016/05/29.

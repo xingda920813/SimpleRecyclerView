@@ -1,10 +1,7 @@
 package com.xdandroid.simplerecyclerview.stickyheaders;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
-import android.view.View;
+import android.support.v7.widget.*;
+import android.view.*;
 
 
 public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTouchListener {

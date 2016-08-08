@@ -1,15 +1,11 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.graphics.Color;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
+import android.graphics.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
 
-import com.xdandroid.materialprogressview.MaterialProgressView;
+import com.xdandroid.materialprogressview.*;
 
 /**
  * Created by XingDa on 2016/05/29.
@@ -38,8 +34,8 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.mColorSchemeColors = colors;
     }
 
-    protected abstract void onLoadMore(Void please_Make_Your_Adapter_Class_As_Abstract_Class);
-    protected abstract boolean hasMoreElements(Void let_Activity_Or_Fragment_Implement_These_Methods);
+    protected abstract void onLoadMore(Void please_make_your_adapter_class_as_abstract_class);
+    protected abstract boolean hasMoreElements(Void let_activity_or_fragment_implement_these_methods);
     protected abstract RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType);
     protected abstract void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType);
     protected abstract int getViewType(int position);
@@ -92,10 +88,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
-            mDisableLoadMore = true;
-            return getViewType(position);
-        }
         return position == getCount() ? 65535 : getViewType(position);
     }
 
@@ -134,10 +126,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
-            mDisableLoadMore = true;
-            return getCount();
-        }
         return getCount() + 1;
     }
 

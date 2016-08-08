@@ -1,13 +1,11 @@
 package com.xdandroid.simplerecyclerview.stickyheaders.caching;
 
-import android.support.v4.util.LongSparseArray;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.util.*;
+import android.support.v7.widget.*;
+import android.view.*;
 
-import com.xdandroid.simplerecyclerview.stickyheaders.StickyRecyclerHeadersAdapter;
-import com.xdandroid.simplerecyclerview.stickyheaders.util.OrientationProvider;
+import com.xdandroid.simplerecyclerview.stickyheaders.*;
+import com.xdandroid.simplerecyclerview.stickyheaders.util.*;
 
 
 /**

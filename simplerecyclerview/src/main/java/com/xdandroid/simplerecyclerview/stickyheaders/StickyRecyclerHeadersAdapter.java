@@ -1,7 +1,7 @@
 package com.xdandroid.simplerecyclerview.stickyheaders;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+import android.support.v7.widget.*;
+import android.view.*;
 
 public interface StickyRecyclerHeadersAdapter<VH extends RecyclerView.ViewHolder> {
   /**

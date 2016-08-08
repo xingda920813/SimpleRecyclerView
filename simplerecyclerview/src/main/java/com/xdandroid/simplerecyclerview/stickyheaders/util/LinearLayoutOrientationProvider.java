@@ -1,7 +1,6 @@
 package com.xdandroid.simplerecyclerview.stickyheaders.util;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 
 /**
  * OrientationProvider for ReyclerViews who use a LinearLayoutManager

@@ -1,11 +1,9 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.*;
+import android.view.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by XingDa on 2016/05/29.
@@ -30,10 +28,6 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
-            mDisableLoadMore = true;
-            return 0;
-        }
         return position == list.size() ? 65535 : 0;
     }
 
@@ -72,10 +66,6 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemCount() {
-        if (getItemSpanSizeForGrid(0, 0, 1) == -1) {
-            mDisableLoadMore = true;
-            return list == null ? 0 : list.size();
-        }
         return (list == null) ? 0 : (list.size() + 1);
     }
 

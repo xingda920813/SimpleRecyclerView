@@ -1,6 +1,7 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.content.Context;
+import android.content.*;
+import android.support.v7.widget.*;
 
 /**
  * Created by XingDa on 2016/05/27.
@@ -13,18 +14,17 @@ public class UIUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static int dp2px(Context context, float dipValue) {
+    public static int dp2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
+        return (int) (dpValue * scale + 0.5f);
     }
 
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
-    }
-
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
+    static void registerObserver(SimpleRecyclerView recyclerView, RecyclerView.AdapterDataObserver observer) {
+        try {
+            recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
+        } catch (Exception ignored) {}
+        try {
+            recyclerView.getAdapter().registerAdapterDataObserver(observer);
+        } catch (Exception ignored) {}
     }
 }

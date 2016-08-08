@@ -1,10 +1,10 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.AttributeSet;
+import android.app.*;
+import android.content.*;
+import android.support.design.widget.*;
+import android.support.v4.widget.*;
+import android.util.*;
 
 /**
  * Created by XingDa on 2016/5/9.
