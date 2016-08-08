@@ -33,11 +33,11 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (!mDisableLoadMore && !mIsLoading && list.size() > 0 && position >= list.size() - mThreshold && hasMoreElements(null)) {
+        if (!mIsLoading && list.size() > 0 && position >= list.size() - mThreshold && hasMoreElements(null)) {
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (!mDisableLoadMore && position == list.size()) {
+        if (position == list.size()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {

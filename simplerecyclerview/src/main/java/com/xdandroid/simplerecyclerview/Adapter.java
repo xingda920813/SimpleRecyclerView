@@ -19,7 +19,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
-    protected boolean mDisableLoadMore;
 
     public void setThreshold(int threshold) {
         this.mThreshold = threshold;
@@ -93,11 +92,11 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (!mDisableLoadMore && !mIsLoading && getCount() > 0 && position >= getCount() - mThreshold && hasMoreElements(null)) {
+        if (!mIsLoading && getCount() > 0 && position >= getCount() - mThreshold && hasMoreElements(null)) {
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (!mDisableLoadMore && position == getCount()) {
+        if (position == getCount()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
@@ -131,7 +130,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setLoadingFalse() {
         mIsLoading = false;
-        if (mDisableLoadMore) return;
         if (!mUseMaterialProgress && mProgressViewHolder != null) {
             mProgressViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
         } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null) {

@@ -8,9 +8,7 @@ import java.util.*;
 
 public abstract class GroupAdapter extends Adapter {
 
-    private boolean mHasComputedTotalCounts = false;
     private List<Integer> mTitleOrderPositionList = new ArrayList<>();
-    private int mTitlePlusChildItemCounts = 0;
 
     protected abstract int getTitleCount(Void viewType_title_32767_childItem_0, Void call_getTitleOrder_and_getTitleOrderAndChildItemOrder);
     protected abstract int getChildItemCount(int titleOrder);
@@ -41,7 +39,6 @@ public abstract class GroupAdapter extends Adapter {
             positionInRV = positionInRV + childItemCounts + 1;
             totalCounts = totalCounts + childItemCounts;
         }
-        mHasComputedTotalCounts = true;
         return totalCounts;
     }
 
@@ -52,28 +49,16 @@ public abstract class GroupAdapter extends Adapter {
 
     @Override
     protected int getCount() {
-        if (!mHasComputedTotalCounts) {
-            mTitlePlusChildItemCounts = computeTotalCount();
-        }
-        return getTitleCount(null, null) + mTitlePlusChildItemCounts;
+        return getTitleCount(null, null) + computeTotalCount();
     }
 
     @Override
     protected int getItemSpanSizeForGrid(int positionInRV, int viewType, int spanCount) {
         switch (viewType) {
             case 32767:
-                //每一组的标题
                 return spanCount;
             default:
-                //一组内的项目
                 return 1;
         }
     }
-
-    @Deprecated protected final void onLoadMore(Void please_make_your_adapter_class_as_abstract_class) {}
-    @Deprecated protected final boolean hasMoreElements(Void let_activity_or_fragment_implement_these_methods) {return false;}
-    @Deprecated public final void onAdded() {}
-    @Deprecated public final void onRemoved() {}
-    @Deprecated public final void onRemovedLast() {}
-    @Deprecated public final void onAddedAll(int newDataSize) {}
 }
