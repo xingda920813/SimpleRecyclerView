@@ -10,14 +10,14 @@ public abstract class GroupAdapter extends Adapter {
 
     private List<Integer> mTitleOrderPositionList = new ArrayList<>();
 
-    protected abstract int getTitleCount(Void viewType_title_32767_childItem_0, Void call_getTitleOrder_and_getTitleOrderAndChildItemOrder);
+    protected abstract int getTitleCount(Void viewType_title_32767_childItem_0, Void call_getTitleOrder_and_getTitleAndChildItemOrder);
     protected abstract int getChildItemCount(int titleOrder);
 
     public int getTitleOrder(int positionInRV_viewType_title) {
         return mTitleOrderPositionList.indexOf(positionInRV_viewType_title);
     }
 
-    public int[] getTitleOrderAndChildItemOrder(int positionInRV_viewType_childItem) {
+    public int[] getTitleAndChildItemOrder(int positionInRV_viewType_childItem) {
         int titleOrder = -1;
         int childItemOrder = 0;
         for (Integer titlePos : mTitleOrderPositionList) {
