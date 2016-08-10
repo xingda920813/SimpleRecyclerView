@@ -26,8 +26,8 @@ public abstract class SimpleAdapter extends SingleViewTypeAdapter<SampleBean> {
     static final class VH extends RecyclerView.ViewHolder {
         VH(View v) {
             super(v);
-            title = (TextView) v.findViewById(R.id.title);
-            content = (TextView) v.findViewById(R.id.content);
+            title = (TextView) v.findViewById(R.id.tv_title);
+            content = (TextView) v.findViewById(R.id.tv_content);
         }
 
         TextView title, content;

@@ -1,41 +1,68 @@
 package com.xdandroid.simplerecyclerview;
 
+import android.support.v7.widget.*;
+import android.view.*;
+
 import java.util.*;
 
-/**
- * Created by xingda on 16-8-8.
- */
+public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
 
-public abstract class GroupAdapter extends Adapter {
+    protected List<Group<Title, ChildItem>> mGroupList;
+    protected List<Integer> mTitlePositionList = new ArrayList<>();
 
-    private List<Integer> mTitleOrderPositionList = new ArrayList<>();
-
-    protected abstract int getTitleCount(Void viewType_title_32767_childItem_0, Void call_getTitleOrder_and_getTitleAndChildItemOrder);
-    protected abstract int getChildItemCount(int titleOrder);
-
-    public int getTitleOrder(int positionInRV_viewType_title) {
-        return mTitleOrderPositionList.indexOf(positionInRV_viewType_title);
+    public GroupAdapter(List<Group<Title, ChildItem>> groupList) {
+        mGroupList = groupList;
     }
 
-    public int[] getTitleAndChildItemOrder(int positionInRV_viewType_childItem) {
+    protected abstract RecyclerView.ViewHolder onTitleVHCreate(ViewGroup parent);
+    protected abstract RecyclerView.ViewHolder onChildItemVHCreate(ViewGroup parent);
+    protected abstract void onTitleVHBind(RecyclerView.ViewHolder holder, Title title);
+    protected abstract void onChildItemVHBind(RecyclerView.ViewHolder holder, Title title, ChildItem childItem);
+
+    @Override
+    protected RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
+        if (viewType == 32767) {
+            return onTitleVHCreate(parent);
+        } else if (viewType == 0) {
+            return onChildItemVHCreate(parent);
+        }
+        return null;
+    }
+
+    @Override
+    protected void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {
+        if (viewType == 32767) {
+            onTitleVHBind(holder, getTitle(position));
+        } else if (viewType == 0) {
+            UIUtils.TitleChildItemBean<Title, ChildItem> titleAndChildItem = getTitleAndChildItem(position);
+            onChildItemVHBind(holder, titleAndChildItem.title, titleAndChildItem.childItem);
+        }
+    }
+
+    protected Title getTitle(int positionInRV_viewType_title) {
+        int titleOrder = mTitlePositionList.indexOf(positionInRV_viewType_title);
+        return mGroupList.get(titleOrder).title;
+    }
+
+    protected UIUtils.TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem) {
         int titleOrder = -1;
         int childItemOrder = 0;
-        for (Integer titlePos : mTitleOrderPositionList) {
-            if (positionInRV_viewType_childItem < titlePos) {
-                break;
-            }
+        for (Integer titlePos : mTitlePositionList) {
+            if (titleOrder >= mGroupList.size() - 1 || positionInRV_viewType_childItem < titlePos) break;
             childItemOrder = positionInRV_viewType_childItem - titlePos - 1;
             titleOrder = titleOrder + 1;
         }
-        return new int[]{titleOrder, childItemOrder};
+        Title title = mGroupList.get(titleOrder).title;
+        ChildItem childItem = mGroupList.get(titleOrder).childItemList.get(childItemOrder);
+        return new UIUtils.TitleChildItemBean<>(title, childItem);
     }
 
-    private int computeTotalCount() {
+    protected int computeTotalCount() {
         int totalCounts = 0;
         int positionInRV = 0;
-        for (int titleOrder = 0; titleOrder < getTitleCount(null, null); titleOrder++) {
-            mTitleOrderPositionList.add(positionInRV);
-            int childItemCounts = getChildItemCount(titleOrder);
+        for (Group<Title, ChildItem> group : mGroupList) {
+            mTitlePositionList.add(positionInRV);
+            int childItemCounts = group.childItemList != null ? group.childItemList.size() : 0;
             positionInRV = positionInRV + childItemCounts + 1;
             totalCounts = totalCounts + childItemCounts;
         }
@@ -44,12 +71,13 @@ public abstract class GroupAdapter extends Adapter {
 
     @Override
     protected int getViewType(int positionInRV) {
-        return mTitleOrderPositionList.contains(positionInRV) ? 32767 : 0;
+        return mTitlePositionList.contains(positionInRV) ? 32767 : 0;
     }
 
     @Override
     protected int getCount() {
-        return getTitleCount(null, null) + computeTotalCount();
+        if (mGroupList == null || mGroupList.size() <= 0) return 0;
+        return mGroupList.size() + computeTotalCount();
     }
 
     @Override

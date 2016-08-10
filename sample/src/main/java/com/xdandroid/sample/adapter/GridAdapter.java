@@ -4,9 +4,9 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 
+import com.xdandroid.sample.R;
 import com.xdandroid.sample.bean.*;
 import com.xdandroid.simplerecyclerview.*;
-import com.xdandroid.sample.R;
 
 import java.util.*;
 

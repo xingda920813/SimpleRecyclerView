@@ -3,6 +3,8 @@ package com.xdandroid.simplerecyclerview;
 import android.content.*;
 import android.support.v7.widget.*;
 
+import java.io.*;
+
 /**
  * Created by XingDa on 2016/05/27.
  */
@@ -26,5 +28,14 @@ public class UIUtils {
         try {
             recyclerView.getAdapter().registerAdapterDataObserver(observer);
         } catch (Exception ignored) {}
+    }
+
+    public static class TitleChildItemBean<Title, ChildItem> implements Serializable {
+        public TitleChildItemBean(Title title, ChildItem childItem) {
+            this.title = title;
+            this.childItem = childItem;
+        }
+        public Title title;
+        public ChildItem childItem;
     }
 }
