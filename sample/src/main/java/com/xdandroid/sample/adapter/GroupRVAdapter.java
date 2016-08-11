@@ -10,9 +10,6 @@ import com.xdandroid.simplerecyclerview.*;
 
 import java.util.*;
 
-/**
- * Created by XingDa on 2016/08/10.
- */
 public class GroupRVAdapter extends GroupAdapter<Title, SampleBean> {
 
     public GroupRVAdapter(List<Group<Title, SampleBean>> groups) {

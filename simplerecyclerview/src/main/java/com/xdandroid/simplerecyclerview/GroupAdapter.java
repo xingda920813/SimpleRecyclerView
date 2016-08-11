@@ -1,14 +1,16 @@
 package com.xdandroid.simplerecyclerview;
 
+import android.annotation.*;
 import android.support.v7.widget.*;
 import android.view.*;
 
 import java.util.*;
 
+@SuppressLint("UseSparseArrays")
 public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
 
     protected List<Group<Title, ChildItem>> mGroupList;
-    protected List<Integer> mTitlePositionList = new ArrayList<>();
+    protected Map<Integer, Integer> mTitleOrderPositionMap = new HashMap<>();
 
     public GroupAdapter(List<Group<Title, ChildItem>> groupList) {
         mGroupList = groupList;
@@ -40,14 +42,19 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     }
 
     protected Title getTitle(int positionInRV_viewType_title) {
-        int titleOrder = mTitlePositionList.indexOf(positionInRV_viewType_title);
-        return mGroupList.get(titleOrder).title;
+        for (Map.Entry<Integer, Integer> entry : mTitleOrderPositionMap.entrySet()) {
+            if (entry.getValue().equals(positionInRV_viewType_title)) {
+                return mGroupList.get(entry.getKey()).title;
+            }
+        }
+        return null;
     }
 
     protected UIUtils.TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem) {
         int titleOrder = -1;
         int childItemOrder = 0;
-        for (Integer titlePos : mTitlePositionList) {
+        for (int i = 0; i < mGroupList.size(); i++) {
+            int titlePos = mTitleOrderPositionMap.get(i);
             if (titleOrder >= mGroupList.size() - 1 || positionInRV_viewType_childItem < titlePos) break;
             childItemOrder = positionInRV_viewType_childItem - titlePos - 1;
             titleOrder = titleOrder + 1;
@@ -60,9 +67,10 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     protected int computeTotalCount() {
         int totalCounts = 0;
         int positionInRV = 0;
-        for (Group<Title, ChildItem> group : mGroupList) {
-            mTitlePositionList.add(positionInRV);
-            int childItemCounts = group.childItemList != null ? group.childItemList.size() : 0;
+        for (int i = 0; i < mGroupList.size(); i++) {
+            mTitleOrderPositionMap.put(i, positionInRV);
+            List<ChildItem> childItemList = mGroupList.get(i).childItemList;
+            int childItemCounts = childItemList != null ? childItemList.size() : 0;
             positionInRV = positionInRV + childItemCounts + 1;
             totalCounts = totalCounts + childItemCounts;
         }
@@ -71,7 +79,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
 
     @Override
     protected int getViewType(int positionInRV) {
-        return mTitlePositionList.contains(positionInRV) ? 32767 : 0;
+        return mTitleOrderPositionMap.containsValue(positionInRV) ? 32767 : 0;
     }
 
     @Override

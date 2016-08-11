@@ -5,10 +5,6 @@
 
 ![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/video.gif)
 
-![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/videomaterial.gif)
-
-![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/videoloading.gif)
-
 ###主要特性：
 #### 1. 下拉刷新：
 对SwipeRefreshLayout的封装。相对于原生的SwipeRefreshLayout，解决了2个问题：
@@ -45,15 +41,14 @@
 
 - 初始化RecyclerView、添加/修改/删除条目时具有Material Design动画
 
+#### 8.GridLayoutManager分组显示Title支持
+
 ## 引入
 ### 1.添加二进制
 
 build.gradle中添加
 
     compile 'com.xdandroid:simplerecyclerview:+'
-	compile 'com.xdandroid:materialprogressview:+'
-	compile 'com.android.support:recyclerview-v7:${latest.version}'
-	compile 'com.android.support:design:${latest.version}'
 
 ### 2.基本用法与原生RecyclerView和SwipeRefreshLayout相同
 
@@ -125,7 +120,7 @@ build.gradle中添加
             android:textSize="20sp"
             android:textColor="@android:color/black"/>
     </FrameLayout>
-    
+
 ### 4. 建立Adapter抽象类
 
 #### 4.1 只有1种viewType时，继承SingleViewTypeAdapter<${JavaBean}>
@@ -163,15 +158,15 @@ build.gradle中添加
 若要自动为Toolbar留出高度而不被Toolbar挡住，需要为CoordinatorLayout下的Layout或SwipeRefreshLayout添加 app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
 ## 加载更多
-### 实例化Adapter时要实现2个方法 : 
+### 实例化Adapter时要实现2个方法 :
 
-#### 1. void onLoadMore(Void please\_Make\_Your\_Adapter\_Class\_As\_Abstract\_Class) :
+#### 1. void onLoadMore(Void please\_make\_your\_adapter\_class\_as\_abstract\_class) :
 
 先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后，只需调用adapter对象的void addAll(List<${JavaBean}>)一个方法即可。
 
 注意不要调用数据集list的addAll方法，然后再手动刷新UI。这样做会丧失转圈消失时和项目添加时的动画效果，也使得加载状态得不到重置。
 
-#### 2. boolean hasMoreElements(Void let\_Activity\_Or\_Fragment\_Implement\_These\_Methods) : 
+#### 2. boolean hasMoreElements(Void let\_activity\_or\_fragment\_implement\_these\_methods) :
 
 告知Adapter是否还有更多的数据需要加载，只是这一批没加载完。
 
@@ -189,13 +184,13 @@ build.gradle中添加
 
 ### 设置Threshold : void Adapter.setThreshold(int threshold);
 
-#### 不需要加载更多功能时 , 可重写getItemSpanSize方法，使其始终返回-1.
-
-### 对于GridLayoutManager : 
+### 对于GridLayoutManager :
 
     GridLayoutManager gridLayoutManager = new GridLayoutManager(context,SPAN_SIZE);
     gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup(SPAN_SIZE));
     recyclerView.setLayoutManager(gridLayoutManager);
+
+见Demo中的GridFragment和GridAdapter.
 
 ## 加载中/空数据/加载错误页面
 ### XML准备(详见引入-布局文件)
@@ -212,7 +207,7 @@ build.gradle中添加
      * @param loadingView 通过findViewById找到的LoadingView.
      */
     void SimpleRecyclerView.setLoadingView(View loadingView);   //在调用setAdapter和notify*系列方法之前调用此方法
-    //示例 : 
+    //示例 :
     recyclerView.setLoadingView(findViewById(R.id.loading_view));   //设置自定义LoadingView布局
 
     View SimpleRecyclerView.hideLoadingView();                  //手动控制LoadingView的隐藏，一般情况下无需调用此方法
@@ -229,7 +224,7 @@ build.gradle中添加
 
 ## 分割线
 
-构建Divider : 
+构建Divider :
 
 Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, int leftOffset, int topOffset, int rightOffset, int bottomOffset);
 
@@ -259,7 +254,7 @@ rv_divider.xml为一般的line形状XML，示例：
 
 Adapter/SingleViewTypeAdapter封装了对数据集操作的常用方法，使用这些方法，将获得动画效果和正确的加载状态设置。
 
-Adapter : 
+Adapter :
 
 - void onAdded();
 - void onAddedAll(int newDataSize);
@@ -267,7 +262,7 @@ Adapter :
 
 先对数据集进行增删操作，再调用上面的方法。
 
-SingleViewTypeAdapter : 
+SingleViewTypeAdapter :
 
 - void setList(List<${JavaBean}> list);
 - void add(${JavaBean} javaBean);
@@ -283,9 +278,12 @@ SingleViewTypeAdapter :
 若所需的对数据集操作的方法没有在上面列出，可直接对数据集合List<${JavaBean}>进行操作后，调用adapter对象的notifyItem* 系列方法刷新UI，并调用void setLoadingFalse()恢复非加载更多时的状态。
 
 ## 上下滑动时的固定Header
+
 Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，创建自己的Header ViewHolder，重写接口里的3个方法：
 
-- long getHeaderId(int position);	//根据position返回headerId，返回headerId的数量就是固定Header的种类数
+- long getHeaderId(int position);
+
+决定了位于position的条目在哪个header下显示。一个header对应一个headerId，所以，对于想显示在同一个header下的条目，传入这些条目的position，应返回相同的headerId。该方法返回几种headerId，固定header就有几种。
 
 - RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent);
 
@@ -293,41 +291,49 @@ Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，�
 
 示例：
 
-    @Override
-    public long getHeaderId(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
+```
+@Override
+public long getHeaderId(int position) {
+    //10个一组(在同一个header下显示)，position 0-9一组，10-19一组，etc..
+    return position / 10;
+}
 
-    @Override
-    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View view = mInflater.inflate(R.layout.header_chart, parent, false);
-        HeaderVH headerVH = new HeaderVH(view);
-        headerVH.ll_header_chart = (LinearLayout) view.findViewById(R.id.ll_header_chart);
-        headerVH.iv_header_chart = (ImageView) view.findViewById(R.id.iv_header_chart);
-        AutoUtils.auto(view);
-        return headerVH;
-    }
+@Override
+public HeaderVH onCreateHeaderViewHolder(ViewGroup parent) {
+    return new HeaderVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header, parent, false));
+}
 
-    @Override
-    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position == 0) {
-            ((HeaderVH) holder).ll_header_chart.setVisibility(View.GONE);
-            ((HeaderVH) holder).iv_header_chart.setVisibility(View.GONE);
-        } else {
-            ((HeaderVH) holder).ll_header_chart.setVisibility(View.VISIBLE);
-            ((HeaderVH) holder).iv_header_chart.setVisibility(View.VISIBLE);
-        }
-    }
+@Override
+public void onBindHeaderViewHolder(HeaderVH holder, int position) {
+    holder.tvHeader.setText("Group : " + String.valueOf(position + 1) + " - " + String.valueOf(position + 10));
+}
+```
 
-    public class HeaderVH extends RecyclerView.ViewHolder {
-        public HeaderVH(View itemView) {
-            super(itemView);
-        }
-        LinearLayout ll_header_chart;
-        ImageView iv_header_chart;
-    }
+见Demo中的PinnedFragment和PinnedAdapter.
 
+## GridLayoutManager分组显示Title
+
+要求使用Group数据结构来表示一个分组，每个分组包含一个标题和若干个子条目.
+
+```
+<Title, ChildItem> Group<Title, ChildItem> {
+    Title title;  //一个分组的标题
+    List<ChildItem> childItemList;  //一个分组下的子条目列表
+}
+```
+
+所以，需要将数据转换为List<\Group>，即分组的列表.
+
+继承GroupAdapter，List<\Group>通过构造方法传入，然后重写下面的4个方法 :
+
+```
+ViewHolder onTitleVHCreate(ViewGroup parent);
+
+ViewHolder onChildItemVHCreate(ViewGroup parent);
+
+void onTitleVHBind(ViewHolder holder, Title title);
+
+void onChildItemVHBind(ViewHolder holder, Title title, ChildItem childItem);
+```
+
+见Demo中的GroupFragment和GroupRVAdapter.
