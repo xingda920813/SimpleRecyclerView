@@ -61,7 +61,7 @@ abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListener {
   /**
   * @param scrolledDistance 已滑动的距离(px)
   * @param distanceToEnd 还能向下/向右滑动多少(px)
-  * @param velocity 当前滑动速度
+  * @param velocity 当前滑动速度(正负表示方向)
   */
   abstract void onScrolled(int scrolledDistance, int distanceToEnd, int velocity);
 }
