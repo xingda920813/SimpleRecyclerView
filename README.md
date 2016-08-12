@@ -43,6 +43,30 @@
 
 #### 8.GridLayoutManager分组显示Title支持
 
+#### 9.增加2个实用方法和SimpleOnScrollListener
+
+可通过方法获得RecyclerView已滑动的距离和还能向下/向右滑动多少
+
+这2个距离同时在SimpleOnScrollListener.onScrolled中作为参数传入
+
+```
+//RecyclerView已滑动的距离(px)
+int getScrolledDistance()
+
+//还能向下/向右滑动多少(px)
+int getDistanceToEnd()
+
+abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListener {
+  abstract void onScrollStateChanged(int newState);
+  /**
+  * @param scrolledDistance 已滑动的距离(px)
+  * @param distanceToEnd 还能向下/向右滑动多少(px)
+  * @param velocity 当前滑动速度
+  */
+  abstract void onScrolled(int scrolledDistance, int distanceToEnd, int velocity);
+}
+```
+
 ## 引入
 ### 1.添加二进制
 

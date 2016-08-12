@@ -36,7 +36,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
         if (viewType == 32767) {
             onTitleVHBind(holder, getTitle(position));
         } else if (viewType == 0) {
-            UIUtils.TitleChildItemBean<Title, ChildItem> titleAndChildItem = getTitleAndChildItem(position);
+            TitleChildItemBean<Title, ChildItem> titleAndChildItem = getTitleAndChildItem(position);
             onChildItemVHBind(holder, titleAndChildItem.title, titleAndChildItem.childItem);
         }
     }
@@ -50,7 +50,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
         return null;
     }
 
-    protected UIUtils.TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem) {
+    protected TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem) {
         int titleOrder = -1;
         int childItemOrder = 0;
         for (int i = 0; i < mGroupList.size(); i++) {
@@ -61,7 +61,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
         }
         Title title = mGroupList.get(titleOrder).title;
         ChildItem childItem = mGroupList.get(titleOrder).childItemList.get(childItemOrder);
-        return new UIUtils.TitleChildItemBean<>(title, childItem);
+        return new TitleChildItemBean<>(title, childItem);
     }
 
     protected int computeTotalCount() {

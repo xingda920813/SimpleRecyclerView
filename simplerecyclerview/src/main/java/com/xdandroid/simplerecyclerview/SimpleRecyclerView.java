@@ -151,4 +151,49 @@ public class SimpleRecyclerView extends RecyclerView {
         hideErrorView();
         return loadingView;
     }
+
+    /**
+     * 还能向下/向右滑动多少(px)
+     * @return 还能向下/向右滑动多少(px)
+     */
+    public int getDistanceToEnd() {
+        LayoutManager manager = getLayoutManager();
+        if (!(manager instanceof LinearLayoutManager)) return getHeight();
+        LinearLayoutManager linearManager = (LinearLayoutManager) manager;
+        View firstVisibleItem = getChildAt(0);
+        int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+        int itemCount = linearManager.getItemCount();
+        if (linearManager.getOrientation() == LinearLayoutManager.VERTICAL) {
+            int recyclerViewHeight = getHeight();
+            int itemHeight = firstVisibleItem.getHeight();
+            int firstItemBottom = linearManager.getDecoratedBottom(firstVisibleItem);
+            return (itemCount - firstItemPosition - 1) * itemHeight - recyclerViewHeight + firstItemBottom;
+        } else {
+            int recyclerViewWidth = getWidth();
+            int itemWidth = firstVisibleItem.getWidth();
+            int firstItemRight = linearManager.getDecoratedRight(firstVisibleItem);
+            return (itemCount - firstItemPosition - 1) * itemWidth - recyclerViewWidth + firstItemRight;
+        }
+    }
+
+    /**
+     * 已滑动的距离(px)
+     * @return 已滑动的距离(px)
+     */
+    public int getScrolledDistance() {
+        LayoutManager manager = getLayoutManager();
+        if (!(manager instanceof LinearLayoutManager)) return 0;
+        LinearLayoutManager linearManager = (LinearLayoutManager) manager;
+        View firstVisibleItem = getChildAt(0);
+        int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+        if (linearManager.getOrientation() == LinearLayoutManager.VERTICAL) {
+            int itemHeight = firstVisibleItem.getHeight();
+            int firstItemBottom = linearManager.getDecoratedBottom(firstVisibleItem);
+            return (firstItemPosition + 1) * itemHeight - firstItemBottom;
+        } else {
+            int itemWidth = firstVisibleItem.getWidth();
+            int firstItemRight = linearManager.getDecoratedRight(firstVisibleItem);
+            return (firstItemPosition + 1) * itemWidth - firstItemRight;
+        }
+    }
 }
