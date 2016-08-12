@@ -19,7 +19,7 @@ public class PinnedAdapter extends SingleViewTypeAdapter<SampleBean> implements 
 
     @Override
     protected RecyclerView.ViewHolder onViewHolderCreate(List<SampleBean> list, ViewGroup parent) {
-        return new ItemVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple, parent, false));
+        return new ItemVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
     }
 
     @Override

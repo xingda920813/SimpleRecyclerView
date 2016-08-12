@@ -35,7 +35,7 @@ public class GroupFragment extends Fragment {
             Title title = new Title("TopTitle " + i);
             List<SampleBean> sampleBeanList = new ArrayList<>();
             for (int j = 0; j <= i % 5; j++) {
-                sampleBeanList.add(new SampleBean("unused", "Item " + j));
+                sampleBeanList.add(new SampleBean(SampleBean.TYPE_TEXT, "unused", "Item " + j, null, 0));
             }
             mGroupList.add(new Group<>(title, sampleBeanList));
         }

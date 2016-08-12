@@ -38,7 +38,7 @@ public class GridFragment extends Fragment {
                     for (int j = 0; j < 2; j++)
                     for (int i = 0; i < 26; i++) {
                         char c = (char) (65 + i);
-                        moreSampleList.add(new SampleBean("Title " + String.valueOf(c), "Content " + String.valueOf(c)));
+                        moreSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
                     }
                     addAll(moreSampleList);
                 }, 1777);
@@ -58,7 +58,7 @@ public class GridFragment extends Fragment {
         List<SampleBean> sampleList = new ArrayList<>();
         for (int i = 0; i < 26; i++) {
             char c = (char) (65 + i);
-            sampleList.add(new SampleBean("Title " + String.valueOf(c), "Content " + String.valueOf(c)));
+            sampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
         }
         mAdapter.setList(sampleList);
     }

@@ -7,17 +7,18 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 
-import com.xdandroid.sample.adapter.SimpleAdapter;
+import com.xdandroid.sample.adapter.BasicAdapter;
 import com.xdandroid.sample.bean.*;
+import com.xdandroid.sample.util.*;
 import com.xdandroid.simplerecyclerview.*;
 
 import java.util.*;
 
-public class SimpleFragment extends Fragment {
+public class BasicFragment extends Fragment {
 
     private SimpleSwipeRefreshLayout mSwipeContainer;
     private SimpleRecyclerView mRecyclerView;
-    private SimpleAdapter mAdapter;
+    private BasicAdapter mAdapter;
     private List<SampleBean> mSampleList;
 
     @Override
@@ -52,21 +53,28 @@ public class SimpleFragment extends Fragment {
         //默认Item Divider
         mRecyclerView.addItemDecoration(new Divider(getActivity(), null, false, 0, 0, 0, 0));
 
-        mAdapter = new SimpleAdapter() {
+        mAdapter = new BasicAdapter() {
 
             protected void onLoadMore(Void v) {
                 new Handler().postDelayed(() -> {
                     List<SampleBean> moreSampleList = new ArrayList<>();
+                    int j = 0;
                     for (int i = 0; i < 26; i++) {
                         char c = (char) (65 + i);
-                        moreSampleList.add(new SampleBean("Title " + String.valueOf(c), "Content " + String.valueOf(c)));
+                        if (i % 8 == 0) {
+                            moreSampleList.add(new SampleBean(SampleBean.TYPE_BANNER, null, null, BannerProvider.getMessage(j), BannerProvider.getImageResId(j)));
+                            j++;
+                        } else {
+                            moreSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                        }
                     }
-                    addAll(moreSampleList);
+                    mSampleList.addAll(moreSampleList);
+                    mAdapter.onAddedAll(moreSampleList.size());
                 }, 1777);
             }
 
             protected boolean hasMoreElements(Void v) {
-                return list.size() <= 666;
+                return mSampleList != null && mSampleList.size() <= 666;
             }
         };
 
@@ -102,9 +110,15 @@ public class SimpleFragment extends Fragment {
     private void initData() {
         new Handler().postDelayed(() -> {
             mSampleList = new ArrayList<>();
+            int j = 0;
             for (int i = 0; i < 26; i++) {
                 char c = (char) (65 + i);
-                mSampleList.add(new SampleBean("Title " + String.valueOf(c), "Content " + String.valueOf(c)));
+                if (i % 8 == 0) {
+                    mSampleList.add(new SampleBean(SampleBean.TYPE_BANNER, null, null, BannerProvider.getMessage(j), BannerProvider.getImageResId(j)));
+                    j++;
+                } else {
+                    mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                }
             }
             mAdapter.setList(mSampleList);
             mSwipeContainer.setRefreshing(false);

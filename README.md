@@ -186,9 +186,11 @@ build.gradle中添加
 
 #### 1. void onLoadMore(Void please\_make\_your\_adapter\_class\_as\_abstract\_class) :
 
-先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后，只需调用adapter对象的void addAll(List<${JavaBean}>)一个方法即可。
+先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后 : 
 
-注意不要调用数据集list的addAll方法，然后再手动刷新UI。这样做会丧失转圈消失时和项目添加时的动画效果，也使得加载状态得不到重置。
+**对于SingleViewTypeAdapter**，不要对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，而是直接调用void SingleViewTypeAdapter.addAll(List<\E>)方法即可，SingleViewTypeAdapter会帮您完成对数据集的操作。。
+
+**对于Adapter**，先对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，再调用void Adapter.onAddedAll(int newDataSize)方法来通知Adapter有数据添加到集合。
 
 #### 2. boolean hasMoreElements(Void let\_activity\_or\_fragment\_implement\_these\_methods) :
 
@@ -284,7 +286,7 @@ Adapter :
 - void onAddedAll(int newDataSize);
 - void onRemovedLast(); / void onRemoved();
 
-先对数据集进行增删操作，再调用上面的方法。
+使用Adapter时，先对自己维护的数据集进行增删操作，再调用上面的方法。
 
 SingleViewTypeAdapter :
 
@@ -298,6 +300,10 @@ SingleViewTypeAdapter :
 - void setAll(int positionStart, int itemCount, ${JavaBean} javaBean);
 - void addAll(int position, List<${JavaBean}> newList);
 - void addAll(List<${JavaBean}> newList);
+
+使用SingleViewTypeAdapter时，不要对自己维护的数据集进行增删操作，而是直接调用上面的方法。
+
+只需将操作所需的参数传入上面的方法，SingleViewTypeAdapter会帮您完成对数据集的操作。
 
 若所需的对数据集操作的方法没有在上面列出，可直接对数据集合List<${JavaBean}>进行操作后，调用adapter对象的notifyItem* 系列方法刷新UI，并调用void setLoadingFalse()恢复非加载更多时的状态。
 

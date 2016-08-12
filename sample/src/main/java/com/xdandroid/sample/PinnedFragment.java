@@ -43,7 +43,7 @@ public class PinnedFragment extends Fragment {
     private void initData() {
         List<SampleBean> sampleList = new ArrayList<>();
         for (int i = 1; i <= 105; i++) {
-            sampleList.add(new SampleBean("Title " + i, "Content " + i));
+            sampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
         }
         mAdapter.setList(sampleList);
     }

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return new SimpleFragment();
+                        return new BasicFragment();
                     case 1:
                         return new GridFragment();
                     case 2:
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return "简单使用";
+                        return "基本使用";
                     case 1:
                         return "多列布局";
                     case 2:
