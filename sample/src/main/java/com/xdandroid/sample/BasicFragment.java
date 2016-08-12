@@ -7,7 +7,7 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 
-import com.xdandroid.sample.adapter.BasicAdapter;
+import com.xdandroid.sample.adapter.*;
 import com.xdandroid.sample.bean.*;
 import com.xdandroid.sample.util.*;
 import com.xdandroid.simplerecyclerview.*;

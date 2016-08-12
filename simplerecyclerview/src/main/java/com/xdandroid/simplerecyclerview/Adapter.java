@@ -19,6 +19,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
+    protected int mHeaderCount;
 
     public void setThreshold(int threshold) {
         this.mThreshold = threshold;
