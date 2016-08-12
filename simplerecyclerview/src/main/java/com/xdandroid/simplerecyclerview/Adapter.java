@@ -7,6 +7,8 @@ import android.widget.*;
 
 import com.xdandroid.materialprogressview.*;
 
+import java.util.*;
+
 /**
  * Created by XingDa on 2016/05/29.
  */
@@ -183,8 +185,33 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         };
     }
 
+    public void onListChanged() {
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void onListSetUp(int listSize) {
+        notifyItemRangeInserted(0, listSize);
+        setLoadingFalse();
+    }
+
+    public void onListCleared(int oldDataSize) {
+        notifyItemRangeRemoved(0, oldDataSize);
+        setLoadingFalse();
+    }
+
     public void onAdded() {
         notifyItemInserted(getCount() - 1);
+        setLoadingFalse();
+    }
+
+    public void onAdded(int position) {
+        notifyItemInserted(position);
+        setLoadingFalse();
+    }
+
+    public void onRemoved(int position) {
+        notifyItemRemoved(position);
         setLoadingFalse();
     }
 
@@ -194,6 +221,26 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void onRemovedLast() {
         notifyItemRemoved(getCount());
+        setLoadingFalse();
+    }
+
+    public void onRemoveAll(int positionStart, int itemCount) {
+        notifyItemRangeRemoved(positionStart, itemCount);
+        setLoadingFalse();
+    }
+
+    public void onSet(int position) {
+        notifyItemChanged(position);
+        setLoadingFalse();
+    }
+
+    public void onSetAll(int positionStart, int itemCount) {
+        notifyItemRangeChanged(positionStart, itemCount);
+        setLoadingFalse();
+    }
+
+    public void onAddedAll(int position, int newDataSize) {
+        notifyItemRangeInserted(position, newDataSize);
         setLoadingFalse();
     }
 

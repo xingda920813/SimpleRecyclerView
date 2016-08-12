@@ -285,6 +285,15 @@ Adapter :
 - void onAdded();
 - void onAddedAll(int newDataSize);
 - void onRemovedLast(); / void onRemoved();
+- void onListChanged();
+- void onListSetUp(int listSize);
+- void onListCleared(int oldDataSize);
+- void onAdded(int position);
+- void onRemoved(int position);
+- void onRemoveAll(int positionStart, int itemCount);
+- void onSet(int position);
+- void onSetAll(int positionStart, int itemCount);
+- void onAddedAll(int position, int newDataSize);
 
 使用Adapter时，先对自己维护的数据集进行增删操作，再调用上面的方法。
 

@@ -3,6 +3,7 @@ package com.xdandroid.simplerecyclerview;
 import android.support.v7.widget.*;
 import android.view.*;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -176,7 +177,16 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     @Deprecated protected final int getViewType(int position) {throw new UnsupportedOperationException();}
     @Deprecated protected final int getCount() {throw new UnsupportedOperationException();}
     @Deprecated public final void onAdded() {super.onAdded();}
+    @Deprecated public final void onAdded(int position) {super.onAdded(position);}
     @Deprecated public final void onAddedAll(int newDataSize) {super.onAddedAll(newDataSize);}
+    @Deprecated public final void onAddedAll(int position, int newDataSize) {super.onAddedAll(position, newDataSize);}
+    @Deprecated public final void onListChanged() {super.onListChanged();}
+    @Deprecated public final void onListCleared(int oldDataSize) {super.onListCleared(oldDataSize);}
+    @Deprecated public final void onListSetUp(int listSize) {super.onListSetUp(listSize);}
+    @Deprecated public final void onRemoveAll(int positionStart, int itemCount) {super.onRemoveAll(positionStart, itemCount);}
     @Deprecated public final void onRemoved() {super.onRemoved();}
+    @Deprecated public final void onRemoved(int position) {super.onRemoved(position);}
     @Deprecated public final void onRemovedLast() {super.onRemovedLast();}
+    @Deprecated public final void onSet(int position) {super.onSet(position);}
+    @Deprecated public final void onSetAll(int positionStart, int itemCount) {super.onSetAll(positionStart, itemCount);}
 }
