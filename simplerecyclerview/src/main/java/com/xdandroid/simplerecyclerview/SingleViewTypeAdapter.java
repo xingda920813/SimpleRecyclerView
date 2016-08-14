@@ -15,7 +15,16 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     protected List<T> list;
 
     protected abstract RecyclerView.ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent);
-
+    /**
+     * 不要将position传入匿名内部类/方法内部类（如OnClickListener）。
+     * Java只实现了值捕获，在匿名内部类中保存的position实际上是onBindViewHolder的position参数的一个副本。
+     * 又因为int是基本类型，在设置创建匿名内部类（如设置OnClickListener）时，
+     * 该int的值复制到了匿名内部类里面的position，而不是指向同一块栈内存。
+     * 当position改变时（如滑动删除Item时），RecyclerView不会自动重新回调onBindViewHolder。
+     * 这将导致匿名内部类（如OnClickListener）中的position还是原来的，而没有得到更新，发生点击错位的问题。
+     * 要在匿名内部类（如OnClickListener）中得到当前Item的位置，请使用holder.getAdapterPosition()，
+     * 通过ViewHolder动态获取当前Item的位置。而不要将position设为final或事实上是final的。
+     */
     protected abstract void onViewHolderBind(List<T> list, RecyclerView.ViewHolder holder, int position);
 
     @Override

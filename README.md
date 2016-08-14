@@ -57,7 +57,7 @@ int SimpleRecyclerView.getScrolledDistance();
 int SimpleRecyclerView.getDistanceToEnd();
 
 abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListener {
-  abstract void onScrollStateChanged(int newState);
+  abstract void onScrollStateChanged(int scrolledDistance, int distanceToEnd, int newState);
   /**
   * @param scrolledDistance 已滑动的距离(px)
   * @param distanceToEnd 还能向下/向右滑动多少(px)

@@ -3,12 +3,19 @@ package com.xdandroid.simplerecyclerview;
 import android.support.v7.widget.*;
 
 /**
+ * 必须配合LinearLayoutManager使用
  * Created by xingda on 16-8-12.
  */
 
 public abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListener {
 
-    protected abstract void onScrollStateChanged(int newState);
+    /**
+     * scrolledDistance 已滑动的距离(px); distanceToEnd 还能向下/向右滑动多少(px); newState 新的滑动状态.
+     * @param scrolledDistance 已滑动的距离(px)
+     * @param distanceToEnd 还能向下/向右滑动多少(px)
+     * @param newState 新的滑动状态
+     */
+    protected abstract void onScrollStateChanged(int scrolledDistance, int distanceToEnd, int newState);
     /**
      * scrolledDistance 已滑动的距离(px); distanceToEnd 还能向下/向右滑动多少(px); velocity 当前滑动速度(正负表示方向).
      * @param scrolledDistance 已滑动的距离(px)
@@ -19,7 +26,9 @@ public abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListen
 
     @Override
     public void onScrollStateChanged(RecyclerView v, int newState) {
-        onScrollStateChanged(newState);
+        if (!(v instanceof SimpleRecyclerView)) return;
+        SimpleRecyclerView rv = (SimpleRecyclerView) v;
+        onScrollStateChanged(rv.getScrolledDistance(), rv.getDistanceToEnd(), newState);
     }
 
     @Override
