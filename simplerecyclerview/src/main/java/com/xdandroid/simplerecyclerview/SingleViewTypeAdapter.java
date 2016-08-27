@@ -3,7 +3,6 @@ package com.xdandroid.simplerecyclerview;
 import android.support.v7.widget.*;
 import android.view.*;
 
-import java.io.*;
 import java.util.*;
 
 /**
@@ -12,7 +11,7 @@ import java.util.*;
 
 public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
-    protected List<T> list;
+    protected List<T> mList;
 
     protected abstract RecyclerView.ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent);
     /**
@@ -30,7 +29,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType != 65535) {
-            return onViewHolderCreate(list, parent);
+            return onViewHolderCreate(mList, parent);
         } else {
             return super.onCreateViewHolder(parent, viewType);
         }
@@ -38,28 +37,33 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        return position == list.size() ? 65535 : 0;
+        return position == mList.size() ? 65535 : 0;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (!mIsLoading && list.size() > 0 && position >= list.size() - mThreshold && hasMoreElements(null)) {
+        if (!mIsLoading && mList.size() > 0 && position >= mList.size() - mThreshold && hasMoreElements(null)) {
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (position == list.size()) {
+        if (position == mList.size()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
-                ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+                ((ProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
-                ((MaterialProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+                ((MaterialProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             }
         } else {
-            onViewHolderBind(list, holder, holder.getAdapterPosition());
+            onViewHolderBind(mList, holder, position);
             if (mOnItemClickLitener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(holder, holder.itemView, holder.getAdapterPosition(), 0);
+                        int adapterPosition = holder.getAdapterPosition();
+                        //非常罕见的情况: layout/animation进行中(一般来说，这些过程的持续时间非常短), 但用户恰好在此时点击了item;
+                        //则position将传入NO_POSITION == -1, 调用List.get(-1)会导致崩溃(ArrayIndexOutOfBoundsException);
+                        //这里直接丢弃掉点击事件, 让用户再点一次.
+                        if (adapterPosition == RecyclerView.NO_POSITION) return;
+                        mOnItemClickLitener.onItemClick(holder, holder.itemView, adapterPosition, 0);
                     }
                 });
             }
@@ -67,7 +71,9 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        return mOnItemLongClickLitener.onItemLongClick(holder, holder.itemView, holder.getAdapterPosition(), 0);
+                        int adapterPosition = holder.getAdapterPosition();
+                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickLitener
+                                .onItemLongClick(holder, holder.itemView, adapterPosition, 0);
                     }
                 });
             }
@@ -76,27 +82,27 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     @Override
     public int getItemCount() {
-        return (list == null) ? 0 : (list.size() + 1);
+        return (mList == null) ? 0 : (mList.size() + 1);
     }
 
     protected void changeList(List<T> list) {
-        this.list = list;
+        this.mList = list;
         notifyDataSetChanged();
         setLoadingFalse();
     }
 
     public void setList(List<T> list) {
         if (list == null || list.size() <= 0) {
-            if (this.list != null && this.list.size() > 0) {
-                int originalSize = this.list.size();
-                this.list.clear();
+            if (this.mList != null && this.mList.size() > 0) {
+                int originalSize = this.mList.size();
+                this.mList.clear();
                 notifyItemRangeRemoved(0, originalSize);
             }
             setLoadingFalse();
             return;
         }
-        if (this.list == null || this.list.size() <= 0) {
-            this.list = list;
+        if (this.mList == null || this.mList.size() <= 0) {
+            this.mList = list;
             notifyItemRangeInserted(0, list.size());
             setLoadingFalse();
         } else {
@@ -105,26 +111,26 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     }
 
     public void add(T t) {
-        if (list == null) list = new ArrayList<>();
+        if (mList == null) mList = new ArrayList<>();
         if (t != null) {
-            int originalSize = list.size();
-            list.add(t);
+            int originalSize = mList.size();
+            mList.add(t);
             notifyItemInserted(originalSize);
         }
         setLoadingFalse();
     }
 
     public void add(int position, T t) {
-        if (list == null) list = new ArrayList<>();
+        if (mList == null) mList = new ArrayList<>();
         if (t != null) {
-            list.add(position, t);
+            mList.add(position, t);
             notifyItemInserted(position);
         }
         setLoadingFalse();
     }
 
     public void remove(int position) {
-        list.remove(position);
+        mList.remove(position);
         notifyItemRemoved(position);
         setLoadingFalse();
     }
@@ -134,48 +140,48 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     }
 
     public void removeLast() {
-        int originalSize = list.size();
-        list.remove(originalSize - 1);
+        int originalSize = mList.size();
+        mList.remove(originalSize - 1);
         notifyItemRemoved(originalSize - 1);
         setLoadingFalse();
     }
 
     public void removeAll(int positionStart, int itemCount) {
         for (int i = positionStart; i < positionStart + itemCount; i++) {
-            list.remove(positionStart);
+            mList.remove(positionStart);
         }
         notifyItemRangeRemoved(positionStart, itemCount);
         setLoadingFalse();
     }
 
     public void set(int position, T t) {
-        list.set(position, t);
+        mList.set(position, t);
         notifyItemChanged(position);
         setLoadingFalse();
     }
 
     public void setAll(int positionStart, int itemCount, T t) {
         for (int i = positionStart; i < positionStart + itemCount; i++) {
-            list.set(i, t);
+            mList.set(i, t);
         }
         notifyItemRangeChanged(positionStart, itemCount);
         setLoadingFalse();
     }
 
     public void addAll(int position, List<T> newList) {
-        if (list == null) list = new ArrayList<>();
+        if (mList == null) mList = new ArrayList<>();
         if (newList != null && newList.size() > 0) {
-            list.addAll(newList);
+            mList.addAll(newList);
             notifyItemRangeInserted(position, newList.size());
         }
         setLoadingFalse();
     }
 
     public void addAll(List<T> newList) {
-        if (list == null) list = new ArrayList<>();
+        if (mList == null) mList = new ArrayList<>();
         if (newList != null && newList.size() > 0) {
-            int originalSize = list.size();
-            list.addAll(newList);
+            int originalSize = mList.size();
+            mList.addAll(newList);
             notifyItemRangeInserted(originalSize, newList.size());
         }
         setLoadingFalse();

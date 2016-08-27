@@ -10,12 +10,12 @@ import android.widget.*;
 
 public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
-    protected ProgressBar mProgressBar;
-    protected FrameLayout mFrameLayout;
+    protected ProgressBar progressBar;
+    protected FrameLayout frameLayout;
 
     protected ProgressViewHolder(View view) {
         super(view);
-        mFrameLayout = (FrameLayout) view;
-        mProgressBar = (ProgressBar) mFrameLayout.findViewById(android.R.id.progress);
+        frameLayout = (FrameLayout) view;
+        progressBar = (ProgressBar) frameLayout.findViewById(android.R.id.progress);
     }
 }

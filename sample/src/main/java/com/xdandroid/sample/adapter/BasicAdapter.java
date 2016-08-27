@@ -32,11 +32,11 @@ public abstract class BasicAdapter extends Adapter {
     protected void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {
         if (viewType == SampleBean.TYPE_BANNER) {
             BannerVH bannerVH = (BannerVH) holder;
-            bannerVH.image.setImageResource(mSampleList.get(holder.getAdapterPosition()).imageResId);
+            bannerVH.image.setImageResource(mSampleList.get(position).imageResId);
         } else {
             TextVH textVH = (TextVH) holder;
-            textVH.title.setText(mSampleList.get(holder.getAdapterPosition()).title);
-            textVH.content.setText(mSampleList.get(holder.getAdapterPosition()).content);
+            textVH.title.setText(mSampleList.get(position).title);
+            textVH.content.setText(mSampleList.get(position).content);
         }
     }
 

@@ -12,12 +12,12 @@ import com.xdandroid.materialprogressview.*;
 
 public class MaterialProgressViewHolder extends RecyclerView.ViewHolder {
 
-    protected MaterialProgressView mProgressBar;
-    protected FrameLayout mFrameLayout;
+    protected MaterialProgressView progressBar;
+    protected FrameLayout frameLayout;
 
     protected MaterialProgressViewHolder(View view) {
         super(view);
-        mFrameLayout = (FrameLayout) view;
-        mProgressBar = (MaterialProgressView) mFrameLayout.findViewById(android.R.id.secondaryProgress);
+        frameLayout = (FrameLayout) view;
+        progressBar = (MaterialProgressView) frameLayout.findViewById(android.R.id.secondaryProgress);
     }
 }

@@ -42,7 +42,7 @@ public class HeaderPositionCalculator {
    *
    * @param itemView given by the RecyclerView
    * @param orientation of the Recyclerview
-   * @param position of the list item in question
+   * @param position of the mList item in question
    * @return True if the view should have a sticky header
    */
   public boolean hasStickyHeader(View itemView, int orientation, int position) {
@@ -60,12 +60,12 @@ public class HeaderPositionCalculator {
   }
 
   /**
-   * Determines if an item in the list should have a header that is different than the item in the
-   * list that immediately precedes it. Items with no headers will always return false.
+   * Determines if an item in the mList should have a header that is different than the item in the
+   * mList that immediately precedes it. Items with no headers will always return false.
    *
-   * @param position of the list item in questions
+   * @param position of the mList item in questions
    * @param isReverseLayout TRUE if layout manager has flag isReverseLayout
-   * @return true if this item has a different header than the previous item in the list
+   * @return true if this item has a different header than the previous item in the mList
    */
   public boolean hasNewHeader(int position, boolean isReverseLayout) {
     if (indexOutOfBounds(position)) {
@@ -187,7 +187,7 @@ public class HeaderPositionCalculator {
   /**
    * Returns the first item currently in the RecyclerView that is not obscured by a header.
    *
-   * @param parent Recyclerview containing all the list items
+   * @param parent Recyclerview containing all the mList items
    * @return first item that is fully beneath a header
    */
   private View getFirstViewUnobscuredByHeader(RecyclerView parent, View firstHeader) {

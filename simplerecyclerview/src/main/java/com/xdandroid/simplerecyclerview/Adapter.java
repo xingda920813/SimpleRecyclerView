@@ -7,8 +7,6 @@ import android.widget.*;
 
 import com.xdandroid.materialprogressview.*;
 
-import java.util.*;
-
 /**
  * Created by XingDa on 2016/05/29.
  */
@@ -21,7 +19,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
-    protected int mHeaderCount;
 
     public void setThreshold(int threshold) {
         this.mThreshold = threshold;
@@ -111,17 +108,22 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         if (position == getCount()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
-                ((ProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+                ((ProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
-                ((MaterialProgressViewHolder) holder).mProgressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+                ((MaterialProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             }
         } else {
-            onViewHolderBind(holder, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
+            onViewHolderBind(holder, position, getViewType(position));
             if (mOnItemClickLitener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(holder, holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
+                        int adapterPosition = holder.getAdapterPosition();
+                        //非常罕见的情况: layout/animation进行中(一般来说，这些过程的持续时间非常短), 但用户恰好在此时点击了item;
+                        //则position将传入NO_POSITION == -1, 调用List.get(-1)会导致崩溃(ArrayIndexOutOfBoundsException);
+                        //这里直接丢弃掉点击事件, 让用户再点一次.
+                        if (adapterPosition == RecyclerView.NO_POSITION) return;
+                        mOnItemClickLitener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
                     }
                 });
             }
@@ -129,7 +131,9 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        return mOnItemLongClickLitener.onItemLongClick(holder, holder.itemView, holder.getAdapterPosition(), getViewType(holder.getAdapterPosition()));
+                        int adapterPosition = holder.getAdapterPosition();
+                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickLitener
+                                .onItemLongClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
                     }
                 });
             }
@@ -144,9 +148,9 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setLoadingFalse() {
         mIsLoading = false;
         if (!mUseMaterialProgress && mProgressViewHolder != null) {
-            mProgressViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
         } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null) {
-            mMaterialProgressViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
+            mMaterialProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
         }
     }
 

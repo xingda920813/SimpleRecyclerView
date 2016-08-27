@@ -13,7 +13,7 @@ public interface HeaderProvider {
    *
    * @param recyclerView that will display the header
    * @param position     that will be headed by the header
-   * @return a header view for the given position and list
+   * @return a header view for the given position and mList
    */
   public View getHeader(RecyclerView recyclerView, int position);
 

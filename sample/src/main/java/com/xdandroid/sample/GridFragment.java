@@ -45,7 +45,7 @@ public class GridFragment extends Fragment {
             }
 
             protected boolean hasMoreElements(Void v) {
-                return list.size() <= 666;
+                return mList.size() <= 666;
             }
         };
         GridLayoutManager gridLM = new GridLayoutManager(getActivity(), 3);

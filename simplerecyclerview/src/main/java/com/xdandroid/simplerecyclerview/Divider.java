@@ -16,7 +16,7 @@ public class Divider extends RecyclerView.ItemDecoration {
 
     protected Drawable mDivider;
     protected boolean mIsHorizontal;
-    protected int leftOffset, topOffset, rightOffset, bottomOffset;
+    protected int mLeftOffset, mTopOffset, mRightOffset, mBottomOffset;
 
     public Divider(Context context, @Nullable Integer dividerDrawableResId, boolean isHorizontal, int leftOffset, int topOffset, int rightOffset, int bottomOffset) {
         if (dividerDrawableResId != null && dividerDrawableResId > 0) {
@@ -27,10 +27,10 @@ public class Divider extends RecyclerView.ItemDecoration {
             a.recycle();
         }
         this.mIsHorizontal = isHorizontal;
-        this.leftOffset = leftOffset;
-        this.topOffset = topOffset;
-        this.rightOffset = rightOffset;
-        this.bottomOffset = bottomOffset;
+        this.mLeftOffset = leftOffset;
+        this.mTopOffset = topOffset;
+        this.mRightOffset = rightOffset;
+        this.mBottomOffset = bottomOffset;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Divider extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
             final int bottom = top + mDivider.getIntrinsicHeight();
-            mDivider.setBounds(left + leftOffset, top + topOffset, right + rightOffset, bottom + bottomOffset);
+            mDivider.setBounds(left + mLeftOffset, top + mTopOffset, right + mRightOffset, bottom + mBottomOffset);
             mDivider.draw(c);
         }
     }
@@ -65,7 +65,7 @@ public class Divider extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getRight() + params.rightMargin;
             final int right = left + mDivider.getIntrinsicHeight();
-            mDivider.setBounds(left + leftOffset, top + topOffset, right + rightOffset, bottom + bottomOffset);
+            mDivider.setBounds(left + mLeftOffset, top + mTopOffset, right + mRightOffset, bottom + mBottomOffset);
             mDivider.draw(c);
         }
     }
