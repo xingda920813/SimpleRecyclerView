@@ -1,6 +1,7 @@
 package com.xdandroid.simplerecyclerview;
 
 import android.graphics.*;
+import android.support.annotation.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
@@ -15,21 +16,35 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     protected ProgressViewHolder mProgressViewHolder;
     protected MaterialProgressViewHolder mMaterialProgressViewHolder;
-    protected int[] mColorSchemeColors;
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
+    @ColorInt protected int[] mColorSchemeColors;
+    @ColorInt protected int mProgressBackgroundColor;
 
     public void setThreshold(int threshold) {
         this.mThreshold = threshold;
     }
 
-    public void setUseMaterialProgress(boolean useMaterialProgress, int[] colors) {
+    /**
+     * 设置是否使用 SwipeRefreshLayout 样式的加载更多转圈, 同时设置转圈的颜色变化序列.
+     */
+    public void setUseMaterialProgress(boolean useMaterialProgress, @ColorInt int[] colors) {
         this.mUseMaterialProgress = useMaterialProgress;
         this.mColorSchemeColors = colors;
     }
 
-    public void setColorSchemeColors(int[] colors) {
+    /**
+     * 设置转圈所在圆形突起的背景色.
+     */
+    public void setProgressBackgroundColor(@ColorInt int color) {
+        this.mProgressBackgroundColor = color;
+    }
+
+    /**
+     * 设置转圈的颜色变化序列.
+     */
+    public void setColorSchemeColors(@ColorInt int[] colors) {
         this.mColorSchemeColors = colors;
     }
 
@@ -72,6 +87,9 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     materialProgressView.setColorSchemeColors(new int[]{color});
                 } else {
                     materialProgressView.setColorSchemeColors(mColorSchemeColors);
+                }
+                if (mProgressBackgroundColor != 0) {
+                    materialProgressView.setProgressBackgroundColor(mProgressBackgroundColor);
                 }
                 FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 innerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));

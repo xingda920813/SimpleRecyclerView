@@ -21,7 +21,7 @@
 
 - 除了LinearLayoutManager，同样支持GridLayoutManager的加载更多动画
 
-- 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义颜色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
+- 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义转圈的颜色和转圈所在圆形突起的背景色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
 
 #### 3.加载中(Loading View)/空数据(Empty View)/错误页面(Error View)的显示
 #### 4.onItemClickListener/onItemLongClickListener
@@ -186,7 +186,7 @@ build.gradle中添加
 
 #### 1. void onLoadMore(Void please\_make\_your\_adapter\_class\_as\_abstract\_class) :
 
-先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后 : 
+先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后 :
 
 **对于SingleViewTypeAdapter**，不要对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，而是直接调用void SingleViewTypeAdapter.addAll(List<\E>)方法即可，SingleViewTypeAdapter会帮您完成对数据集的操作。。
 
@@ -207,6 +207,12 @@ build.gradle中添加
 	adapter.setColorSchemeColors(new int[]{getResources().getColor(R.color.colorAccent)});
 
 随时改变转圈的颜色。
+
+```
+progressView.setProgressBackgroundColor(Color.parseColor("#FAFAFA"));
+```
+
+设置转圈所在圆形突起的背景色。(这里设置为默认的浅灰色)
 
 ### 设置Threshold : void Adapter.setThreshold(int threshold);
 
