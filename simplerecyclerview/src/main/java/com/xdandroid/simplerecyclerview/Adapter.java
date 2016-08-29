@@ -132,7 +132,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         } else {
             onViewHolderBind(holder, position, getViewType(position));
-            if (mOnItemClickLitener != null) {
+            if (mOnItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -141,16 +141,16 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         //则position将传入NO_POSITION == -1, 调用List.get(-1)会导致崩溃(ArrayIndexOutOfBoundsException);
                         //这里直接丢弃掉点击事件, 让用户再点一次.
                         if (adapterPosition == RecyclerView.NO_POSITION) return;
-                        mOnItemClickLitener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
+                        mOnItemClickListener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
                     }
                 });
             }
-            if (mOnItemLongClickLitener != null) {
+            if (mOnItemLongClickListener != null) {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
-                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickLitener
+                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickListener
                                 .onItemLongClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
                     }
                 });
@@ -172,16 +172,16 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    protected OnItemClickLitener mOnItemClickLitener;
+    protected OnItemClickListener mOnItemClickListener;
 
-    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
-        this.mOnItemClickLitener = mOnItemClickLitener;
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    protected OnItemLongClickLitener mOnItemLongClickLitener;
+    protected OnItemLongClickListener mOnItemLongClickListener;
 
-    public void setOnItemLongClickLitener(OnItemLongClickLitener mOnItemLongClickLitener) {
-        this.mOnItemLongClickLitener = mOnItemLongClickLitener;
+    public void setOnItemLongClickListener(OnItemLongClickListener mOnItemLongClickListener) {
+        this.mOnItemLongClickListener = mOnItemLongClickListener;
     }
 
     protected abstract class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {

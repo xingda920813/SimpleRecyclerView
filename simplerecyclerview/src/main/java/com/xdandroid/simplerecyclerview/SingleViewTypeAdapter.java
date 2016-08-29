@@ -54,7 +54,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             }
         } else {
             onViewHolderBind(mList, holder, position);
-            if (mOnItemClickLitener != null) {
+            if (mOnItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -63,16 +63,16 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
                         //则position将传入NO_POSITION == -1, 调用List.get(-1)会导致崩溃(ArrayIndexOutOfBoundsException);
                         //这里直接丢弃掉点击事件, 让用户再点一次.
                         if (adapterPosition == RecyclerView.NO_POSITION) return;
-                        mOnItemClickLitener.onItemClick(holder, holder.itemView, adapterPosition, 0);
+                        mOnItemClickListener.onItemClick(holder, holder.itemView, adapterPosition, 0);
                     }
                 });
             }
-            if (mOnItemLongClickLitener != null) {
+            if (mOnItemLongClickListener != null) {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
-                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickLitener
+                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickListener
                                 .onItemLongClick(holder, holder.itemView, adapterPosition, 0);
                     }
                 });

@@ -7,6 +7,6 @@ import android.view.*;
  * Created by XingDa on 2016/05/29.
  */
 
-public interface OnItemLongClickLitener {
-    public boolean onItemLongClick(RecyclerView.ViewHolder holder, View v, int position, int viewType);
+public interface OnItemClickListener {
+    public void onItemClick(RecyclerView.ViewHolder holder, View v, int position, int viewType);
 }

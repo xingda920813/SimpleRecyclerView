@@ -82,17 +82,20 @@ public class BasicFragment extends Fragment {
         mAdapter.setThreshold(7);
 
         //设置点击事件的监听器
-        mAdapter.setOnItemClickLitener((holder, view, position, viewType) -> Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT)
-                                                                                  .show());
+        mAdapter.setOnItemClickListener((holder, view, position, viewType) -> Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT)
+                                                                                   .show());
         /**
          * true为使用 SwipeRefreshLayout 样式的加载更多转圈，以及设置转圈的颜色。false为使用 ProgressBar样式的加载更多转圈。
          * SwipeRefreshLayout 样式与系统版本无关。
          * ProgressBar的外观因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。
          */
-        mAdapter.setUseMaterialProgress(true, new int[]{getResources().getColor(R.color.colorAccent)});
+        mAdapter.setUseMaterialProgress(true, new int[]{getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorPrimary)});
 
-        //也可单独调用API设置颜色
-        //adapter.setColorSchemeColors(new int[]{getResources().getColor(R.color.colorAccent)});
+        //也可单独调用API设置转圈的颜色变化序列.
+        //mAdapter.setColorSchemeColors(new int[]{getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorPrimary)});
+
+        //可设置转圈所在圆形突起的背景色.
+        //mAdapter.setProgressBackgroundColor(0xFFFAFAFA);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
