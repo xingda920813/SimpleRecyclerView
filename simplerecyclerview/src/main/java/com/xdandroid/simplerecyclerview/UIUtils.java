@@ -3,10 +3,6 @@ package com.xdandroid.simplerecyclerview;
 import android.content.*;
 import android.support.v7.widget.*;
 
-import com.xdandroid.simplerecyclerview.*;
-
-import java.io.*;
-
 /**
  * Created by XingDa on 2016/05/27.
  */

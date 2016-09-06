@@ -54,7 +54,17 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             }
         } else {
             onViewHolderBind(mList, holder, position);
-            if (mOnItemClickListener != null) {
+            if (mTypoListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int adapterPosition = holder.getAdapterPosition();
+                        if (adapterPosition == RecyclerView.NO_POSITION) return;
+                        mTypoListener.onItemClick(holder, holder.itemView, adapterPosition, 0);
+                    }
+                });
+            }
+            if (mOnItemClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -67,7 +77,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
                     }
                 });
             }
-            if (mOnItemLongClickListener != null) {
+            if (mOnItemLongClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {

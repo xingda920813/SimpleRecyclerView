@@ -7,8 +7,8 @@ import android.widget.*;
 
 import com.xdandroid.sample.R;
 import com.xdandroid.sample.bean.*;
-import com.xdandroid.simplerecyclerview.*;
 import com.xdandroid.simplerecyclerview.Adapter;
+import com.xdandroid.simplerecyclerview.*;
 
 import java.util.*;
 

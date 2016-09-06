@@ -160,6 +160,7 @@ public class SimpleRecyclerView extends RecyclerView {
         if (!(manager instanceof LinearLayoutManager)) return getHeight();
         LinearLayoutManager linearManager = (LinearLayoutManager) manager;
         View firstVisibleItem = getChildAt(0);
+        if (firstVisibleItem == null) return getHeight();
         int firstItemPosition = linearManager.findFirstVisibleItemPosition();
         int itemCount = linearManager.getItemCount();
         if (linearManager.getOrientation() == LinearLayoutManager.VERTICAL) {
@@ -184,6 +185,7 @@ public class SimpleRecyclerView extends RecyclerView {
         if (!(manager instanceof LinearLayoutManager)) return 0;
         LinearLayoutManager linearManager = (LinearLayoutManager) manager;
         View firstVisibleItem = getChildAt(0);
+        if (firstVisibleItem == null) return 0;
         int firstItemPosition = linearManager.findFirstVisibleItemPosition();
         if (linearManager.getOrientation() == LinearLayoutManager.VERTICAL) {
             int itemHeight = firstVisibleItem.getHeight();

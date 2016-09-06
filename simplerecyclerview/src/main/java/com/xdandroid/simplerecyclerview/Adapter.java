@@ -66,6 +66,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected abstract int getCount();
     protected abstract int getItemSpanSizeForGrid(int position, int viewType, int spanCount);
 
+    @SuppressWarnings("ResourceType")
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType != 65535) {
@@ -132,7 +133,17 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         } else {
             onViewHolderBind(holder, position, getViewType(position));
-            if (mOnItemClickListener != null) {
+            if (mTypoListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int adapterPosition = holder.getAdapterPosition();
+                        if (adapterPosition == RecyclerView.NO_POSITION) return;
+                        mTypoListener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
+                    }
+                });
+            }
+            if (mOnItemClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -145,7 +156,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                 });
             }
-            if (mOnItemLongClickListener != null) {
+            if (mOnItemLongClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -165,23 +176,37 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setLoadingFalse() {
         mIsLoading = false;
-        if (!mUseMaterialProgress && mProgressViewHolder != null) {
+        if (!mUseMaterialProgress && mProgressViewHolder != null && mProgressViewHolder.progressBar.isShown()) {
             mProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
-        } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null) {
+        } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null && mMaterialProgressViewHolder.progressBar.isShown()) {
             mMaterialProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    protected OnItemClickLitener mTypoListener;
+
+    /**
+     * @deprecated 使用 setOnItemClickListener(OnItemClickListener l) 代替.
+     */
+    @Deprecated
+    public void setOnItemClickLitener(@Deprecated OnItemClickLitener deprecated) {
+        mTypoListener = deprecated;
+    }
+
     protected OnItemClickListener mOnItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     protected OnItemLongClickListener mOnItemLongClickListener;
 
-    public void setOnItemLongClickListener(OnItemLongClickListener mOnItemLongClickListener) {
-        this.mOnItemLongClickListener = mOnItemLongClickListener;
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        mOnItemLongClickListener = onItemLongClickListener;
     }
 
     protected abstract class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
