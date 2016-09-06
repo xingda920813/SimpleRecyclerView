@@ -54,7 +54,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             }
         } else {
             onViewHolderBind(mList, holder, position);
-            if (mTypoListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+            if (mTypoListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -64,7 +64,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
                     }
                 });
             }
-            if (mOnItemClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+            if (mOnItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -77,7 +77,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
                     }
                 });
             }
-            if (mOnItemLongClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+            if (mOnItemLongClickListener != null) {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {

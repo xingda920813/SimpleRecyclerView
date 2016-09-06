@@ -133,7 +133,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         } else {
             onViewHolderBind(holder, position, getViewType(position));
-            if (mTypoListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+            if (mTypoListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -143,7 +143,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                 });
             }
-            if (mOnItemClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+            if (mOnItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -156,7 +156,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                 });
             }
-            if (mOnItemLongClickListener != null && !(holder instanceof ProgressViewHolder) && !(holder instanceof MaterialProgressViewHolder)) {
+            if (mOnItemLongClickListener != null) {
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
