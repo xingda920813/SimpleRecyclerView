@@ -242,32 +242,49 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         };
     }
 
-    public void onListChanged() {
+    /**
+     * @deprecated 使用 onListSet() 代替.
+     */
+    @Deprecated public void onListChanged() {onListSet();}
+
+    /**
+     * @deprecated 使用 onListSet() 代替.
+     */
+    @Deprecated public void onListSetUp(int unused) {onListSet();}
+
+    /**
+     * @deprecated 使用 onListSet() 代替.
+     */
+    @Deprecated public void onListCleared(int unused) {onListSet();}
+
+    public void onListSet() {
         notifyDataSetChanged();
         setLoadingFalse();
     }
 
-    public void onListSetUp(int listSize) {
-        notifyItemRangeInserted(0, listSize);
-        setLoadingFalse();
-    }
-
-    public void onListCleared(int oldDataSize) {
-        notifyItemRangeRemoved(0, oldDataSize);
-        setLoadingFalse();
-    }
-
     public void onAdded() {
+        if (getCount() <= 1) {
+            onListSet();
+            return;
+        }
         notifyItemInserted(getCount() - 1);
         setLoadingFalse();
     }
 
     public void onAdded(int position) {
+        if (getCount() <= 1) {
+            onListSet();
+            return;
+        }
         notifyItemInserted(position);
         setLoadingFalse();
     }
 
     public void onRemoved(int position) {
+        if (getCount() <= 0) {
+            onListSet();
+            return;
+        }
         notifyItemRemoved(position);
         setLoadingFalse();
     }
@@ -277,11 +294,19 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void onRemovedLast() {
+        if (getCount() <= 0) {
+            onListSet();
+            return;
+        }
         notifyItemRemoved(getCount());
         setLoadingFalse();
     }
 
     public void onRemoveAll(int positionStart, int itemCount) {
+        if (getCount() <= 0) {
+            onListSet();
+            return;
+        }
         notifyItemRangeRemoved(positionStart, itemCount);
         setLoadingFalse();
     }
@@ -297,11 +322,19 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void onAddedAll(int position, int newDataSize) {
+        if (getCount() <= newDataSize) {
+            onListSet();
+            return;
+        }
         notifyItemRangeInserted(position, newDataSize);
         setLoadingFalse();
     }
 
     public void onAddedAll(int newDataSize) {
+        if (getCount() <= newDataSize) {
+            onListSet();
+            return;
+        }
         notifyItemRangeInserted(getCount() - newDataSize, newDataSize);
         setLoadingFalse();
     }
