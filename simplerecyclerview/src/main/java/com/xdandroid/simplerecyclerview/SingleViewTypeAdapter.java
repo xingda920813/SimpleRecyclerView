@@ -11,7 +11,7 @@ import java.util.*;
 
 public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
-    protected List<T> mList = new ArrayList<>();
+    protected List<T> mList;
 
     protected abstract RecyclerView.ViewHolder onViewHolderCreate(List<T> list, ViewGroup parent);
 
@@ -188,7 +188,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             return;
         }
         int originalSize = mList.size();
-        mList.addAll(newList);
+        mList.addAll(position, newList);
         if (originalSize <= 0) {
             notifyDataSetChanged();
         } else {
@@ -210,6 +210,10 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             notifyItemRangeInserted(originalSize, newList.size());
         }
         setLoadingFalse();
+    }
+
+    public List<T> getList() {
+        return mList;
     }
 
     @Deprecated protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {throw new UnsupportedOperationException();}

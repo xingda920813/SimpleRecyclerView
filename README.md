@@ -367,7 +367,7 @@ public void onBindHeaderViewHolder(HeaderVH holder, int position) {
 
 所以，需要将数据转换为List<\Group>，即分组的列表.
 
-继承GroupAdapter，List<\Group>通过构造方法传入，然后重写下面的4个方法 :
+继承GroupAdapter，重写下面的4个方法 :
 
 ```
 ViewHolder onTitleVHCreate(ViewGroup parent);
@@ -379,4 +379,21 @@ void onTitleVHBind(ViewHolder holder, Title title);
 void onChildItemVHBind(ViewHolder holder, Title title, ChildItem childItem);
 ```
 
-见Demo中的GroupFragment和GroupRVAdapter.
+数据 List<\Group> 通过 GroupAdapter.setList(List<\Group> groupList) 方法传入.
+
+同 SingleViewTypeAdapter 一样，GroupAdapter 提供了一系列方法用于便捷地操作 Adapter 持有的数据集 :
+
+```
+- void setList(List<Group<Title, ChildItem>> groupList);
+- void add(Group<Title, ChildItem> group);
+- void add(int position, Group<Title, ChildItem> group);
+- void remove(int position);
+- void removeLast(); / void remove();
+- void removeAll(int positionStart, int itemCount);
+- void set(int position, Group<Title, ChildItem> group);
+- void setAll(int positionStart, int itemCount, Group group);
+- void addAll(int position, List<Group> newGroupList);
+- void addAll(List<Group<Title, ChildItem>> newGroupList);
+```
+
+见 GroupAdapter 源码以及 Demo 中的 GroupFragment 和 GroupRVAdapter.

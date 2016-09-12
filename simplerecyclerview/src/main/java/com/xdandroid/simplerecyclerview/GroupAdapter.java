@@ -12,6 +12,14 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     protected List<Group<Title, ChildItem>> mGroupList;
     protected Map<Integer, Integer> mTitleOrderPositionMap = new HashMap<>();
 
+    public GroupAdapter() {
+
+    }
+
+    /**
+     * 使用 GroupAdapter.setList(groupList) 代替.
+     */
+    @Deprecated
     public GroupAdapter(List<Group<Title, ChildItem>> groupList) {
         mGroupList = groupList;
     }
@@ -96,5 +104,94 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
             default:
                 return 1;
         }
+    }
+
+    public void setList(List<Group<Title, ChildItem>> groupList) {
+        this.mGroupList = groupList;
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void add(Group<Title, ChildItem> group) {
+        if (group == null) {
+            setLoadingFalse();
+            return;
+        }
+        mGroupList.add(group);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void add(int position, Group<Title, ChildItem> group) {
+        if (group == null) {
+            setLoadingFalse();
+            return;
+        }
+        mGroupList.add(position, group);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void remove(int position) {
+        mGroupList.remove(position);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void remove() {
+        removeLast();
+    }
+
+    public void removeLast() {
+        int originalSize = mGroupList.size();
+        mGroupList.remove(originalSize - 1);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void removeAll(int positionStart, int itemCount) {
+        for (int i = positionStart; i < positionStart + itemCount; i++) {
+            mGroupList.remove(positionStart);
+        }
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void set(int position, Group<Title, ChildItem> group) {
+        mGroupList.set(position, group);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void setAll(int positionStart, int itemCount, Group<Title, ChildItem> group) {
+        for (int i = positionStart; i < positionStart + itemCount; i++) {
+            mGroupList.set(i, group);
+        }
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void addAll(int position, List<Group<Title, ChildItem>> newGroupList) {
+        if (newGroupList == null || newGroupList.size() <= 0) {
+            setLoadingFalse();
+            return;
+        }
+        mGroupList.addAll(position, newGroupList);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public void addAll(List<Group<Title, ChildItem>> newGroupList) {
+        if (newGroupList == null || newGroupList.size() <= 0) {
+            setLoadingFalse();
+            return;
+        }
+        mGroupList.addAll(newGroupList);
+        notifyDataSetChanged();
+        setLoadingFalse();
+    }
+
+    public List<Group<Title, ChildItem>> getGroupList() {
+        return mGroupList;
     }
 }
