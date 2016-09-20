@@ -26,8 +26,16 @@ public class GroupFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = (SimpleRecyclerView) view.findViewById(R.id.recycler_view);
-        initData();
         setupRecyclerView();
+        initData();
+    }
+
+    private void setupRecyclerView() {
+        mAdapter = new GroupRVAdapter();
+        GridLayoutManager gridLM = new GridLayoutManager(getActivity(), 3);
+        gridLM.setSpanSizeLookup(mAdapter.getSpanSizeLookup(3));
+        mRecyclerView.setLayoutManager(gridLM);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initData() {
@@ -39,13 +47,6 @@ public class GroupFragment extends Fragment {
             }
             mGroupList.add(new Group<>(title, sampleBeanList));
         }
-    }
-
-    private void setupRecyclerView() {
-        mAdapter = new GroupRVAdapter(mGroupList);
-        GridLayoutManager gridLM = new GridLayoutManager(getActivity(), 3);
-        gridLM.setSpanSizeLookup(mAdapter.getSpanSizeLookup(3));
-        mRecyclerView.setLayoutManager(gridLM);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setList(mGroupList);
     }
 }

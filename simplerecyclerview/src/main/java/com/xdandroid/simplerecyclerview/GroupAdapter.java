@@ -12,18 +12,6 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     protected List<Group<Title, ChildItem>> mGroupList;
     protected Map<Integer, Integer> mTitleOrderPositionMap = new HashMap<>();
 
-    public GroupAdapter() {
-
-    }
-
-    /**
-     * 使用 GroupAdapter.setList(groupList) 代替.
-     */
-    @Deprecated
-    public GroupAdapter(List<Group<Title, ChildItem>> groupList) {
-        mGroupList = groupList;
-    }
-
     protected abstract RecyclerView.ViewHolder onTitleVHCreate(ViewGroup parent);
     protected abstract RecyclerView.ViewHolder onChildItemVHCreate(ViewGroup parent);
     protected abstract void onTitleVHBind(RecyclerView.ViewHolder holder, Title title);

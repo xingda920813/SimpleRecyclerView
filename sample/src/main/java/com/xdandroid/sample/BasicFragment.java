@@ -1,5 +1,6 @@
 package com.xdandroid.sample;
 
+import android.graphics.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
@@ -47,11 +48,16 @@ public class BasicFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        //自定义Divider Drawable
-        //recyclerView.addItemDecoration(new SimpleRecyclerView.Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
-
-        //默认Item Divider
-        mRecyclerView.addItemDecoration(new Divider(getActivity(), null, false, 0, 0, 0, 0));
+        //添加Divider
+        mRecyclerView.addItemDecoration(new Divider(
+                getActivity(),
+                //分割线宽1dp
+                UIUtils.dp2px(getActivity(), 1),
+                //分割线颜色#DDDDDD
+                Color.parseColor("#DDDDDD"),
+                false,
+                //分割线左侧留出20dp的空白，不绘制
+                UIUtils.dp2px(getActivity(), 20), 0, 0, 0));
 
         mAdapter = new BasicAdapter() {
 

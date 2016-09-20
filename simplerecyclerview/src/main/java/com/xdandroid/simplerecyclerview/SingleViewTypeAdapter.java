@@ -55,16 +55,6 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             }
         } else {
             onViewHolderBind(mList, holder, position);
-            if (mTypoListener != null) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int adapterPosition = holder.getAdapterPosition();
-                        if (adapterPosition == RecyclerView.NO_POSITION) return;
-                        mTypoListener.onItemClick(holder, holder.itemView, adapterPosition, 0);
-                    }
-                });
-            }
             if (mOnItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -224,9 +214,6 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     @Deprecated public final void onAdded(int position) {super.onAdded(position);}
     @Deprecated public final void onAddedAll(int newDataSize) {super.onAddedAll(newDataSize);}
     @Deprecated public final void onAddedAll(int position, int newDataSize) {super.onAddedAll(position, newDataSize);}
-    @Deprecated public final void onListChanged() {super.onListChanged();}
-    @Deprecated public final void onListCleared(int oldDataSize) {super.onListCleared(oldDataSize);}
-    @Deprecated public final void onListSetUp(int listSize) {super.onListSetUp(listSize);}
     @Deprecated public final void onListSet() {super.onListSet();}
     @Deprecated public final void onRemoveAll(int positionStart, int itemCount) {super.onRemoveAll(positionStart, itemCount);}
     @Deprecated public final void onRemoved() {super.onRemoved();}

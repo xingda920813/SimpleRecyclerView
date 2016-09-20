@@ -133,16 +133,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         } else {
             onViewHolderBind(holder, position, getViewType(position));
-            if (mTypoListener != null) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int adapterPosition = holder.getAdapterPosition();
-                        if (adapterPosition == RecyclerView.NO_POSITION) return;
-                        mTypoListener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
-                    }
-                });
-            }
             if (mOnItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -181,20 +171,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null && mMaterialProgressViewHolder.progressBar.isShown()) {
             mMaterialProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
         }
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    protected OnItemClickLitener mTypoListener;
-
-    /**
-     * @deprecated 使用 setOnItemClickListener(OnItemClickListener l) 代替.
-     */
-    @Deprecated
-    public void setOnItemClickLitener(@Deprecated OnItemClickLitener deprecated) {
-        mTypoListener = deprecated;
     }
 
     protected OnItemClickListener mOnItemClickListener;
@@ -241,21 +217,6 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         };
     }
-
-    /**
-     * @deprecated 使用 onListSet() 代替.
-     */
-    @Deprecated public void onListChanged() {onListSet();}
-
-    /**
-     * @deprecated 使用 onListSet() 代替.
-     */
-    @Deprecated public void onListSetUp(int unused) {onListSet();}
-
-    /**
-     * @deprecated 使用 onListSet() 代替.
-     */
-    @Deprecated public void onListCleared(int unused) {onListSet();}
 
     public void onListSet() {
         notifyDataSetChanged();

@@ -1,5 +1,6 @@
 package com.xdandroid.sample;
 
+import android.graphics.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
@@ -34,7 +35,15 @@ public class PinnedFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        mRecyclerView.addItemDecoration(new Divider(getActivity(), null, false, 0, 0, 0, 0));
+        mRecyclerView.addItemDecoration(new Divider(
+                getActivity(),
+                //分割线宽1dp
+                UIUtils.dp2px(getActivity(), 1),
+                //分割线颜色#DDDDDD
+                Color.parseColor("#DDDDDD"),
+                false,
+                //分割线左侧留出20dp的空白，不绘制
+                UIUtils.dp2px(getActivity(), 20), 0, 0, 0));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new PinnedAdapter();
         mRecyclerView.setAdapter(mAdapter);

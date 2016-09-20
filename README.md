@@ -29,11 +29,11 @@
 
 - 可设置任意数量的固定Header种类
 
-#### 6.item分割线支持
+#### 6.Item分割线支持
 
-- 可自定义分割线的Drawable，在Drawable XML里，可自定义粗细、颜色等参数
+- 可自定义分割线的粗细和颜色
 
-- 可自定义分割线的左侧起始点与RecyclerView左侧的距离等，共可自定义上、下、左、右4个offset
+- 可自定义分割线左侧留白区域（不绘制分割线）的长度，共可自定义上、下、左、右4个offset
 
 - 横向/纵向LinearLayoutManager均支持
 
@@ -258,29 +258,22 @@ progressView.setProgressBackgroundColor(Color.parseColor("#FAFAFA"));
 
 构建Divider :
 
-Divider(Context context, @Nullable @DrawableResId Integer dividerDrawableResId, boolean isHorizontal, int leftOffset, int topOffset, int rightOffset, int bottomOffset);
+```
+public Divider(
+  Context context,
+  int divWidthInPx,           //分割线的线宽
+  @ColorInt int divColor,     //分割线的颜色
+  boolean isHorizontalList,   //是否为横向的LinearLayoutManager
+  int leftOffset, int topOffset, int rightOffset, int bottomOffset);
+```
 
-- 可自定义分割线的Drawable，在Drawable XML里，可自定义粗细、颜色等参数，然后将Drawable的资源ID传入构造方法的第二个参数即可使用自定义的分割线Drawable，传入null将使用默认分割线样式
+- leftOffset为分割线左侧留白区域（不绘制分割线）的长度，适用于Item左侧图片部分不画分割线的需求
 
-rv_divider.xml为一般的line形状XML，示例：
-
-    <?xml version="1.0" encoding="utf-8"?>
-    <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    	android:shape="line" >
-    	<stroke
-    		android:width="0.5dp"
-    		android:color="#bdbdbd"/>
-    	<size android:height="1dp"/>
-    </shape>
-
-- 横向列表需设置isHorizontal为true
-
-- leftOffset为分割线的左侧起始点与RecyclerView左侧的距离，topOffset/rightOffset/bottomOffset同理，适用于条目左侧头像部分下面不画分割线的需求
+- topOffset/rightOffset/bottomOffset同理
 
 使用：
 
-    recyclerView.addItemDecoration(new Divider(this, R.drawable.rv_divider, false, 0, 0, 0, 0));
-	recyclerView.addItemDecoration(new Divider(this, null, false, 0, 0, 0, 0));
+    mRecyclerView.addItemDecoration(Divider divider);
 
 ## 初始化RecyclerView、添加/修改/删除Item时的动画
 

@@ -12,10 +12,6 @@ import java.util.*;
 
 public class GroupRVAdapter extends GroupAdapter<Title, SampleBean> {
 
-    public GroupRVAdapter(List<Group<Title, SampleBean>> groups) {
-        super(groups);
-    }
-
     @Override
     protected RecyclerView.ViewHolder onTitleVHCreate(ViewGroup parent) {
         return new TitleVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_group_title, parent, false));
