@@ -260,11 +260,10 @@ progressView.setProgressBackgroundColor(Color.parseColor("#FAFAFA"));
 
 ```
 public Divider(
-  Context context,
-  int divWidthInPx,           //分割线的线宽
-  @ColorInt int divColor,     //分割线的颜色
+  @Px int width,           //分割线的线宽
+  @ColorInt int color,     //分割线的颜色
   boolean isHorizontalList,   //是否为横向的LinearLayoutManager
-  int leftOffset, int topOffset, int rightOffset, int bottomOffset);
+  @Px int leftOffset, @Px int topOffset, @Px int rightOffset, @Px int bottomOffset);
 ```
 
 - leftOffset为分割线左侧留白区域（不绘制分割线）的长度，适用于Item左侧图片部分不画分割线的需求
