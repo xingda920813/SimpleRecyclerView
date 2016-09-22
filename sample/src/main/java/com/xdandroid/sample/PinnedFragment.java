@@ -36,7 +36,6 @@ public class PinnedFragment extends Fragment {
 
     private void setupRecyclerView() {
         mRecyclerView.addItemDecoration(new Divider(
-                getActivity(),
                 //分割线宽1dp
                 UIUtils.dp2px(getActivity(), 1),
                 //分割线颜色#DDDDDD
