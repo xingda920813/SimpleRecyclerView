@@ -254,6 +254,15 @@ progressView.setProgressBackgroundColor(Color.parseColor("#FAFAFA"));
     adapter.setOnItemClickLitener(new OnItemClickLitener());
 	adapter.setOnItemLongClickLitener(new OnItemLongClickLitener());
 
+Item 点击水波纹效果, 在 Item 布局 XML 的根元素上添加:
+
+```
+android:foreground="?android:attr/selectableItemBackground"(对于CardView, SimpleDraweeView)
+android:background="?android:attr/selectableItemBackground"(对于一般View)
+```
+
+CardView 除外, 添加到 CardView 上, 而非添加到根元素
+
 ## 分割线
 
 构建Divider :
