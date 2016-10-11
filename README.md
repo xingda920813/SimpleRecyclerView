@@ -251,8 +251,8 @@ progressView.setProgressBackgroundColor(Color.parseColor("#FAFAFA"));
 
 ## onItemClickListener/OnItemLongClickListener
 
-    adapter.setOnItemClickLitener(new OnItemClickLitener());
-	adapter.setOnItemLongClickLitener(new OnItemLongClickLitener());
+    adapter.setOnItemClickListener(new OnItemClickListener());
+	adapter.setOnItemLongClickListener(new OnItemLongClickListener());
 
 Item 点击水波纹效果, 在 Item 布局 XML 的根元素上添加:
 
@@ -375,12 +375,59 @@ ViewHolder onTitleVHCreate(ViewGroup parent);
 
 ViewHolder onChildItemVHCreate(ViewGroup parent);
 
-void onTitleVHBind(ViewHolder holder, Title title);
+/**
+* @param adapterPos Title 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
+* @param titleOrderInAllTitles 当前 Title 所在 Group 在 List[Group] 中的相对位置.
+*/
+void onTitleVHBind(ViewHolder holder, int adapterPos, Title title, int titleOrderInAllTitles);
 
-void onChildItemVHBind(ViewHolder holder, Title title, ChildItem childItem);
+/**
+* @param adapterPos ChildItem 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
+* @param titleOrderInAllTitles 当前 ChildItem 所在 Group 在 List[Group] 中的相对位置.
+* @param childOrderInCurrentGroup 当前 ChildItem 在 Group 中的相对位置.
+* (第 1 个 ChildItem 的 childOrder 为 0, 即 childOrder 不包括 Title 占的位置)
+*/
+void onChildItemVHBind(ViewHolder holder, int adapterPos, Title title,
+    int titleOrderInAllTitles, ChildItem childItem, int childOrderInCurrentGroup);
 ```
 
 数据 List<\Group> 通过 GroupAdapter.setList(List<\Group> groupList) 方法传入.
+
+若已知 Title 或 ChildItem 在 Adapter 中的绝对位置，需要得到 Title 对象、当前 Title 所在 Group 在 List[Group] 中的相对位置、ChildItem 对象和当前 ChildItem 在 Group 中的相对位置，可使用 GroupAdapter 上的 2 个方法:
+
+```
+/**
+* 根据 Title 在 Adapter 中的绝对位置，
+* 得到 Title 对象和当前 Title 所在 Group 在 List[Group] 中的相对位置.
+* @param positionInRV_viewType_title Title 在 Adapter 中的绝对位置.
+* @return TitleChildItemBean {Title title;  int titleOrder;}
+*/
+TitleChildItemBean<Title, Void> getTitleWithOrder(int positionInRV_viewType_title)
+
+/**
+* 根据 ChildItem 在 Adapter 中的绝对位置，
+* 得到 Title 对象、当前 Title 所在 Group 在 List[Group] 中的相对位置、
+* ChildItem 对象和当前 ChildItem 在 Group 中的相对位置.
+* @param positionInRV_viewType_childItem ChildItem 在 Adapter 中的绝对位置.
+* @return TitleChildItemBean {Title title;  int titleOrder;
+    ChildItem childItem;  int childOrder;}
+*/
+TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem)
+```
+
+设置 OnGroupItemClickListener 和 OnGroupItemLongClickListener:
+
+```
+GroupAdapter.setOnGroupItemClickListener(OnGroupItemClickListener l);
+
+void onGroupItemClick(ViewHolder holder, View v, int adapterPos, int viewType,
+   Title title, int titleOrder, ChildItem childItem, int childOrder);
+
+GroupAdapter.setOnGroupItemLongClickListener(OnGroupItemLongClickListener l);
+
+boolean onGroupItemLongClick(ViewHolder holder, View v, int adapterPos, int viewType,
+   Title title, int titleOrder, ChildItem childItem, int childOrder);
+```
 
 同 SingleViewTypeAdapter 一样，GroupAdapter 提供了一系列方法用于便捷地操作 Adapter 持有的数据集 :
 

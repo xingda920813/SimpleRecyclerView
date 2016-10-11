@@ -14,8 +14,27 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
 
     protected abstract RecyclerView.ViewHolder onTitleVHCreate(ViewGroup parent);
     protected abstract RecyclerView.ViewHolder onChildItemVHCreate(ViewGroup parent);
-    protected abstract void onTitleVHBind(RecyclerView.ViewHolder holder, Title title);
-    protected abstract void onChildItemVHBind(RecyclerView.ViewHolder holder, Title title, ChildItem childItem);
+
+    /**
+     * 详见下方参数说明.
+     * @param holder TitleViewHolder.
+     * @param adapterPos Title 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
+     * @param title Title.
+     * @param titleOrderInAllTitles 当前 Title 所在 Group 在 List[Group] 中的相对位置.
+     */
+    protected abstract void onTitleVHBind(RecyclerView.ViewHolder holder, int adapterPos, Title title, int titleOrderInAllTitles);
+
+    /**
+     * 详见下方参数说明.
+     * @param holder ChildItemViewHolder.
+     * @param adapterPos ChildItem 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
+     * @param title Title.
+     * @param titleOrderInAllTitles 当前 ChildItem 所在 Group 在 List[Group] 中的相对位置.
+     * @param childItem ChildItem.
+     * @param childOrderInCurrentGroup 当前 ChildItem 在 Group 中的相对位置.
+     *                                 (第 1 个 ChildItem 的 childOrder 为 0, 即 childOrder 不包括 Title 占的位置)
+     */
+    protected abstract void onChildItemVHBind(RecyclerView.ViewHolder holder, int adapterPos, Title title, int titleOrderInAllTitles, ChildItem childItem, int childOrderInCurrentGroup);
 
     @Override
     protected RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {
@@ -28,25 +47,57 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     }
 
     @Override
-    protected void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {
+    protected void onViewHolderBind(final RecyclerView.ViewHolder holder, int position, int viewType) {
         if (viewType == 32767) {
-            onTitleVHBind(holder, getTitle(position));
+            TitleChildItemBean<Title, Void> titleWithOrder = getTitleWithOrder(position);
+            onTitleVHBind(holder, position, titleWithOrder.title, titleWithOrder.titleOrder);
         } else if (viewType == 0) {
             TitleChildItemBean<Title, ChildItem> titleAndChildItem = getTitleAndChildItem(position);
-            onChildItemVHBind(holder, titleAndChildItem.title, titleAndChildItem.childItem);
+            onChildItemVHBind(holder, position, titleAndChildItem.title, titleAndChildItem.titleOrder, titleAndChildItem.childItem, titleAndChildItem.childOrder);
+        }
+        if (mOnGroupItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int adapterPosition = holder.getAdapterPosition();
+                    if (adapterPosition ==  RecyclerView.NO_POSITION) return;
+                    mOnGroupItemClickListener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
+                }
+            });
+        }
+        if (mOnGroupItemLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int adapterPosition = holder.getAdapterPosition();
+                    return adapterPosition != RecyclerView.NO_POSITION && mOnGroupItemLongClickListener
+                            .onItemLongClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
+                }
+            });
         }
     }
 
-    protected Title getTitle(int positionInRV_viewType_title) {
+    /**
+     * 根据 Title 在 Adapter 中的绝对位置得到 Title 对象和当前 Title 所在 Group 在 List[Group] 中的相对位置.
+     * @param positionInRV_viewType_title Title 在 Adapter 中的绝对位置.
+     * @return TitleChildItemBean {Title title;  int titleOrder;}
+     */
+    public TitleChildItemBean<Title, Void> getTitleWithOrder(int positionInRV_viewType_title) {
         for (Map.Entry<Integer, Integer> entry : mTitleOrderPositionMap.entrySet()) {
             if (entry.getValue().equals(positionInRV_viewType_title)) {
-                return mGroupList.get(entry.getKey()).title;
+                return new TitleChildItemBean<>(mGroupList.get(entry.getKey()).title, entry.getKey(), null, -1);
             }
         }
         return null;
     }
 
-    protected TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem) {
+    /**
+     * 根据 ChildItem 在 Adapter 中的绝对位置得到 Title 对象、当前 Title 所在 Group 在 List[Group] 中的相对位置、
+     * ChildItem 对象和当前 ChildItem 在 Group 中的相对位置.
+     * @param positionInRV_viewType_childItem ChildItem 在 Adapter 中的绝对位置.
+     * @return TitleChildItemBean {Title title;  int titleOrder;  ChildItem childItem;  int childOrder;}
+     */
+    public TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem) {
         int titleOrder = -1;
         int childItemOrder = 0;
         for (int i = 0; i < mGroupList.size(); i++) {
@@ -57,7 +108,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
         }
         Title title = mGroupList.get(titleOrder).title;
         ChildItem childItem = mGroupList.get(titleOrder).childItemList.get(childItemOrder);
-        return new TitleChildItemBean<>(title, childItem);
+        return new TitleChildItemBean<>(title, titleOrder, childItem, childItemOrder);
     }
 
     protected int computeTotalCount() {
@@ -92,6 +143,18 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
             default:
                 return 1;
         }
+    }
+
+    protected OnGroupItemClickListener mOnGroupItemClickListener;
+
+    public void setOnGroupItemClickListener(OnGroupItemClickListener onGroupItemClickListener) {
+        mOnGroupItemClickListener = onGroupItemClickListener;
+    }
+
+    protected OnGroupItemLongClickListener mOnGroupItemLongClickListener;
+
+    public void setOnGroupItemLongClickListener(OnGroupItemLongClickListener onGroupItemLongClickListener) {
+        mOnGroupItemLongClickListener = onGroupItemLongClickListener;
     }
 
     public void setList(List<Group<Title, ChildItem>> groupList) {

@@ -22,14 +22,30 @@ public class GroupRVAdapter extends GroupAdapter<Title, SampleBean> {
         return new ChildItemVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_group_card, parent, false));
     }
 
+    /**
+     * 详见下方参数说明.
+     * @param holder TitleViewHolder.
+     * @param adapterPos Title 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
+     * @param title Title.
+     * @param titleOrderInAllTitles 当前 Title 所在 Group 在 List[Group] 中的相对位置.
+     */
     @Override
-    protected void onTitleVHBind(RecyclerView.ViewHolder holder, Title title) {
+    protected void onTitleVHBind(RecyclerView.ViewHolder holder, int adapterPos, Title title, int titleOrderInAllTitles) {
         TitleVH titleVH = (TitleVH) holder;
         titleVH.tvTitle.setText(title.topTitle);
     }
 
+    /**
+     * 详见下方参数说明.
+     * @param holder ChildItemViewHolder.
+     * @param adapterPos ChildItem 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
+     * @param title Title.
+     * @param titleOrderInAllTitles 当前 ChildItem 所在 Group 在 List[Group] 中的相对位置.
+     * @param childOrderInCurrentGroup 当前 ChildItem 在 Group 中的相对位置.
+     *                                 (第 1 个 ChildItem 的 childOrder 为 0, 即 childOrder 不包括 Title 占的位置)
+     */
     @Override
-    protected void onChildItemVHBind(RecyclerView.ViewHolder holder, Title title, SampleBean sampleBean) {
+    protected void onChildItemVHBind(RecyclerView.ViewHolder holder, int adapterPos, Title title, int titleOrderInAllTitles, SampleBean sampleBean, int childOrderInCurrentGroup) {
         ChildItemVH childItemVH = (ChildItemVH) holder;
         childItemVH.tvCard.setText(sampleBean.content);
     }
