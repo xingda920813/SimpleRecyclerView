@@ -112,6 +112,9 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     }
 
     protected int computeTotalCount() {
+        //notifyDataSetChanged()会调到mChildHelper.getChildCount(), 进而调到computeTotalCount()
+        //每次重新计算TitleOrder与Position的对应关系时先清空上一次用于储存该关系的Map
+        mTitleOrderPositionMap.clear();
         int totalCounts = 0;
         int positionInRV = 0;
         for (int i = 0; i < mGroupList.size(); i++) {
