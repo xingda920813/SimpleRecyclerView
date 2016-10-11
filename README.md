@@ -355,7 +355,7 @@ public void onBindHeaderViewHolder(HeaderVH holder, int position) {
 
 见Demo中的PinnedFragment和PinnedAdapter.
 
-## GridLayoutManager分组显示Title
+## 分组显示 Title
 
 要求使用Group数据结构来表示一个分组，每个分组包含一个标题和若干个子条目.
 
@@ -444,4 +444,4 @@ boolean onGroupItemLongClick(ViewHolder holder, View v, int adapterPos, int view
 - void addAll(List<Group<Title, ChildItem>> newGroupList);
 ```
 
-见 GroupAdapter 源码以及 Demo 中的 GroupFragment 和 GroupRVAdapter.
+见 GroupAdapter 的代码注释以及 Demo 中的 GroupFragment 和 GroupRVAdapter.
