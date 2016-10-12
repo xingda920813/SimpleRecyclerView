@@ -60,7 +60,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
                 @Override
                 public void onClick(View v) {
                     int adapterPosition = holder.getAdapterPosition();
-                    if (adapterPosition ==  RecyclerView.NO_POSITION) return;
+                    if (adapterPosition == RecyclerView.NO_POSITION) return;
                     mOnGroupItemClickListener.onItemClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
                 }
             });
@@ -162,6 +162,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
 
     public void setList(List<Group<Title, ChildItem>> groupList) {
         this.mGroupList = groupList;
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -172,6 +173,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
             return;
         }
         mGroupList.add(group);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -182,12 +184,14 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
             return;
         }
         mGroupList.add(position, group);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
 
     public void remove(int position) {
         mGroupList.remove(position);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -199,6 +203,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     public void removeLast() {
         int originalSize = mGroupList.size();
         mGroupList.remove(originalSize - 1);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -207,12 +212,14 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
         for (int i = positionStart; i < positionStart + itemCount; i++) {
             mGroupList.remove(positionStart);
         }
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
 
     public void set(int position, Group<Title, ChildItem> group) {
         mGroupList.set(position, group);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -221,6 +228,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
         for (int i = positionStart; i < positionStart + itemCount; i++) {
             mGroupList.set(i, group);
         }
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -231,6 +239,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
             return;
         }
         mGroupList.addAll(position, newGroupList);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -241,6 +250,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
             return;
         }
         mGroupList.addAll(newGroupList);
+        mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();
     }
