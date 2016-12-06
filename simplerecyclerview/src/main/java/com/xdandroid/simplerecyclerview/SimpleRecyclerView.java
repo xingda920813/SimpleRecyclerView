@@ -197,4 +197,12 @@ public class SimpleRecyclerView extends RecyclerView {
             return (firstItemPosition + 1) * itemWidth - firstItemRight;
         }
     }
+
+    /**
+     * @return Yeah we simply return false, preventing the annoying crash.
+     */
+    @Override
+    public boolean isComputingLayout() {
+        return false;
+    }
 }
