@@ -329,16 +329,19 @@ Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，�
 
 决定了位于position的条目在哪个header下显示。一个header对应一个headerId，所以，对于想显示在同一个header下的条目，传入这些条目的position，应返回相同的headerId。该方法返回几种headerId，固定header就有几种。
 
+可在 onViewHolderBind 和 onBindHeaderViewHolder 中随时调用此方法获得当前 adapterPosition 对应的 headerId.
+
 - RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent);
 
-- void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position);
+- void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int adapterPosition);
 
 示例：
 
 ```
 @Override
 public long getHeaderId(int position) {
-    //10个一组(在同一个header下显示)，position 0-9一组，10-19一组，etc..
+    //这个例子是把 0 - 9 的元素作为一组，10 - 19 的元素作为一组，以此类推，每 10 个元素属于相同的一组
+    //实际使用时完全可以根据 position 和 List.get(position) 得到的数据，判断里面的字段，灵活决定哪些元素属于哪些组
     return position / 10;
 }
 
@@ -349,7 +352,8 @@ public HeaderVH onCreateHeaderViewHolder(ViewGroup parent) {
 
 @Override
 public void onBindHeaderViewHolder(HeaderVH holder, int position) {
-    holder.tvHeader.setText("Group : " + String.valueOf(position + 1) + " - " + String.valueOf(position + 10));
+    holder.tvHeader.setText("Group " + getHeaderId(position) /* 当前 header 是哪一组的 header */ +
+        ": Adapter Position " + String.valueOf(position + 1) + " - " + String.valueOf(position + 10));
 }
 ```
 

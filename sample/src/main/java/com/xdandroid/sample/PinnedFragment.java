@@ -19,8 +19,10 @@ import java.util.*;
 
 public class PinnedFragment extends Fragment {
 
+    private SimpleSwipeRefreshLayout mSwipeContainer;
     private SimpleRecyclerView mRecyclerView;
     private PinnedAdapter mAdapter;
+    private List<SampleBean> mSampleList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,9 +31,19 @@ public class PinnedFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mSwipeContainer = (SimpleSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         mRecyclerView = (SimpleRecyclerView) view.findViewById(R.id.recycler_view);
-        setupRecyclerView();
-        initData();
+        setupSwipeContainer();
+        mRecyclerView.postDelayed(() -> {
+            setupRecyclerView();
+            initData();
+        }, 1500);
+    }
+
+    private void setupSwipeContainer() {
+        mSwipeContainer.setColorSchemeResources(R.color.colorAccent);
+        mSwipeContainer.setOnRefreshListener(this::initData);
+        mSwipeContainer.setRefreshing(true);
     }
 
     private void setupRecyclerView() {
@@ -44,15 +56,32 @@ public class PinnedFragment extends Fragment {
                 //分割线左侧留出20dp的空白，不绘制
                 UIUtils.dp2px(getActivity(), 20), 0, 0, 0));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new PinnedAdapter();
+        mAdapter = new PinnedAdapter() {
+            @Override
+            protected void onLoadMore(Void v) {
+                mRecyclerView.postDelayed(() -> {
+                    for (int i = 1; i <= 105; i++) {
+                        mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
+                    }
+                    setList(mSampleList);
+                    mSwipeContainer.setRefreshing(false);
+                }, 1500);
+            }
+
+            @Override
+            protected boolean hasMoreElements(Void v) {
+                return mSampleList != null && mSampleList.size() <= 666;
+            }
+        };
         mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initData() {
-        List<SampleBean> sampleList = new ArrayList<>();
+        mSampleList = new ArrayList<>();
         for (int i = 1; i <= 105; i++) {
-            sampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
+            mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
         }
-        mAdapter.setList(sampleList);
+        mAdapter.setList(mSampleList);
+        mSwipeContainer.setRefreshing(false);
     }
 }
