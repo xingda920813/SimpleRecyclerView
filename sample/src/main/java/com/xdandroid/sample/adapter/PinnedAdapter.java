@@ -11,10 +11,6 @@ import com.xdandroid.simplerecyclerview.stickyheaders.*;
 
 import java.util.*;
 
-/**
- * Created by XingDa on 2016/08/10.
- */
-
 public abstract class PinnedAdapter extends SingleViewTypeAdapter<SampleBean> implements StickyRecyclerHeadersAdapter<PinnedAdapter.HeaderVH> {
 
     @Override

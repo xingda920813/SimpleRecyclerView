@@ -3,10 +3,6 @@ package com.xdandroid.simplerecyclerview;
 import android.support.v7.widget.*;
 import android.view.*;
 
-/**
- * Created by XingDa on 2016/10/11.
- */
-
 public abstract class OnGroupItemClickListener<Title, ChildItem> implements OnItemClickListener {
 
     protected GroupAdapter<Title, ChildItem> mGroupAdapter;

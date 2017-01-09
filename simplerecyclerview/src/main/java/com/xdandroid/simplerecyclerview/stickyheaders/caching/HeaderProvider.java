@@ -15,10 +15,7 @@ public interface HeaderProvider {
    * @param position     that will be headed by the header
    * @return a header view for the given position and mList
    */
-  public View getHeader(RecyclerView recyclerView, int position);
+  View getHeader(RecyclerView recyclerView, int position);
 
-  /**
-   * TODO: describe this functionality and its necessity
-   */
   void invalidate();
 }

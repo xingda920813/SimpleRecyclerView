@@ -14,9 +14,9 @@ import java.util.*;
 
 public class GroupFragment extends Fragment {
 
-    private SimpleRecyclerView mRecyclerView;
-    private GroupRVAdapter mAdapter;
-    private List<Group<Title, SampleBean>> mGroupList = new ArrayList<>();
+    SimpleRecyclerView mRecyclerView;
+    GroupRVAdapter mAdapter;
+    List<Group<Title, SampleBean>> mGroupList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class GroupFragment extends Fragment {
         initData();
     }
 
-    private void setupRecyclerView() {
+    void setupRecyclerView() {
         mAdapter = new GroupRVAdapter();
         GridLayoutManager gridLM = new GridLayoutManager(getActivity(), 3);
         gridLM.setSpanSizeLookup(mAdapter.getSpanSizeLookup(3));
@@ -38,13 +38,11 @@ public class GroupFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initData() {
+    void initData() {
         for (int i = 0; i < 20; i++) {
             Title title = new Title("TopTitle " + i);
             List<SampleBean> sampleBeanList = new ArrayList<>();
-            for (int j = 0; j <= i % 5; j++) {
-                sampleBeanList.add(new SampleBean(SampleBean.TYPE_TEXT, "unused", "Item " + j, null, 0));
-            }
+            for (int j = 0; j <= i % 5; j++) sampleBeanList.add(new SampleBean(SampleBean.TYPE_TEXT, "unused", "Item " + j, null, 0));
             mGroupList.add(new Group<>(title, sampleBeanList));
         }
         mAdapter.setList(mGroupList);

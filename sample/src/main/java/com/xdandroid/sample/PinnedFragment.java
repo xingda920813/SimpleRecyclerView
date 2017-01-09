@@ -13,16 +13,12 @@ import com.xdandroid.simplerecyclerview.*;
 
 import java.util.*;
 
-/**
- * Created by xingda on 16-8-10.
- */
-
 public class PinnedFragment extends Fragment {
 
-    private SimpleSwipeRefreshLayout mSwipeContainer;
-    private SimpleRecyclerView mRecyclerView;
-    private PinnedAdapter mAdapter;
-    private List<SampleBean> mSampleList;
+    SimpleSwipeRefreshLayout mSwipeContainer;
+    SimpleRecyclerView mRecyclerView;
+    PinnedAdapter mAdapter;
+    List<SampleBean> mSampleList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,13 +36,13 @@ public class PinnedFragment extends Fragment {
         }, 1500);
     }
 
-    private void setupSwipeContainer() {
+    void setupSwipeContainer() {
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent);
         mSwipeContainer.setOnRefreshListener(this::initData);
         mSwipeContainer.setRefreshing(true);
     }
 
-    private void setupRecyclerView() {
+    void setupRecyclerView() {
         mRecyclerView.addItemDecoration(new Divider(
                 //分割线宽1dp
                 UIUtils.dp2px(getActivity(), 1),
@@ -60,9 +56,7 @@ public class PinnedFragment extends Fragment {
             @Override
             protected void onLoadMore(Void v) {
                 mRecyclerView.postDelayed(() -> {
-                    for (int i = 1; i <= 105; i++) {
-                        mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
-                    }
+                    for (int i = 1; i <= 105; i++) mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
                     setList(mSampleList);
                     mSwipeContainer.setRefreshing(false);
                 }, 1500);
@@ -76,11 +70,9 @@ public class PinnedFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initData() {
+    void initData() {
         mSampleList = new ArrayList<>();
-        for (int i = 1; i <= 105; i++) {
-            mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
-        }
+        for (int i = 1; i <= 105; i++) mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
         mAdapter.setList(mSampleList);
         mSwipeContainer.setRefreshing(false);
     }

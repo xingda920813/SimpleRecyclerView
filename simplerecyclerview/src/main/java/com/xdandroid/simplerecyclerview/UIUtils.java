@@ -3,10 +3,6 @@ package com.xdandroid.simplerecyclerview;
 import android.content.*;
 import android.support.v7.widget.*;
 
-/**
- * Created by XingDa on 2016/05/27.
- */
-
 public class UIUtils {
 
     public static int px2dp(Context context, float pxValue) {
@@ -19,12 +15,8 @@ public class UIUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    static void registerObserver(SimpleRecyclerView recyclerView, RecyclerView.AdapterDataObserver observer) {
-        try {
-            recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
-        } catch (Exception ignored) {}
-        try {
-            recyclerView.getAdapter().registerAdapterDataObserver(observer);
-        } catch (Exception ignored) {}
+    protected static void registerObserver(SimpleRecyclerView recyclerView, RecyclerView.AdapterDataObserver observer) {
+        try {recyclerView.getAdapter().unregisterAdapterDataObserver(observer);} catch (Exception ignored) {}
+        try {recyclerView.getAdapter().registerAdapterDataObserver(observer);} catch (Exception ignored) {}
     }
 }

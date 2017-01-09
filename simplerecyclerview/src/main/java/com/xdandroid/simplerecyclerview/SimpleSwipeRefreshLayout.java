@@ -6,9 +6,6 @@ import android.support.design.widget.*;
 import android.support.v4.widget.*;
 import android.util.*;
 
-/**
- * Created by XingDa on 2016/5/9.
- */
 public class SimpleSwipeRefreshLayout extends SwipeRefreshLayout implements AppBarLayout.OnOffsetChangedListener {
 
     public SimpleSwipeRefreshLayout(Context context) {

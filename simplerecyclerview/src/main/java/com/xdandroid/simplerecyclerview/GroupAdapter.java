@@ -70,8 +70,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
                 @Override
                 public boolean onLongClick(View v) {
                     int adapterPosition = holder.getAdapterPosition();
-                    return adapterPosition != RecyclerView.NO_POSITION && mOnGroupItemLongClickListener
-                            .onItemLongClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
+                    return adapterPosition != RecyclerView.NO_POSITION && mOnGroupItemLongClickListener.onItemLongClick(holder, holder.itemView, adapterPosition, getViewType(adapterPosition));
                 }
             });
         }
@@ -83,11 +82,9 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
      * @return TitleChildItemBean {Title title;  int titleOrder;}
      */
     public TitleChildItemBean<Title, Void> getTitleWithOrder(int positionInRV_viewType_title) {
-        for (Map.Entry<Integer, Integer> entry : mTitleOrderPositionMap.entrySet()) {
-            if (entry.getValue().equals(positionInRV_viewType_title)) {
+        for (Map.Entry<Integer, Integer> entry : mTitleOrderPositionMap.entrySet())
+            if (entry.getValue().equals(positionInRV_viewType_title))
                 return new TitleChildItemBean<>(mGroupList.get(entry.getKey()).title, entry.getKey(), null, -1);
-            }
-        }
         return null;
     }
 

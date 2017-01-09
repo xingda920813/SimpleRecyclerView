@@ -35,7 +35,7 @@ public class DimensionCalculator {
    * {@link MarginLayoutParams#leftMargin} is equivalent to {@link Rect#left}, etc.
    * @param marginLayoutParams margins to populate the Rect with
    */
-  private void initMarginRect(Rect marginRect, MarginLayoutParams marginLayoutParams) {
+  protected void initMarginRect(Rect marginRect, MarginLayoutParams marginLayoutParams) {
       marginRect.set(
         marginLayoutParams.leftMargin,
         marginLayoutParams.topMargin,

@@ -12,7 +12,7 @@ import java.util.*;
 
 public abstract class BasicAdapter extends Adapter {
 
-    private List<SampleBean> mSampleList;
+    List<SampleBean> mSampleList;
 
     public void setList(List<SampleBean> sampleList) {
         mSampleList = sampleList;

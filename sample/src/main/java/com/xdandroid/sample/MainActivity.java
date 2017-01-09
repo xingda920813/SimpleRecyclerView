@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                return new FragmentUtils().instantiateItem(getSupportFragmentManager(), container, getItem(position), getPageTitle(position)
-                        .toString());
+                return new FragmentUtils().instantiateItem(getSupportFragmentManager(),
+                        container, getItem(position), getPageTitle(position).toString());
             }
 
             @Override

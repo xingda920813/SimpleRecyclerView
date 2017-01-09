@@ -3,11 +3,8 @@ package com.xdandroid.sample.util;
 import android.support.v4.app.*;
 import android.view.*;
 
-/**
- * Created by xingda on 16-8-10.
- */
-
 public class FragmentUtils {
+
     public Fragment replace(FragmentManager fm, int flResId, Fragment getInstance) {
         String fragmentName = getInstance.getClass().getSimpleName();
         FragmentTransaction transaction = fm.beginTransaction();

@@ -12,22 +12,21 @@ import com.xdandroid.simplerecyclerview.stickyheaders.util.*;
 
 public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration {
 
-  private final StickyRecyclerHeadersAdapter mAdapter;
-  private final ItemVisibilityAdapter mVisibilityAdapter;
-  private final SparseArray<Rect> mHeaderRects = new SparseArray<>();
-  private final HeaderProvider mHeaderProvider;
-  private final OrientationProvider mOrientationProvider;
-  private final HeaderPositionCalculator mHeaderPositionCalculator;
-  private final HeaderRenderer mRenderer;
-  private final DimensionCalculator mDimensionCalculator;
+  protected StickyRecyclerHeadersAdapter mAdapter;
+  protected ItemVisibilityAdapter mVisibilityAdapter;
+  protected SparseArray<Rect> mHeaderRects = new SparseArray<>();
+  protected HeaderProvider mHeaderProvider;
+  protected OrientationProvider mOrientationProvider;
+  protected HeaderPositionCalculator mHeaderPositionCalculator;
+  protected HeaderRenderer mRenderer;
+  protected DimensionCalculator mDimensionCalculator;
 
   /**
    * The following field is used as a buffer for internal calculations. Its sole purpose is to avoid
    * allocating new Rect every time we need one.
    */
-  private final Rect mTempRect = new Rect();
+  protected Rect mTempRect = new Rect();
 
-  // TODO: Consider passing in orientation to simplify orientation accounting within calculation
   public StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter) {
     this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator(), null);
   }
@@ -36,20 +35,19 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     this(adapter, new LinearLayoutOrientationProvider(), new DimensionCalculator(), visibilityAdapter);
   }
 
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
+  protected StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
                                           DimensionCalculator dimensionCalculator, ItemVisibilityAdapter visibilityAdapter) {
     this(adapter, orientationProvider, dimensionCalculator, new HeaderRenderer(orientationProvider),
         new HeaderViewCache(adapter, orientationProvider), visibilityAdapter);
   }
 
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
+  protected StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, OrientationProvider orientationProvider,
                                           DimensionCalculator dimensionCalculator, HeaderRenderer headerRenderer, HeaderProvider headerProvider, ItemVisibilityAdapter visibilityAdapter) {
     this(adapter, headerRenderer, orientationProvider, dimensionCalculator, headerProvider,
-        new HeaderPositionCalculator(adapter, headerProvider, orientationProvider,
-            dimensionCalculator), visibilityAdapter);
+        new HeaderPositionCalculator(adapter, headerProvider, orientationProvider, dimensionCalculator), visibilityAdapter);
   }
 
-  private StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, HeaderRenderer headerRenderer,
+  protected StickyRecyclerHeadersDecoration(StickyRecyclerHeadersAdapter adapter, HeaderRenderer headerRenderer,
                                           OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator, HeaderProvider headerProvider,
                                           HeaderPositionCalculator headerPositionCalculator, ItemVisibilityAdapter visibilityAdapter) {
     mAdapter = adapter;
@@ -65,9 +63,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
   public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
     int itemPosition = parent.getChildAdapterPosition(view);
-    if (itemPosition == RecyclerView.NO_POSITION) {
-        return;
-    }
+    if (itemPosition == RecyclerView.NO_POSITION) return;
     if (mHeaderPositionCalculator.hasNewHeader(itemPosition, mOrientationProvider.isReverseLayout(parent))) {
       View header = getHeaderView(parent, itemPosition);
       setItemOffsetsForHeader(outRect, header, mOrientationProvider.getOrientation(parent));
@@ -81,7 +77,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
    * @param header      view used to calculate offset for the item
    * @param orientation used to calculate offset for the item
    */
-  private void setItemOffsetsForHeader(Rect itemOffsets, View header, int orientation) {
+  protected void setItemOffsetsForHeader(Rect itemOffsets, View header, int orientation) {
     mDimensionCalculator.initMargins(mTempRect, header);
     if (orientation == LinearLayoutManager.VERTICAL) {
       itemOffsets.top = header.getHeight() + mTempRect.top + mTempRect.bottom;
@@ -95,16 +91,12 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     super.onDrawOver(canvas, parent, state);
 
     final int childCount = parent.getChildCount();
-    if (childCount <= 0 || mAdapter.getItemCount() <= 0) {
-      return;
-    }
+    if (childCount <= 0 || mAdapter.getItemCount() <= 0) return;
 
     for (int i = 0; i < childCount; i++) {
       View itemView = parent.getChildAt(i);
       int position = parent.getChildAdapterPosition(itemView);
-      if (position == RecyclerView.NO_POSITION) {
-          continue;
-      }
+      if (position == RecyclerView.NO_POSITION) continue;
 
       boolean hasStickyHeader = mHeaderPositionCalculator.hasStickyHeader(itemView, mOrientationProvider.getOrientation(parent), position);
       if (hasStickyHeader || mHeaderPositionCalculator.hasNewHeader(position, mOrientationProvider.isReverseLayout(parent))) {
@@ -133,9 +125,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
       Rect rect = mHeaderRects.get(mHeaderRects.keyAt(i));
       if (rect.contains(x, y)) {
         int position = mHeaderRects.keyAt(i);
-        if (mVisibilityAdapter == null || mVisibilityAdapter.isPositionVisible(position)) {
-          return position;
-        }
+        if (mVisibilityAdapter == null || mVisibilityAdapter.isPositionVisible(position)) return position;
       }
     }
     return -1;

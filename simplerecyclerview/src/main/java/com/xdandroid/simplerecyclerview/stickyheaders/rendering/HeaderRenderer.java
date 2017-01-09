@@ -13,21 +13,20 @@ import com.xdandroid.simplerecyclerview.stickyheaders.util.*;
  */
 public class HeaderRenderer {
 
-  private final DimensionCalculator mDimensionCalculator;
-  private final OrientationProvider mOrientationProvider;
+  protected DimensionCalculator mDimensionCalculator;
+  protected OrientationProvider mOrientationProvider;
 
   /**
    * The following field is used as a buffer for internal calculations. Its sole purpose is to avoid
    * allocating new Rect every time we need one.
    */
-  private final Rect mTempRect = new Rect();
+  protected Rect mTempRect = new Rect();
 
   public HeaderRenderer(OrientationProvider orientationProvider) {
     this(orientationProvider, new DimensionCalculator());
   }
 
-  private HeaderRenderer(OrientationProvider orientationProvider,
-      DimensionCalculator dimensionCalculator) {
+  protected HeaderRenderer(OrientationProvider orientationProvider, DimensionCalculator dimensionCalculator) {
     mOrientationProvider = orientationProvider;
     mDimensionCalculator = dimensionCalculator;
   }
@@ -67,7 +66,7 @@ public class HeaderRenderer {
    * @param recyclerView for which to provide a header
    * @param header       for clipping
    */
-  private void initClipRectForHeader(Rect clipRect, RecyclerView recyclerView, View header) {
+  protected void initClipRectForHeader(Rect clipRect, RecyclerView recyclerView, View header) {
     mDimensionCalculator.initMargins(clipRect, header);
     if (mOrientationProvider.getOrientation(recyclerView) == LinearLayout.VERTICAL) {
       clipRect.set(

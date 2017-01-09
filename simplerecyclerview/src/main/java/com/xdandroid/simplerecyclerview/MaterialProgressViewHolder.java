@@ -6,10 +6,6 @@ import android.widget.*;
 
 import com.xdandroid.materialprogressview.*;
 
-/**
- * Created by XingDa on 2016/05/29.
- */
-
 public class MaterialProgressViewHolder extends RecyclerView.ViewHolder {
 
     protected MaterialProgressView progressBar;

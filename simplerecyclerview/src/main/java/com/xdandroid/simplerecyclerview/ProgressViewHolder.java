@@ -4,10 +4,6 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 
-/**
- * Created by XingDa on 2016/05/29.
- */
-
 public class ProgressViewHolder extends RecyclerView.ViewHolder {
 
     protected ProgressBar progressBar;

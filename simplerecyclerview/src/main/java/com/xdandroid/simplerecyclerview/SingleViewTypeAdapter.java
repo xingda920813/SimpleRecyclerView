@@ -5,10 +5,6 @@ import android.view.*;
 
 import java.util.*;
 
-/**
- * Created by XingDa on 2016/05/29.
- */
-
 public abstract class SingleViewTypeAdapter<T> extends Adapter {
 
     protected List<T> mList;
@@ -73,8 +69,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
                     @Override
                     public boolean onLongClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
-                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickListener
-                                .onItemLongClick(holder, holder.itemView, adapterPosition, 0);
+                        return adapterPosition != RecyclerView.NO_POSITION && mOnItemLongClickListener.onItemLongClick(holder, holder.itemView, adapterPosition, 0);
                     }
                 });
             }
@@ -206,10 +201,10 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
         return mList;
     }
 
-    @Deprecated protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType) {throw new UnsupportedOperationException();}
-    @Deprecated protected final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType) {throw new UnsupportedOperationException();}
-    @Deprecated protected final int getViewType(int position) {throw new UnsupportedOperationException();}
-    @Deprecated protected final int getCount() {throw new UnsupportedOperationException();}
+    @Deprecated protected native final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType);
+    @Deprecated protected native final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType);
+    @Deprecated protected native final int getViewType(int position);
+    @Deprecated protected native final int getCount();
     @Deprecated public final void onAdded() {super.onAdded();}
     @Deprecated public final void onAdded(int position) {super.onAdded(position);}
     @Deprecated public final void onAddedAll(int newDataSize) {super.onAddedAll(newDataSize);}

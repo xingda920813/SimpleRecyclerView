@@ -21,10 +21,9 @@ public class LinearLayoutOrientationProvider implements OrientationProvider {
     return ((LinearLayoutManager) layoutManager).getReverseLayout();
   }
 
-  private void throwIfNotLinearLayoutManager(RecyclerView.LayoutManager layoutManager){
+  protected void throwIfNotLinearLayoutManager(RecyclerView.LayoutManager layoutManager){
     if (!(layoutManager instanceof LinearLayoutManager)) {
-      throw new IllegalStateException("StickyListHeadersDecoration can only be used with a " +
-          "LinearLayoutManager.");
+      throw new IllegalStateException("StickyListHeadersDecoration can only be used with a LinearLayoutManager.");
     }
   }
 }

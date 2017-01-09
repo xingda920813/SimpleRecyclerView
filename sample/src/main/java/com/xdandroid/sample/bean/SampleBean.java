@@ -2,9 +2,6 @@ package com.xdandroid.sample.bean;
 
 import java.io.*;
 
-/**
- * Created by XingDa on 2016/5/11.
- */
 public class SampleBean implements Serializable {
 
     public SampleBean(int type, String title, String content, String message, int imageResId) {

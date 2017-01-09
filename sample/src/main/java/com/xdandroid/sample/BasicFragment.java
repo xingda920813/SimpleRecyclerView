@@ -17,10 +17,10 @@ import java.util.*;
 
 public class BasicFragment extends Fragment {
 
-    private SimpleSwipeRefreshLayout mSwipeContainer;
-    private SimpleRecyclerView mRecyclerView;
-    private BasicAdapter mAdapter;
-    private List<SampleBean> mSampleList;
+    SimpleSwipeRefreshLayout mSwipeContainer;
+    SimpleRecyclerView mRecyclerView;
+    BasicAdapter mAdapter;
+    List<SampleBean> mSampleList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class BasicFragment extends Fragment {
         initData();
     }
 
-    private void setupSwipeContainer(View fragmentView) {
+    void setupSwipeContainer(View fragmentView) {
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent);
         mSwipeContainer.setOnRefreshListener(this::initData);
 
@@ -47,7 +47,7 @@ public class BasicFragment extends Fragment {
         mRecyclerView.setLoadingView(fragmentView.findViewById(R.id.loading_view));
     }
 
-    private void setupRecyclerView() {
+    void setupRecyclerView() {
         //添加Divider
         mRecyclerView.addItemDecoration(new Divider(
                 //分割线宽1dp
@@ -115,7 +115,7 @@ public class BasicFragment extends Fragment {
         //mRecyclerView.hideErrorView();
     }
 
-    private void initData() {
+    void initData() {
         new Handler().postDelayed(() -> {
             mSampleList = new ArrayList<>();
             int j = 0;

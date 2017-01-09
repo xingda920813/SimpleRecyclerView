@@ -6,7 +6,6 @@ import android.support.v7.widget.*;
  * 必须配合LinearLayoutManager使用
  * Created by xingda on 16-8-12.
  */
-
 public abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListener {
 
     /**

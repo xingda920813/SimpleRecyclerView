@@ -14,8 +14,8 @@ import java.util.*;
 
 public class GridFragment extends Fragment {
 
-    private SimpleRecyclerView mRecyclerView;
-    private GridAdapter mAdapter;
+    SimpleRecyclerView mRecyclerView;
+    GridAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class GridFragment extends Fragment {
         initData();
     }
 
-    private void setupRecyclerView() {
+    void setupRecyclerView() {
         mAdapter = new GridAdapter() {
 
             protected void onLoadMore(Void v) {

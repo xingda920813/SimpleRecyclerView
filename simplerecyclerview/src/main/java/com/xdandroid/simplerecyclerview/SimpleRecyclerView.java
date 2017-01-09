@@ -7,9 +7,6 @@ import android.view.*;
 
 import com.xdandroid.simplerecyclerview.stickyheaders.*;
 
-/**
- * Created by XingDa on 2016/5/9.
- */
 public class SimpleRecyclerView extends RecyclerView {
 
     protected boolean mHasAddedItemDecor, mHasRegisteredEmptyObserver;

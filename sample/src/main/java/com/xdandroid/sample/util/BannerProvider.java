@@ -2,10 +2,6 @@ package com.xdandroid.sample.util;
 
 import com.xdandroid.sample.*;
 
-/**
- * Created by XingDa on 2016/08/12.
- */
-
 public class BannerProvider {
 
     public static String getMessage(int position) {

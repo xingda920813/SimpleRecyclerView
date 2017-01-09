@@ -14,7 +14,7 @@ import java.util.*;
 
 public abstract class BasicHeaderAdapter extends Adapter {
 
-    private List<SampleBean> mSampleList;
+    List<SampleBean> mSampleList;
     public static final int TYPE_HEADER = 300;
 
     public void setList(List<SampleBean> sampleList) {
