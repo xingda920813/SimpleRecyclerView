@@ -19,6 +19,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
+    protected boolean mCanScrollVertically = true; //默认为纵向列表
     @ColorInt protected int[] mColorSchemeColors;
     @ColorInt protected int mProgressBackgroundColor;
 
@@ -73,7 +74,9 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return onViewHolderCreate(parent, viewType);
         } else {
             FrameLayout frameLayout = new FrameLayout(parent.getContext());
-            ViewGroup.MarginLayoutParams outerParams = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+            int outerWidth = mCanScrollVertically ? FrameLayout.LayoutParams.MATCH_PARENT : FrameLayout.LayoutParams.WRAP_CONTENT;
+            int outerHeight = mCanScrollVertically ? FrameLayout.LayoutParams.WRAP_CONTENT : FrameLayout.LayoutParams.MATCH_PARENT;
+            FrameLayout.LayoutParams outerParams = new FrameLayout.LayoutParams(outerWidth, outerHeight, Gravity.CENTER);
             frameLayout.setLayoutParams(outerParams);
             if (mUseMaterialProgress) {
                 MaterialProgressView materialProgressView = new MaterialProgressView(parent.getContext());
@@ -216,6 +219,13 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 return getItemSpanSizeForGrid(position, viewType, spanCount);
             }
         };
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager lm = recyclerView.getLayoutManager();
+        if (lm != null) mCanScrollVertically = lm.canScrollVertically();
     }
 
     public void onListSet() {
