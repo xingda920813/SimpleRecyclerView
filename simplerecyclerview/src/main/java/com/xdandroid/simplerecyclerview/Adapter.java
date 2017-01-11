@@ -125,7 +125,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (position == count) {
+        if (position == getCount()) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
