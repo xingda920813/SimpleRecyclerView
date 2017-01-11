@@ -158,7 +158,7 @@ public abstract class GroupAdapter<Title, ChildItem> extends Adapter {
     }
 
     public void setList(List<Group<Title, ChildItem>> groupList) {
-        this.mGroupList = groupList;
+        mGroupList = groupList;
         mTitleOrderPositionMap.clear();
         notifyDataSetChanged();
         setLoadingFalse();

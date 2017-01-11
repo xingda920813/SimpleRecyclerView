@@ -37,7 +37,7 @@ public class SimpleSwipeRefreshLayout extends SwipeRefreshLayout implements AppB
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        this.setEnabled(verticalOffset == 0);
+        setEnabled(verticalOffset == 0);
     }
 
     @Override

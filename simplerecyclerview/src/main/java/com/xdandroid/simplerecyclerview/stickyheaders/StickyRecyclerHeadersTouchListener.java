@@ -37,8 +37,8 @@ public class StickyRecyclerHeadersTouchListener implements RecyclerView.OnItemTo
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
-        if (this.mOnHeaderClickListener != null) {
-            boolean tapDetectorResponse = this.mTapDetector.onTouchEvent(e);
+        if (mOnHeaderClickListener != null) {
+            boolean tapDetectorResponse = mTapDetector.onTouchEvent(e);
             if (tapDetectorResponse) {
                 // Don't return false if a single tap is detected
                 return true;

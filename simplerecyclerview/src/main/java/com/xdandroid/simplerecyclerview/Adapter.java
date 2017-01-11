@@ -20,29 +20,29 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @ColorInt protected int mProgressBackgroundColor;
 
     public void setThreshold(int threshold) {
-        this.mThreshold = threshold;
+        mThreshold = threshold;
     }
 
     /**
      * 设置是否使用 SwipeRefreshLayout 样式的加载更多转圈, 同时设置转圈的颜色变化序列.
      */
     public void setUseMaterialProgress(boolean useMaterialProgress, @ColorInt int[] colors) {
-        this.mUseMaterialProgress = useMaterialProgress;
-        this.mColorSchemeColors = colors;
+        mUseMaterialProgress = useMaterialProgress;
+        mColorSchemeColors = colors;
     }
 
     /**
      * 设置转圈所在圆形突起的背景色.
      */
     public void setProgressBackgroundColor(@ColorInt int color) {
-        this.mProgressBackgroundColor = color;
+        mProgressBackgroundColor = color;
     }
 
     /**
      * 设置转圈的颜色变化序列.
      */
     public void setColorSchemeColors(@ColorInt int[] colors) {
-        this.mColorSchemeColors = colors;
+        mColorSchemeColors = colors;
     }
 
     protected abstract void onLoadMore(Void please_make_your_adapter_class_as_abstract_class);
@@ -63,7 +63,7 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     protected abstract int getCount();
     protected abstract int getItemSpanSizeForGrid(int position, int viewType, int spanCount);
 
-    @SuppressWarnings("ResourceType")
+    @SuppressWarnings({"ResourceType", "deprecation"})
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType != 65535) {
@@ -120,11 +120,12 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (!mIsLoading && getCount() > 0 && position >= getCount() - mThreshold && hasMoreElements(null)) {
+        int count = getCount();
+        if (!mIsLoading && count > 0 && position >= count - mThreshold && hasMoreElements(null)) {
             mIsLoading = true;
             onLoadMore(null);
         }
-        if (position == getCount()) {
+        if (position == count) {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
@@ -186,21 +187,21 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     protected abstract class ProgressSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
 
-        protected int spanCount;
+        protected int mSpanCount;
 
         protected ProgressSpanSizeLookup(int spanCount) {
-            this.spanCount = spanCount;
+            mSpanCount = spanCount;
         }
 
         @Override
         public int getSpanSize(int position) {
             int viewType = getItemViewType(position);
             if (viewType == 65535) {
-                return spanCount;
+                return mSpanCount;
             } else {
-                int itemSpanSize = getItemSpanSize(position, viewType, spanCount);
+                int itemSpanSize = getItemSpanSize(position, viewType, mSpanCount);
                 if (itemSpanSize < 1) itemSpanSize = 1;
-                if (itemSpanSize > spanCount) itemSpanSize = spanCount;
+                if (itemSpanSize > mSpanCount) itemSpanSize = mSpanCount;
                 return itemSpanSize;
             }
         }
@@ -230,11 +231,12 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void onAdded() {
-        if (getCount() <= 1) {
+        int count = getCount();
+        if (count <= 1) {
             onListSet();
             return;
         }
-        notifyItemInserted(getCount() - 1);
+        notifyItemInserted(count - 1);
         setLoadingFalse();
     }
 
@@ -261,11 +263,12 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void onRemovedLast() {
-        if (getCount() <= 0) {
+        int count = getCount();
+        if (count <= 0) {
             onListSet();
             return;
         }
-        notifyItemRemoved(getCount());
+        notifyItemRemoved(count);
         setLoadingFalse();
     }
 
@@ -298,11 +301,12 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void onAddedAll(int newDataSize) {
-        if (getCount() <= newDataSize) {
+        int count = getCount();
+        if (count <= newDataSize) {
             onListSet();
             return;
         }
-        notifyItemRangeInserted(getCount() - newDataSize, newDataSize);
+        notifyItemRangeInserted(count - newDataSize, newDataSize);
         setLoadingFalse();
     }
 }

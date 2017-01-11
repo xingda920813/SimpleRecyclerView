@@ -82,7 +82,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
     }
 
     public void setList(List<T> list) {
-        this.mList = list;
+        mList = list;
         notifyDataSetChanged();
         setLoadingFalse();
     }
@@ -201,10 +201,10 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
         return mList;
     }
 
-    @Deprecated protected native final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup parent, int viewType);
-    @Deprecated protected native final void onViewHolderBind(RecyclerView.ViewHolder holder, int position, int viewType);
-    @Deprecated protected native final int getViewType(int position);
-    @Deprecated protected native final int getCount();
+    @Deprecated protected final RecyclerView.ViewHolder onViewHolderCreate(ViewGroup unused, int i0) {throw new UnsupportedOperationException();}
+    @Deprecated protected final void onViewHolderBind(RecyclerView.ViewHolder unused, int i0, int i1) {throw new UnsupportedOperationException();}
+    @Deprecated protected final int getViewType(int unused) {throw new UnsupportedOperationException();}
+    @Deprecated protected final int getCount() {throw new UnsupportedOperationException();}
     @Deprecated public final void onAdded() {super.onAdded();}
     @Deprecated public final void onAdded(int position) {super.onAdded(position);}
     @Deprecated public final void onAddedAll(int newDataSize) {super.onAddedAll(newDataSize);}

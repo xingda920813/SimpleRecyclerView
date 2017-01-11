@@ -187,10 +187,10 @@ public class HeaderPositionCalculator {
     /**
      * Determines if an item is obscured by a header
      *
-     * @param parent
+     * @param parent      the RecyclerView
      * @param item        to determine if obscured by header
      * @param header      that might be obscuring the item
-     * @param orientation of the {@link RecyclerView}
+     * @param orientation of the RecyclerView
      * @return true if the item view is obscured by the header view
      */
     protected boolean itemIsObscuredByHeader(RecyclerView parent, View item, View header, int orientation) {

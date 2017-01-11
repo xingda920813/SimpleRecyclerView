@@ -98,12 +98,12 @@ public class SimpleRecyclerView extends RecyclerView {
     }
 
     public void setEmptyView(View emptyView) {
-        this.mEmptyView = emptyView;
+        mEmptyView = emptyView;
         emptyObserver.onChanged();
     }
 
     public void showErrorView(View errorView) {
-        this.mErrorView = errorView;
+        mErrorView = errorView;
         if (errorView == null) return;
         errorView.setVisibility(View.VISIBLE);
         setVisibility(View.GONE);
@@ -124,7 +124,7 @@ public class SimpleRecyclerView extends RecyclerView {
      * @param loadingView 通过findViewById找到的LoadingView.
      */
     public void setLoadingView(View loadingView) {
-        this.mLoadingView = loadingView;
+        mLoadingView = loadingView;
     }
 
     /**
