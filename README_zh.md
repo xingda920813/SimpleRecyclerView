@@ -1,25 +1,19 @@
 # SimpleRecyclerView
-
-[中文 README](https://github.com/xingda920813/SimpleRecyclerView/blob/master/README_zh.md)
-
-### An enhancement to RecyclerView and SwipeRefreshLayout. Integrated timehop/sticky-headers-recyclerview for sticky headers.
+###对RecyclerView和SwipeRefreshLayout的简单封装。固定Header部分使用了timehop/sticky-headers-recyclerview。
 
 [https://github.com/timehop/sticky-headers-recyclerview](https://github.com/timehop/sticky-headers-recyclerview "timehop/sticky-headers-recyclerview")
 
 ![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/video.gif)
 
-### Nain Characters:
+###主要特性：
+#### 1. 下拉刷新：
+对SwipeRefreshLayout的封装。相对于原生的SwipeRefreshLayout，解决了2个问题：
 
-#### 1. Pull-To-Refresh
+- 在某些版本的android.support库中，SwipeRefreshLayout与AppbarLayout滑动冲突。向下拉RecyclerView时，会立即出现下拉刷新，而不能将列表往下拉。
 
-An enhancement to SwipeRefreshLayout in 2 aspects:
+- 不能在onCreate方法里调用setRefreshing(true)显示加载的转圈动画。
 
-- In some versions of android.support library, SwipeRefreshLayout has
-sliding conflict with AppbarLayout. When you pull down RecyclerView, SwipeRefreshLayout will appear instantly, preventing you from pulling down the list.
-
-- Now you can invoke setRefreshing(true) to show loading progress in onCreate() while the official's can not.
-
-#### 2.Load more
+#### 2.加载更多
 
 - 距离底部还有一定数量(THRESHOLD)的item时，自动加载更多的数据(THRESHOLD值可设置)
 
@@ -29,27 +23,25 @@ sliding conflict with AppbarLayout. When you pull down RecyclerView, SwipeRefres
 
 - 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义转圈的颜色和转圈所在圆形突起的背景色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
 
-#### 3.Loading View) / Empty View) / Error View
-
-#### 4.onItemClickListener / onItemLongClickListener
-
-#### 5.Sticky headers
+#### 3.加载中(Loading View)/空数据(Empty View)/错误页面(Error View)的显示
+#### 4.onItemClickListener/onItemLongClickListener
+#### 5.上下滑动时的固定Header
 
 - 可设置任意数量的固定Header种类
 
-#### 6.Item divider support
+#### 6.Item分割线支持
 
-- Customizable divider width and color
+- 可自定义分割线的粗细和颜色
 
 - 可自定义分割线左侧留白区域（不绘制分割线）的长度，共可自定义上、下、左、右4个offset
 
-- Supports horizontal / vertical LinearLayoutManager
+- 横向/纵向LinearLayoutManager均支持
 
-#### 7.Item animation
+#### 7.Item 动画
 
-- Material Design animation when initing RecyclerView, adding / modifying / deleting items
+- 初始化RecyclerView、添加/修改/删除条目时具有Material Design动画
 
-#### 8.Support for group display
+#### 8.分组显示Title支持
 
 #### 9.得到已滑动的距离和还能向下/向右滑动多少
 
@@ -58,28 +50,27 @@ SimpleRecyclerView中增加了获得这2个距离的方法;
 同时, 这2个距离在SimpleOnScrollListener.onScrolled中作为参数传入
 
 ```
-//Scrolled distance (px)
+//RecyclerView已滑动的距离(px)
 int SimpleRecyclerView.getScrolledDistance();
 
-//Distance to end (px)
+//还能向下/向右滑动多少(px)
 int SimpleRecyclerView.getDistanceToEnd();
 
 abstract class SimpleOnScrollListener extends RecyclerView.OnScrollListener {
   abstract void onScrollStateChanged(int scrolledDistance, int distanceToEnd, int newState);
   /**
-  * @param scrolledDistance Scrolled distance (px)
-  * @param distanceToEnd Distance to end (px)
-  * @param velocity Current scroll velocity (positive or negative indicates the direction)
+  * @param scrolledDistance 已滑动的距离(px)
+  * @param distanceToEnd 还能向下/向右滑动多少(px)
+  * @param velocity 当前滑动速度(正负表示方向)
   */
   abstract void onScrolled(int scrolledDistance, int distanceToEnd, int velocity);
 }
 ```
 
-## Import
+## 引入
+### 1.添加二进制
 
-### 1.Add binary
-
-In build.gradle, add
+build.gradle中添加
 
     compile 'com.xdandroid:simplerecyclerview:+'
 
