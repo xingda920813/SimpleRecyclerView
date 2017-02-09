@@ -8,7 +8,7 @@
 
 ![Alt text](https://raw.githubusercontent.com/xingda920813/SimpleRecyclerView/master/video.gif)
 
-### Nain Characters:
+### Main Characters:
 
 #### 1. Pull-To-Refresh
 
