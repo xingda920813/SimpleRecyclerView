@@ -21,10 +21,10 @@
 
 - 除了LinearLayoutManager，同样支持GridLayoutManager的加载更多动画
 
-- 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义转圈的颜色和转圈所在圆形突起的背景色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
+- 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（SwipeRefreshLayout 样式与系统版本无关，可自定义转圈的颜色和转圈所在圆形突起的背景色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
 
 #### 3.加载中(Loading View)/空数据(Empty View)/错误页面(Error View)的显示
-#### 4.onItemClickListener/onItemLongClickListener
+#### 4.OnItemClickListener / OnItemLongClickListener
 #### 5.上下滑动时的固定Header
 
 - 可设置任意数量的固定Header种类
@@ -86,8 +86,8 @@ build.gradle中添加
 
 .
 
-    recyclerView.setAdapter(adapter);				//先把前面构建好的adapter对象设置给RecyclerView
-    void Adapter.setList(List<${JavaBean}> list);	//再调用setList设置数据
+    recyclerView.setAdapter(adapter);
+    void Adapter.setList(List<${JavaBean}> list);
 
 ### 3.布局文件
 
@@ -188,7 +188,7 @@ build.gradle中添加
 
 先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后 :
 
-**对于SingleViewTypeAdapter**，不要对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，而是直接调用void SingleViewTypeAdapter.addAll(List<\E>)方法即可，SingleViewTypeAdapter会帮您完成对数据集的操作。。
+**对于SingleViewTypeAdapter**，不要对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，而是直接调用void SingleViewTypeAdapter.addAll(List<\E>)方法即可，SingleViewTypeAdapter会帮您完成对数据集的操作。
 
 **对于Adapter**，先对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，再调用void Adapter.onAddedAll(int newDataSize)方法来通知Adapter有数据添加到集合。
 

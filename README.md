@@ -2,7 +2,7 @@
 
 [中文 README](https://github.com/xingda920813/SimpleRecyclerView/blob/master/README_zh.md)
 
-### An enhancement to RecyclerView and SwipeRefreshLayout. Integrated timehop/sticky-headers-recyclerview for sticky headers.
+### An enhancement to RecyclerView and SwipeRefreshLayout. Integrated with timehop/sticky-headers-recyclerview for sticky headers.
 
 [https://github.com/timehop/sticky-headers-recyclerview](https://github.com/timehop/sticky-headers-recyclerview "timehop/sticky-headers-recyclerview")
 
@@ -21,27 +21,27 @@ sliding conflict with AppbarLayout. When you pull down RecyclerView, SwipeRefres
 
 #### 2.Load more
 
-- 距离底部还有一定数量(THRESHOLD)的item时，自动加载更多的数据(THRESHOLD值可设置)
+- Automatically load more data when there are still ${THRESHOLD} items to the bottom (THRESHOLD customizable)
 
-- 若滑到最底部，加载仍未完成，则显示加载的转圈动画
+- If user slides to the bottom and the loading process is still incomplete, the loading progress animation will be displayed.
 
-- 除了LinearLayoutManager，同样支持GridLayoutManager的加载更多动画
+- LayoutManager irrelevant
 
-- 转圈SwipeRefreshLayout样式（仿知乎）和ProgressBar样式双样式可选（第一张图为ProgressBar样式，第二张图为SwipeRefreshLayout样式。SwipeRefreshLayout 样式与系统版本无关，可自定义转圈的颜色和转圈所在圆形突起的背景色；ProgressBar样式因系统版本而异，仅在 API 21 以上的 Android 系统中具有 Material Design 风格。）
+- 2 indicator styles available: ProgressBar and SwipeRefreshLayout (The SwipeRefreshLayout style is independent of the Android version, with indicator color and background color Customizable. The ProgressBar style is dependent on the Android version. Its Material Design style is only available in API 21+.)
 
-#### 3.Loading View) / Empty View) / Error View
+#### 3.Loading View / Empty View / Error View
 
-#### 4.onItemClickListener / onItemLongClickListener
+#### 4.OnItemClickListener / OnItemLongClickListener
 
 #### 5.Sticky headers
 
-- 可设置任意数量的固定Header种类
+- Supports any number of fixed header types
 
 #### 6.Item divider support
 
 - Customizable divider width and color
 
-- 可自定义分割线左侧留白区域（不绘制分割线）的长度，共可自定义上、下、左、右4个offset
+- You can customize the length of the blank area on the left / top / right / bottom of the divider (divider will not draw in blank area)
 
 - Supports horizontal / vertical LinearLayoutManager
 
@@ -51,11 +51,11 @@ sliding conflict with AppbarLayout. When you pull down RecyclerView, SwipeRefres
 
 #### 8.Support for group display
 
-#### 9.得到已滑动的距离和还能向下/向右滑动多少
+#### 9.Get scrolled distance and distance to end
 
-SimpleRecyclerView中增加了获得这2个距离的方法;
+SimpleRecyclerView added 2 methods to get these distances;
 
-同时, 这2个距离在SimpleOnScrollListener.onScrolled中作为参数传入
+Meanwhile, these two distances are passed as parameters in SimpleOnScrollListener.onScrolled.
 
 ```
 //Scrolled distance (px)
@@ -83,22 +83,22 @@ In build.gradle, add
 
     compile 'com.xdandroid:simplerecyclerview:+'
 
-### 2.基本用法与原生RecyclerView和SwipeRefreshLayout相同
+### 2.Basic usage is the same as official RecyclerView and SwipeRefreshLayout
 
-- Simple* 类直接继承自相应的原生控件
+- Simple* classes inherit from the official widgets
 
-- 用法可参考Demo
+- Please refer to the demo for usage
 
-- 有多种viewType（Adapter继承com.xdandroid.simplerecyclerview.Adapter）时，为Adapter设置数据源的方法与原生RecyclerView.Adapter相同，可通过构造方法传入，也可在Adapter里建立自己的设置数据的方法，在方法里面为数据对象赋值并刷新UI。
+- If you have multiple viewType (Adapter inherits com.xdandroid.simplerecyclerview.Adapter), The ways of setting data to Adapter are the same as RecyclerView.Adapter. You can pass the data set by the constructor, or you can create a method called setList or so, setting data set to the Adapter and refresh UI using notifyDataSetChanged().
 
-- 只有1种viewType（Adapter继承SingleViewTypeAdapter<${JavaBean}>）时，为Adapter设置数据源list的方法为：
+- If there is only one viewType (Adapter inherits SingleViewTypeAdapter<${JavaBean}>), the method of setting data list to Adapter is:
 
 .
 
-    recyclerView.setAdapter(adapter);				//先把前面构建好的adapter对象设置给RecyclerView
-    void Adapter.setList(List<${JavaBean}> list);	//再调用setList设置数据
+    recyclerView.setAdapter(adapter);
+    void Adapter.setList(List<${JavaBean}> list);
 
-### 3.布局文件
+### 3.Layout XML
 
 	<com.xdandroid.simplerecyclerview.SimpleSwipeRefreshLayout
         tools:context="com.xdandroid.sample.MainActivity"
@@ -154,149 +154,151 @@ In build.gradle, add
             android:textColor="@android:color/black"/>
     </FrameLayout>
 
-### 4. 建立Adapter抽象类
+### 4. Define Adapter abstract class
 
-#### 4.1 只有1种viewType时，继承SingleViewTypeAdapter<${JavaBean}>
+#### 4.1 When you only have one viewType, subclass SingleViewTypeAdapter<${JavaBean}>
 
-- 重写onViewHolderCreate，对应于RecyclerView.Adapter中的onCreateViewHolder
+- Override onViewHolderCreate, corresponds to onCreateViewHolder in RecyclerView.Adapter
 
-- 重写onViewHolderBind，对应于RecyclerView.Adapter中的onBindViewHolder
+- Override onViewHolderBind, corresponds to onBindViewHolder in RecyclerView.Adapter
 
-- 建立ViewHolder
+- Create ViewHolder
 
-- 使用GridLayoutManager时，重写int getItemSpanSize(int position, int viewType, int spanCount)
+- Override int getItemSpanSize(int position, int viewType, int spanCount) if you use GridLayoutManager
 
-- 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
+- Do not override onLoadMore or hasMoreElements, instead implement them when instantiat Adapter in Activity / Fragment.
 
-#### 4.2 有多种viewType时，继承Adapter
+#### 4.2 Multiple viewType, subclass Adapter
 
-- 重写onViewHolderCreate，对应于RecyclerView.Adapter中的onCreateViewHolder
+- Override onViewHolderCreate, corresponds to onCreateViewHolder in RecyclerView.Adapter
 
-- 重写onViewHolderBind，对应于RecyclerView.Adapter中的onBindViewHolder
+- Override onViewHolderBind, corresponds to onBindViewHolder in RecyclerView.Adapter
 
-- 重写getViewType，对应于RecyclerView.Adapter中的getItemViewType
+- Override getViewType, corresponds to getItemViewType in RecyclerView.Adapter
 
-- 重写getCount，对应于RecyclerView.Adapter中的getItemCount
+- Override getCount, corresponds to getItemCount in RecyclerView.Adapter
 
-- 建立各个viewType对应的ViewHolder类
+- Create ViewHolder classes for each viewType
 
-- 使用GridLayoutManager时，重写int getItemSpanSize(int position, int viewType, int spanCount)
+- Override int getItemSpanSize(int position, int viewType, int spanCount) if you use GridLayoutManager
 
-- 不要重写onLoadMore和hasMoreElements，把他们交由Activity/Fragment在实例化Adapter时实现。
+- Do not override onLoadMore or hasMoreElements, instead implement them when instantiat Adapter in Activity / Fragment.
 
-## 下拉刷新
+## Pull-To-Refresh
 
-解决与AppbarLayout的滑动冲突：为AppBarLayout指定id为appbar即可(android:id="@+id/appbar")
+Resolve a sliding conflict with AppbarLayout: Assign an id to AppBarLayout named "appbar" (android:id="@+id/appbar")
 
-若要自动为Toolbar留出高度而不被Toolbar挡住，需要为CoordinatorLayout下的Layout或SwipeRefreshLayout添加 app:layout_behavior="@string/appbar_scrolling_view_behavior"
+To automatically leave the height for Toolbar and prevent from being blocked by the Toolbar, add app:layout_behavior="@string/appbar_scrolling_view_behavior" to SwipeRefreshLayout or the layout under CoordinatorLayout.
 
-## 加载更多
-### 实例化Adapter时要实现2个方法 :
+## Load more
+
+### Implement 2 methods when instantiate Adapter:
 
 #### 1. void onLoadMore(Void please\_make\_your\_adapter\_class\_as\_abstract\_class) :
 
-先将自己维护的pageIndex变量自增1，去API获取到更多的数据之后 :
+First self-increment pageIndex varible by one, then invoke API to get more data. After new piece of data is parsed:
 
-**对于SingleViewTypeAdapter**，不要对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，而是直接调用void SingleViewTypeAdapter.addAll(List<\E>)方法即可，SingleViewTypeAdapter会帮您完成对数据集的操作。。
+**For SingleViewTypeAdapter**, Do NOT call List[E].addAll(Collection[? extends E]) on your data set, instead call void SingleViewTypeAdapter.addAll(List[E]) directly. SingleViewTypeAdapter will update the underlying data set automatically.
 
-**对于Adapter**，先对自己维护的数据集List<\E>进行addAll(Collection<? extends E>)操作，再调用void Adapter.onAddedAll(int newDataSize)方法来通知Adapter有数据添加到集合。
+**For Adapter**, first update your data set using List[E].addAll(Collection[? extends E]), then call void Adapter.onAddedAll(int newDataSize) to notify Adapter that some data has been added to the data set.
 
 #### 2. boolean hasMoreElements(Void let\_activity\_or\_fragment\_implement\_these\_methods) :
 
-告知Adapter是否还有更多的数据需要加载，只是这一批没加载完。
+Tell the Adapter whether there is more data to load.
 
-有需要时，可调用void Adapter.setLoadingFalse()恢复非加载更多时的状态。
+if needed, you can call void Adapter.setLoadingFalse() to restore the status of not loading more.
 
-### 样式选择：
+### Customize style:
 
 	adapter.setUseMaterialProgress(true, new int[]{getResources().getColor(R.color.colorAccent)});
 
-第一个参数(boolean useMaterialProgress)为false时，使用ProgressBar样式，为true时，使用SwipeRefreshLayout样式。第二个参数(int[] colors)仅在useMaterialProgress为true时有效，可设置SwipeRefreshLayout样式加载转圈的颜色。若int[]中的颜色值多于一个，将按顺序轮换显示不同颜色的转圈，每转一圈换一种颜色。
+When the first parameter (boolean useMaterialProgress) is true, SwipeRefreshLayout style is used, otherwise ProgressBar style is used. The second parameter (int[] colors) is available only if useMaterialProgress is true. You can pass an int[] in the method to set the color set of the loading indicator. If there are more than one color in the int[], the indicator will iterate the colors at the frequency of one color per turn.
 
 	adapter.setColorSchemeColors(new int[]{getResources().getColor(R.color.colorAccent)});
 
-随时改变转圈的颜色。
+Call the method above to change the indicator color at any time.
 
 ```
 progressView.setProgressBackgroundColor(Color.parseColor("#FAFAFA"));
 ```
 
-设置转圈所在圆形突起的背景色。(这里设置为默认的浅灰色)
+Set the background color of indicator.
 
-### 设置Threshold : void Adapter.setThreshold(int threshold);
+### Set threshold: void Adapter.setThreshold(int threshold);
 
-### 对于GridLayoutManager :
+### For GridLayoutManager:
 
     GridLayoutManager gridLayoutManager = new GridLayoutManager(context,SPAN_SIZE);
     gridLayoutManager.setSpanSizeLookup(adapter.getSpanSizeLookup(SPAN_SIZE));
     recyclerView.setLayoutManager(gridLayoutManager);
 
-见Demo中的GridFragment和GridAdapter.
+Please refer to GridFragment and GridAdapter in the demo.
 
-## 加载中/空数据/加载错误页面
-### XML准备(详见引入-布局文件)
+## Loading View / Empty View / Error View
 
-- 将LoadingView与SwipeRefreshLayout元素并列。
+### XML prepare (Please refer to Import - Layout XML)
 
-- 将ErrorView或EmptyView与SwipeRefreshLayout元素并列，visibility设置为gone。
+- Place the LoadingView in parallel with the SwipeRefreshLayout element.
 
-### Java代码
+- Place the ErrorView / EmptyView in parallel with the SwipeRefreshLayout element. Set the visibility of ErrorView / EmptyView to "gone".
+
+### Java Code
 
     /**
-     * 在调用setAdapter和notify*系列方法之前调用此方法来设置LoadingView。
-     * LoadingView会在setAdapter和notify*系列方法调用时自动隐藏。
-     * @param loadingView 通过findViewById找到的LoadingView.
+     * Call this method to set the LoadingView before calling the setAdapter or notify* methods.
+     * LoadingView will automatically hide when the setAdapter or notify* methods is called.
+     * @param loadingView LoadingView got by findViewById.
      */
-    void SimpleRecyclerView.setLoadingView(View loadingView);   //在调用setAdapter和notify*系列方法之前调用此方法
-    //示例 :
-    recyclerView.setLoadingView(findViewById(R.id.loading_view));   //设置自定义LoadingView布局
+    void SimpleRecyclerView.setLoadingView(View loadingView);   //Call this method to set the LoadingView before calling the setAdapter or notify* methods.
+    //Example:
+    recyclerView.setLoadingView(findViewById(R.id.loading_view));   //Set custom LoadingView layout.
 
-    View SimpleRecyclerView.hideLoadingView();                  //手动控制LoadingView的隐藏，一般情况下无需调用此方法
-    View SimpleRecyclerView.showLoadingView();                  //手动控制LoadingView的显示，一般情况下无需调用此方法
+    View SimpleRecyclerView.hideLoadingView();                  //Manually hide LoadingView. Generally needn't.
+    View SimpleRecyclerView.showLoadingView();                  //Manually show LoadingView. Generally needn't.
 
-    recyclerView.setEmptyView(findViewById(R.id.empty_view)); 	//设置空数据View
-    recyclerView.showErrorView(findViewById(R.id.error_view));	//设置并显示错误View
-    recyclerView.hideErrorView();								//隐藏错误View
+    recyclerView.setEmptyView(findViewById(R.id.empty_view)); 	//Set EmptyView
+    recyclerView.showErrorView(findViewById(R.id.error_view));	//Set and show ErrorView
+    recyclerView.hideErrorView();								//Hide ErrorView
 
-## onItemClickListener/OnItemLongClickListener
+## OnItemClickListener/OnItemLongClickListener
 
     adapter.setOnItemClickListener(new OnItemClickListener());
 	adapter.setOnItemLongClickListener(new OnItemLongClickListener());
 
-Item 点击水波纹效果, 在 Item 布局 XML 的根元素上添加:
+To implement ripple effect on item clicks, add the code below to the root element of the item layout XML:
 
 ```
-android:foreground="?android:attr/selectableItemBackground"(对于CardView, SimpleDraweeView)
-android:background="?android:attr/selectableItemBackground"(对于一般View)
+android:foreground="?android:attr/selectableItemBackground"(for CardView, SimpleDraweeView)
+android:background="?android:attr/selectableItemBackground"(for general View)
 ```
 
-CardView 除外, 添加到 CardView 上, 而非添加到根元素
+For CardView, add the code above to the element of CardView, instead of adding to the root element.
 
-## 分割线
+## Divider
 
-构建Divider :
+Instantiate Divider:
 
 ```
 public Divider(
-  @Px int width,           //分割线的线宽
-  @ColorInt int color,     //分割线的颜色
-  boolean isHorizontalList,   //是否为横向的LinearLayoutManager
+  @Px int width,           //The width of the divider
+  @ColorInt int color,     //The color of the divider
+  boolean isHorizontalList,   //Whether the LinearLayoutManager is horizontal
   @Px int leftOffset, @Px int topOffset, @Px int rightOffset, @Px int bottomOffset);
 ```
 
-- leftOffset为分割线左侧留白区域（不绘制分割线）的长度，适用于Item左侧图片部分不画分割线的需求
+- leftOffset is the length of the blank area on the left of the divider (divider will not draw in blank area).
 
-- topOffset/rightOffset/bottomOffset同理
+- topOffset / rightOffset / bottomOffset are the same.
 
-使用：
+Usage：
 
     mRecyclerView.addItemDecoration(Divider divider);
 
-## 初始化RecyclerView、添加/修改/删除Item时的动画
+## Animation when initing RecyclerView, adding / modifying / deleting items
 
-Adapter/SingleViewTypeAdapter封装了对数据集操作的常用方法，使用这些方法，将获得动画效果和正确的加载状态设置。
+The Adapter / SingleViewTypeAdapter encapsulates common methods for manipulating data sets. Using these methods, you will get animation effects and the correct loading state settings.
 
-Adapter :
+Adapter:
 
 - void onAdded();
 - void onAdded(int position);
@@ -309,7 +311,7 @@ Adapter :
 - void onSet(int position);
 - void onSetAll(int positionStart, int itemCount);
 
-使用Adapter时，先对自己维护的数据集进行增删操作，再调用上面的方法。
+When you are using Adapter, you should update your data set first, then call the above methods.
 
 SingleViewTypeAdapter :
 
@@ -324,33 +326,37 @@ SingleViewTypeAdapter :
 - void addAll(int position, List<${JavaBean}> newList);
 - void addAll(List<${JavaBean}> newList);
 
-使用SingleViewTypeAdapter时，不要对自己维护的数据集进行增删操作，而是直接调用上面的方法。
+When you are using SingleViewTypeAdapter, you should NOT update your data set, instead call the above methods directly.
 
-只需将操作所需的参数传入上面的方法，SingleViewTypeAdapter会帮您完成对数据集的操作。
+You only need to call the methods above, SingleViewTypeAdapter will update the underlying data set automatically.
 
-若所需的对数据集操作的方法没有在上面列出，可直接对数据集合List<${JavaBean}>进行操作后，调用adapter对象的notifyItem* 系列方法刷新UI，并调用void setLoadingFalse()恢复非加载更多时的状态。
+If the required method of operation on the data set is not listed above, you can operate on the data set List[${JavaBean}] first, then call adapter.notifyItem* mmethods to refresh UI, finally call setLoadingFalse() to restore the status of not loading more.
 
-## 上下滑动时的固定Header
+## Sticky headers
 
-Adapter类实现StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>接口，创建自己的Header ViewHolder，重写接口里的3个方法：
+1.Make your Adapter class implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> interface;
+
+2.Create your Header ViewHolder;
+
+3.Implement 3 methods in the interface:
 
 - long getHeaderId(int position);
 
-决定了位于position的条目在哪个header下显示。一个header对应一个headerId，所以，对于想显示在同一个header下的条目，传入这些条目的position，应返回相同的headerId。该方法返回几种headerId，固定header就有几种。
+This method determines which header the item in ${position} is displayed under. One header corresponds to one headerId, so, For items that want to be displayed under the same header, this method should return the same headerId for the items' positions. The number of headerIds the method possibility returns is the number of fixed headers.
 
-可在 onViewHolderBind 和 onBindHeaderViewHolder 中随时调用此方法获得当前 adapterPosition 对应的 headerId.
+You can call this method to get the headerId for the current adapterPosition in onViewHolderBind and onBindHeaderViewHolder.
 
 - RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent);
 
 - void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int adapterPosition);
 
-示例：
+Example:
 
 ```
 @Override
 public long getHeaderId(int position) {
-    //这个例子是把 0 - 9 的元素作为一组，10 - 19 的元素作为一组，以此类推，每 10 个元素属于相同的一组
-    //实际使用时完全可以根据 position 和 List.get(position) 得到的数据，判断里面的字段，灵活决定哪些元素属于哪些组
+    //This example takes the elements 0-9 as a group, the 10-19 elements as a group, and so on, with every 10 elements belonging to the same group.
+    //For actual use, you can base on position and the data got from List.get(position) to judge the fields inside, to decide which elements belong to which groups.
     return position / 10;
 }
 
@@ -361,27 +367,27 @@ public HeaderVH onCreateHeaderViewHolder(ViewGroup parent) {
 
 @Override
 public void onBindHeaderViewHolder(HeaderVH holder, int position) {
-    holder.tvHeader.setText("Group " + getHeaderId(position) /* 当前 header 是哪一组的 header */ +
+    holder.tvHeader.setText("Group " + getHeaderId(position) /* The group the current header is in. */ +
         ": Adapter Position " + String.valueOf(position + 1) + " - " + String.valueOf(position + 10));
 }
 ```
 
-见Demo中的PinnedFragment和PinnedAdapter.
+Please refer to PinnedFragment and PinnedAdapter in the demo.
 
-## 分组显示 Title
+## Group display
 
-要求使用Group数据结构来表示一个分组，每个分组包含一个标题和若干个子条目.
+Type Group[Title, ChildItem] is required to represent a group. Each group contains one title and a number of subitems.
 
 ```
 <Title, ChildItem> Group<Title, ChildItem> {
-    Title title;  //一个分组的标题
-    List<ChildItem> childItemList;  //一个分组下的子条目列表
+    Title title;  //Title of one group
+    List<ChildItem> childItemList;  //Subitem list under one group
 }
 ```
 
-所以，需要将数据转换为List<\Group>，即分组的列表.
+Therefore, you need to convert the data to List[Group[Title, ChildItem]], that is, the list of groups.
 
-继承GroupAdapter，重写下面的4个方法 :
+You need to subclass GroupAdapter, and override the following 4 methods:
 
 ```
 ViewHolder onTitleVHCreate(ViewGroup parent);
@@ -389,46 +395,46 @@ ViewHolder onTitleVHCreate(ViewGroup parent);
 ViewHolder onChildItemVHCreate(ViewGroup parent);
 
 /**
-* @param adapterPos Title 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
-* @param titleOrderInAllTitles 当前 Title 所在 Group 在 List[Group] 中的相对位置.
+* @param adapterPos The absolute position of the Title in the Adapter ( = holder.getAdapterPosition()).
+* @param titleOrderInAllTitles The relative position of the Group of the current Title in List[Group].
 */
 void onTitleVHBind(ViewHolder holder, int adapterPos, Title title, int titleOrderInAllTitles);
 
 /**
-* @param adapterPos ChildItem 在 Adapter 中的绝对位置 ( = holder.getAdapterPosition()).
-* @param titleOrderInAllTitles 当前 ChildItem 所在 Group 在 List[Group] 中的相对位置.
-* @param childOrderInCurrentGroup 当前 ChildItem 在 Group 中的相对位置.
-* (第 1 个 ChildItem 的 childOrder 为 0, 即 childOrder 不包括 Title 占的位置)
+* @param adapterPos The absolute position of the ChildItem in the Adapter ( = holder.getAdapterPosition()).
+* @param titleOrderInAllTitles The relative position of the Group of the current ChildItem in List[Group].
+* @param childOrderInCurrentGroup The relative position of the current ChildItem in the Group.
+* (The childOrder of the first ChildItem is 0, that is, the childOrder does not include the position of the Title.)
 */
 void onChildItemVHBind(ViewHolder holder, int adapterPos, Title title,
     int titleOrderInAllTitles, ChildItem childItem, int childOrderInCurrentGroup);
 ```
 
-数据 List<\Group> 通过 GroupAdapter.setList(List<\Group> groupList) 方法传入.
+The data List[Group] is passed in through the GroupAdapter.setList(List[Group] groupList) method.
 
-若已知 Title 或 ChildItem 在 Adapter 中的绝对位置，需要得到 Title 对象、当前 Title 所在 Group 在 List[Group] 中的相对位置、ChildItem 对象和当前 ChildItem 在 Group 中的相对位置，可使用 GroupAdapter 上的 2 个方法:
+If you know the absolute position of the Title or ChildItem in the Adapter, and you need to get the Title object, the relative position of the Group of the current Title in List[Group], the ChildItem object and the relative position of the current ChildItem in the Group, You can use 2 methods below on the GroupAdapter:
 
 ```
 /**
-* 根据 Title 在 Adapter 中的绝对位置，
-* 得到 Title 对象和当前 Title 所在 Group 在 List[Group] 中的相对位置.
-* @param positionInRV_viewType_title Title 在 Adapter 中的绝对位置.
+* According to the absolute position of the Title in the Adapter,
+* get the Title object and the relative position of the Group of the current Title in List[Group].
+* @param positionInRV_viewType_title The absolute position of the Title in the Adapter，
 * @return TitleChildItemBean {Title title;  int titleOrder;}
 */
 TitleChildItemBean<Title, Void> getTitleWithOrder(int positionInRV_viewType_title)
 
 /**
-* 根据 ChildItem 在 Adapter 中的绝对位置，
-* 得到 Title 对象、当前 Title 所在 Group 在 List[Group] 中的相对位置、
-* ChildItem 对象和当前 ChildItem 在 Group 中的相对位置.
-* @param positionInRV_viewType_childItem ChildItem 在 Adapter 中的绝对位置.
+* According to the absolute position of the ChildItem in the Adapter,
+* get the Title object, the relative position of the Group of the current Title in List[Group],
+* the ChildItem object and the relative position of the current ChildItem in the Group.
+* @param positionInRV_viewType_childItem The absolute position of the ChildItem in the Adapter.
 * @return TitleChildItemBean {Title title;  int titleOrder;
     ChildItem childItem;  int childOrder;}
 */
 TitleChildItemBean<Title, ChildItem> getTitleAndChildItem(int positionInRV_viewType_childItem)
 ```
 
-设置 OnGroupItemClickListener 和 OnGroupItemLongClickListener:
+Set OnGroupItemClickListener and OnGroupItemLongClickListener:
 
 ```
 GroupAdapter.setOnGroupItemClickListener(OnGroupItemClickListener l);
@@ -442,7 +448,7 @@ boolean onGroupItemLongClick(ViewHolder holder, View v, int adapterPos, int view
    Title title, int titleOrder, ChildItem childItem, int childOrder);
 ```
 
-同 SingleViewTypeAdapter 一样，GroupAdapter 提供了一系列方法用于便捷地操作 Adapter 持有的数据集 :
+As with the SingleViewTypeAdapter, the GroupAdapter provides a set of methods for easily manipulating data sets held by the Adapter:
 
 ```
 - void setList(List<Group<Title, ChildItem>> groupList);
@@ -457,4 +463,4 @@ boolean onGroupItemLongClick(ViewHolder holder, View v, int adapterPos, int view
 - void addAll(List<Group<Title, ChildItem>> newGroupList);
 ```
 
-见 GroupAdapter 的代码注释以及 Demo 中的 GroupFragment 和 GroupRVAdapter.
+Please refer to the codes and comments of GroupAdapter. There is also an example usage in GroupFragment and GroupRVAdapter of the demo.
