@@ -40,7 +40,7 @@ public class BasicFragment extends Fragment {
     void setupSwipeContainer(View fragmentView) {
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent);
         mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            public void onRefresh() {BasicFragment.this.initData();}
+            public void onRefresh() {initData();}
         });
 
         //启动SwipeRefreshLayout样式下拉刷新转圈。
@@ -94,7 +94,7 @@ public class BasicFragment extends Fragment {
         //设置点击事件的监听器
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(RecyclerView.ViewHolder holder, View view, int position, int viewType) {
-                Toast.makeText(BasicFragment.this.getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
             }
         });
         /**

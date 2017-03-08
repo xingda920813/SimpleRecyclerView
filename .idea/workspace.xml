@@ -59,7 +59,7 @@
     <favorites_list name="SimpleRecyclerView" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="PinnedAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/adapter/PinnedAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -93,7 +93,7 @@
       <file leaf-file-name="BannerProvider.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/util/BannerProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
+            <state relative-caret-position="88">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
@@ -105,27 +105,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="352">
               <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-              <folding>
-                <element signature="e#93#127#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BasicFragment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BasicFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/BasicFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="669">
-              <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+            <state relative-caret-position="726">
+              <caret line="98" column="11" selection-start-line="98" selection-start-column="11" selection-end-line="98" selection-end-column="11" />
               <folding>
-                <element signature="e#1389#1512#0" expanded="true" />
-                <element signature="e#1511#1512#0" expanded="true" />
-                <element signature="e#2233#3182#0" expanded="true" />
-                <element signature="e#3181#3182#0" expanded="true" />
-                <element signature="e#3505#3781#0" expanded="true" />
-                <element signature="e#3780#3781#0" expanded="true" />
-                <element signature="e#4900#5684#0" expanded="true" />
-                <element signature="e#5683#5684#0" expanded="true" />
+                <element signature="e#1389#1493#0" expanded="true" />
+                <element signature="e#1492#1493#0" expanded="true" />
+                <element signature="e#3486#3743#0" expanded="true" />
+                <element signature="e#3742#3743#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -134,11 +128,9 @@
       <file leaf-file-name="GridFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/GridFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9">
+            <state relative-caret-position="506">
               <caret line="35" column="58" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
-              <folding>
-                <element signature="e#1628#1629#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -163,19 +155,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PinnedFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PinnedFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/PinnedFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1351">
+            <state relative-caret-position="771">
               <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-              <folding>
-                <element signature="e#1139#1276#0" expanded="true" />
-                <element signature="e#1275#1276#0" expanded="true" />
-                <element signature="e#1440#1544#0" expanded="true" />
-                <element signature="e#1543#1544#0" expanded="true" />
-                <element signature="e#2188#2541#0" expanded="true" />
-                <element signature="e#2540#2541#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -3030,9 +3015,9 @@
         <option value="$PROJECT_DIR$/sample/build.gradle" />
         <option value="$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/adapter/GridAdapter.java" />
         <option value="$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/util/FragmentUtils.java" />
-        <option value="$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/BasicFragment.java" />
         <option value="$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/GridFragment.java" />
         <option value="$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/PinnedFragment.java" />
+        <option value="$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/BasicFragment.java" />
       </list>
     </option>
   </component>
@@ -3065,9 +3050,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -3182,7 +3165,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3897,7 +3882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3919,7 +3903,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3935,9 +3918,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3945,7 +3925,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3953,10 +3932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="28" column="59" selection-start-line="28" selection-start-column="59" selection-end-line="28" selection-end-column="59" />
-          <folding>
-            <element signature="e#812#993#0" expanded="true" />
-            <element signature="e#992#993#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3964,7 +3939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3994,7 +3968,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/util/BannerProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
+        <state relative-caret-position="88">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
         </state>
@@ -4004,36 +3978,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-          <folding>
-            <element signature="e#93#127#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/BasicFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="669">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-          <folding>
-            <element signature="e#1389#1512#0" expanded="true" />
-            <element signature="e#1511#1512#0" expanded="true" />
-            <element signature="e#2233#3182#0" expanded="true" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3505#3781#0" expanded="true" />
-            <element signature="e#3780#3781#0" expanded="true" />
-            <element signature="e#4900#5684#0" expanded="true" />
-            <element signature="e#5683#5684#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/GridFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
+        <state relative-caret-position="506">
           <caret line="35" column="58" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
-          <folding>
-            <element signature="e#1628#1629#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4055,15 +4008,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/PinnedFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1351">
+        <state relative-caret-position="771">
           <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/xdandroid/sample/BasicFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="98" column="11" selection-start-line="98" selection-start-column="11" selection-end-line="98" selection-end-column="11" />
           <folding>
-            <element signature="e#1139#1276#0" expanded="true" />
-            <element signature="e#1275#1276#0" expanded="true" />
-            <element signature="e#1440#1544#0" expanded="true" />
-            <element signature="e#1543#1544#0" expanded="true" />
-            <element signature="e#2188#2541#0" expanded="true" />
-            <element signature="e#2540#2541#0" expanded="true" />
+            <element signature="e#1389#1493#0" expanded="true" />
+            <element signature="e#1492#1493#0" expanded="true" />
+            <element signature="e#3486#3743#0" expanded="true" />
+            <element signature="e#3742#3743#0" expanded="true" />
           </folding>
         </state>
       </provider>
