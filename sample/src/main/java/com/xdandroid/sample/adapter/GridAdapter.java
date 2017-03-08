@@ -18,10 +18,12 @@ public abstract class GridAdapter extends SingleViewTypeAdapter<SampleBean> {
     }
 
     @Override
-    protected void onViewHolderBind(List<SampleBean> list, RecyclerView.ViewHolder holder, int position) {
+    protected void onViewHolderBind(List<SampleBean> list, final RecyclerView.ViewHolder holder, int position) {
         VH vh = (VH) holder;
         vh.tvGrid.setText(list.get(position).title);
-        vh.cardGrid.setOnClickListener(v -> Toast.makeText(v.getContext(), "Clicked " + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show());
+        vh.cardGrid.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {Toast.makeText(v.getContext(), "Clicked " + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();}
+        });
     }
 
     static final class VH extends RecyclerView.ViewHolder {

@@ -3,6 +3,7 @@ package com.xdandroid.sample.util;
 import android.support.v4.app.*;
 import android.view.*;
 
+@SuppressWarnings("RestrictedApi")
 public class FragmentUtils {
 
     public Fragment replace(FragmentManager fm, int flResId, Fragment getInstance) {

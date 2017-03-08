@@ -33,14 +33,16 @@ public class GridFragment extends Fragment {
         mAdapter = new GridAdapter() {
 
             protected void onLoadMore(Void v) {
-                new Handler().postDelayed(() -> {
-                    List<SampleBean> moreSampleList = new ArrayList<>();
-                    for (int j = 0; j < 2; j++)
-                    for (int i = 0; i < 26; i++) {
-                        char c = (char) (65 + i);
-                        moreSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        List<SampleBean> moreSampleList = new ArrayList<>();
+                        for (int j = 0; j < 2; j++)
+                            for (int i = 0; i < 26; i++) {
+                                char c = (char) (65 + i);
+                                moreSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                            }
+                        addAll(moreSampleList);
                     }
-                    addAll(moreSampleList);
                 }, 1777);
             }
 

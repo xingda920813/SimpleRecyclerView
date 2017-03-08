@@ -4,6 +4,7 @@ import android.graphics.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
+import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.view.*;
 
@@ -30,15 +31,19 @@ public class PinnedFragment extends Fragment {
         mSwipeContainer = (SimpleSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         mRecyclerView = (SimpleRecyclerView) view.findViewById(R.id.recycler_view);
         setupSwipeContainer();
-        mRecyclerView.postDelayed(() -> {
-            setupRecyclerView();
-            initData();
+        mRecyclerView.postDelayed(new Runnable() {
+            public void run() {
+                setupRecyclerView();
+                initData();
+            }
         }, 1500);
     }
 
     void setupSwipeContainer() {
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent);
-        mSwipeContainer.setOnRefreshListener(this::initData);
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            public void onRefresh() {initData();}
+        });
         mSwipeContainer.setRefreshing(true);
     }
 
@@ -55,10 +60,12 @@ public class PinnedFragment extends Fragment {
         mAdapter = new PinnedAdapter() {
             @Override
             protected void onLoadMore(Void v) {
-                mRecyclerView.postDelayed(() -> {
-                    for (int i = 1; i <= 105; i++) mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
-                    setList(mSampleList);
-                    mSwipeContainer.setRefreshing(false);
+                mRecyclerView.postDelayed(new Runnable() {
+                    public void run() {
+                        for (int i = 1; i <= 105; i++) mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + i, "Content " + i, null, 0));
+                        setList(mSampleList);
+                        mSwipeContainer.setRefreshing(false);
+                    }
                 }, 1500);
             }
 

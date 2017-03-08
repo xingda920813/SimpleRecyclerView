@@ -4,6 +4,7 @@ import android.graphics.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
+import android.support.v4.widget.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
@@ -38,7 +39,9 @@ public class BasicFragment extends Fragment {
 
     void setupSwipeContainer(View fragmentView) {
         mSwipeContainer.setColorSchemeResources(R.color.colorAccent);
-        mSwipeContainer.setOnRefreshListener(this::initData);
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            public void onRefresh() {BasicFragment.this.initData();}
+        });
 
         //启动SwipeRefreshLayout样式下拉刷新转圈。
         //mSwipeContainer.setRefreshing(true);
@@ -61,20 +64,22 @@ public class BasicFragment extends Fragment {
         mAdapter = new BasicAdapter() {
 
             protected void onLoadMore(Void v) {
-                new Handler().postDelayed(() -> {
-                    List<SampleBean> moreSampleList = new ArrayList<>();
-                    int j = 0;
-                    for (int i = 0; i < 26; i++) {
-                        char c = (char) (65 + i);
-                        if (i % 8 == 0) {
-                            moreSampleList.add(new SampleBean(SampleBean.TYPE_BANNER, null, null, BannerProvider.getMessage(j), BannerProvider.getImageResId(j)));
-                            j++;
-                        } else {
-                            moreSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        List<SampleBean> moreSampleList = new ArrayList<>();
+                        int j = 0;
+                        for (int i = 0; i < 26; i++) {
+                            char c = (char) (65 + i);
+                            if (i % 8 == 0) {
+                                moreSampleList.add(new SampleBean(SampleBean.TYPE_BANNER, null, null, BannerProvider.getMessage(j), BannerProvider.getImageResId(j)));
+                                j++;
+                            } else {
+                                moreSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                            }
                         }
+                        mSampleList.addAll(moreSampleList);
+                        mAdapter.onAddedAll(moreSampleList.size());
                     }
-                    mSampleList.addAll(moreSampleList);
-                    mAdapter.onAddedAll(moreSampleList.size());
                 }, 1777);
             }
 
@@ -87,8 +92,11 @@ public class BasicFragment extends Fragment {
         mAdapter.setThreshold(7);
 
         //设置点击事件的监听器
-        mAdapter.setOnItemClickListener((holder, view, position, viewType) -> Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT)
-                                                                                   .show());
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(RecyclerView.ViewHolder holder, View view, int position, int viewType) {
+                Toast.makeText(BasicFragment.this.getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         /**
          * true为使用 SwipeRefreshLayout 样式的加载更多转圈，以及设置转圈的颜色。false为使用 ProgressBar样式的加载更多转圈。
          * SwipeRefreshLayout 样式与系统版本无关。
@@ -116,20 +124,22 @@ public class BasicFragment extends Fragment {
     }
 
     void initData() {
-        new Handler().postDelayed(() -> {
-            mSampleList = new ArrayList<>();
-            int j = 0;
-            for (int i = 0; i < 26; i++) {
-                char c = (char) (65 + i);
-                if (i % 8 == 0) {
-                    mSampleList.add(new SampleBean(SampleBean.TYPE_BANNER, null, null, BannerProvider.getMessage(j), BannerProvider.getImageResId(j)));
-                    j++;
-                } else {
-                    mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                mSampleList = new ArrayList<>();
+                int j = 0;
+                for (int i = 0; i < 26; i++) {
+                    char c = (char) (65 + i);
+                    if (i % 8 == 0) {
+                        mSampleList.add(new SampleBean(SampleBean.TYPE_BANNER, null, null, BannerProvider.getMessage(j), BannerProvider.getImageResId(j)));
+                        j++;
+                    } else {
+                        mSampleList.add(new SampleBean(SampleBean.TYPE_TEXT, "Title " + String.valueOf(c), "Content " + String.valueOf(c), null, 0));
+                    }
                 }
+                mAdapter.setList(mSampleList);
+                mSwipeContainer.setRefreshing(false);
             }
-            mAdapter.setList(mSampleList);
-            mSwipeContainer.setRefreshing(false);
         }, 1777);
     }
 }
