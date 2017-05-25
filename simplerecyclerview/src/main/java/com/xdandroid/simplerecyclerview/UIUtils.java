@@ -21,7 +21,7 @@ public class UIUtils {
     }
 
     /**
-     * 判断 RecyclerView 是否可以滑动.
+     * 判断 RecyclerView 当前是否可滑动.
      */
     public static boolean isScrollable(RecyclerView rv) {
         try {
