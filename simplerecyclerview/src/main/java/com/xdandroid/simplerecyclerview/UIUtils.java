@@ -19,4 +19,17 @@ public class UIUtils {
         try {recyclerView.getAdapter().unregisterAdapterDataObserver(observer);} catch (Exception ignored) {}
         try {recyclerView.getAdapter().registerAdapterDataObserver(observer);} catch (Exception ignored) {}
     }
+
+    /**
+     * 判断 RecyclerView 是否可以滑动.
+     */
+    public static boolean isScrollable(RecyclerView rv) {
+        try {
+            return rv.getChildAt(rv.getChildCount() - 1).getBottom() > rv.getHeight() ||
+                    rv.getChildAt(0).getTop() < 0 ||
+                    rv.getChildCount() != rv.getAdapter().getItemCount();
+        } catch (Exception e) {
+            return true;
+        }
+    }
 }

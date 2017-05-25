@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/xingda920813/SimpleRecyclerView'
     gitUrl = 'https://github.com/xingda920813/SimpleRecyclerView.git'
 
-    libraryVersion = '1.5.10'
+    libraryVersion = '1.5.11'
 
     developerId = 'xingda920813'
     developerName = 'Da Xing'
@@ -26,13 +26,13 @@ ext {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 47
-        versionName "1.5.10"
+        versionCode 48
+        versionName "1.5.11"
     }
     buildTypes {
         release {
@@ -50,16 +50,6 @@ dependencies {
     compile 'com.android.support:design:+'
     compile 'com.xdandroid:materialprogressview:+'
 }
-
-task makeJar(type: Copy) {
-    delete 'build/libs/SimpleRecyclerView-1.5.10.jar'
-    from('build/intermediates/bundles/release/')
-    into('build/libs/')
-    include('classes.jar')
-    rename ('classes.jar', 'SimpleRecyclerView-1.5.10.jar')
-}
-
-makeJar.dependsOn(build)
 
 // Place it at the end of the file
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
