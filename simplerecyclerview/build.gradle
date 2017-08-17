@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/xingda920813/SimpleRecyclerView'
     gitUrl = 'https://github.com/xingda920813/SimpleRecyclerView.git'
 
-    libraryVersion = '1.5.11'
+    libraryVersion = '1.6.0'
 
     developerId = 'xingda920813'
     developerName = 'Da Xing'
@@ -25,14 +25,14 @@ ext {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 48
-        versionName "1.5.11"
+        targetSdkVersion 26
+        versionCode 49
+        versionName "1.6.0"
     }
     buildTypes {
         release {

@@ -1,26 +1,31 @@
 package com.xdandroid.simplerecyclerview;
 
-import android.graphics.*;
 import android.support.annotation.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 
-import com.xdandroid.materialprogressview.*;
+import com.xdandroid.simplerecyclerview.progress.*;
 
 public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    protected View mCustomProgressView;
+    protected CustomProgressViewHolder mCustomProgressViewHolder;
     protected ProgressViewHolder mProgressViewHolder;
     protected MaterialProgressViewHolder mMaterialProgressViewHolder;
     protected boolean mIsLoading;
     protected int mThreshold = 7;
     protected boolean mUseMaterialProgress;
     protected boolean mCanScrollVertically = true; //默认为纵向列表
-    @ColorInt protected int[] mColorSchemeColors;
-    @ColorInt protected int mProgressBackgroundColor;
+    @ColorInt public int[] mColorSchemeColors;
+    @ColorInt public int mProgressBackgroundColor;
 
     public void setThreshold(int threshold) {
         mThreshold = threshold;
+    }
+
+    public void setCustomProgressView(View customProgressView) {
+        mCustomProgressView = customProgressView;
     }
 
     /**
@@ -74,39 +79,16 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             int outerHeight = mCanScrollVertically ? FrameLayout.LayoutParams.WRAP_CONTENT : FrameLayout.LayoutParams.MATCH_PARENT;
             FrameLayout.LayoutParams outerParams = new FrameLayout.LayoutParams(outerWidth, outerHeight, Gravity.CENTER);
             frameLayout.setLayoutParams(outerParams);
-            if (mUseMaterialProgress) {
-                MaterialProgressView materialProgressView = new MaterialProgressView(parent.getContext());
-                if (mColorSchemeColors == null || mColorSchemeColors.length <= 0) {
-                    int colorAccentId = parent.getContext().getResources().getIdentifier("colorAccent", "color", parent.getContext().getPackageName());
-                    int color;
-                    if (colorAccentId > 0) {
-                        color = parent.getContext().getResources().getColor(colorAccentId);
-                    } else {
-                        color = Color.parseColor("#607D8B");
-                    }
-                    materialProgressView.setColorSchemeColors(new int[]{color});
-                } else {
-                    materialProgressView.setColorSchemeColors(mColorSchemeColors);
-                }
-                if (mProgressBackgroundColor != 0) {
-                    materialProgressView.setProgressBackgroundColor(mProgressBackgroundColor);
-                }
-                FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                innerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
-                innerParams.gravity = Gravity.CENTER;
-                materialProgressView.setLayoutParams(innerParams);
-                materialProgressView.setId(android.R.id.secondaryProgress);
-                frameLayout.addView(materialProgressView);
+            if (mCustomProgressView != null) {
+                frameLayout.addView(mCustomProgressView);
+                mCustomProgressViewHolder = new CustomProgressViewHolder(frameLayout, mCustomProgressView);
+                return mCustomProgressViewHolder;
+            } else if (mUseMaterialProgress) {
+                frameLayout.addView(new MaterialProgressView(parent.getContext()).init(this));
                 mMaterialProgressViewHolder = new MaterialProgressViewHolder(frameLayout);
                 return mMaterialProgressViewHolder;
             } else {
-                ProgressBar progressBar = new ProgressBar(parent.getContext());
-                FrameLayout.LayoutParams innerParams = new FrameLayout.LayoutParams(UIUtils.dp2px(parent.getContext(), 40), UIUtils.dp2px(parent.getContext(), 40));
-                innerParams.setMargins(0, UIUtils.dp2px(parent.getContext(), 6), 0, UIUtils.dp2px(parent.getContext(), 6));
-                innerParams.gravity = Gravity.CENTER;
-                progressBar.setLayoutParams(innerParams);
-                progressBar.setId(android.R.id.progress);
-                frameLayout.addView(progressBar);
+                frameLayout.addView(new ProgressView(parent.getContext()).init());
                 mProgressViewHolder = new ProgressViewHolder(frameLayout);
                 return mProgressViewHolder;
             }
@@ -126,10 +108,12 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             onLoadMore(null);
         }
         if (position == getCount()) {
-            if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
+            if (mCustomProgressView != null && holder instanceof CustomProgressViewHolder) {
+                ((CustomProgressViewHolder) holder).customProgress.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+            } else if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
-                ((MaterialProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+                ((MaterialProgressViewHolder) holder).materialProgress.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             }
         } else {
             onViewHolderBind(holder, position, getViewType(position));
@@ -166,10 +150,12 @@ public abstract class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setLoadingFalse() {
         mIsLoading = false;
-        if (!mUseMaterialProgress && mProgressViewHolder != null && mProgressViewHolder.progressBar.isShown()) {
+        if (mCustomProgressView != null && mCustomProgressViewHolder != null && mCustomProgressViewHolder.customProgress.isShown()) {
+            mCustomProgressViewHolder.customProgress.setVisibility(View.INVISIBLE);
+        } else if (!mUseMaterialProgress && mProgressViewHolder != null && mProgressViewHolder.progressBar.isShown()) {
             mProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
-        } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null && mMaterialProgressViewHolder.progressBar.isShown()) {
-            mMaterialProgressViewHolder.progressBar.setVisibility(View.INVISIBLE);
+        } else if (mUseMaterialProgress && mMaterialProgressViewHolder != null && mMaterialProgressViewHolder.materialProgress.isShown()) {
+            mMaterialProgressViewHolder.materialProgress.setVisibility(View.INVISIBLE);
         }
     }
 

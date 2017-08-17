@@ -3,6 +3,8 @@ package com.xdandroid.simplerecyclerview;
 import android.support.v7.widget.*;
 import android.view.*;
 
+import com.xdandroid.simplerecyclerview.progress.*;
+
 import java.util.*;
 
 public abstract class SingleViewTypeAdapter<T> extends Adapter {
@@ -47,7 +49,7 @@ public abstract class SingleViewTypeAdapter<T> extends Adapter {
             if (!mUseMaterialProgress && holder instanceof ProgressViewHolder) {
                 ((ProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             } else if (mUseMaterialProgress && holder instanceof MaterialProgressViewHolder) {
-                ((MaterialProgressViewHolder) holder).progressBar.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
+                ((MaterialProgressViewHolder) holder).materialProgress.setVisibility(mIsLoading ? View.VISIBLE : View.GONE);
             }
         } else {
             onViewHolderBind(mList, holder, position);
