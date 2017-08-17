@@ -43,7 +43,7 @@ public class BasicFragment extends Fragment {
             public void onRefresh() {initData();}
         });
 
-        //启动SwipeRefreshLayout样式下拉刷新转圈(类似于知乎启动时, 出现在列表上层的圆形凸起刷新转圈).
+        //启动SwipeRefreshLayout样式下拉刷新转圈 (类似于知乎启动时, 出现在列表上层的圆形凸起刷新转圈).
         //mSwipeContainer.setRefreshing(true);
 
         //启动自定义LoadingView布局。
@@ -98,7 +98,7 @@ public class BasicFragment extends Fragment {
             }
         });
 
-        //自定义 LoadingView.
+        //自定义 LoadingView (不推荐).
         //TextView tv = new TextView(getActivity());
         //tv.setText("加载中...");
         //tv.setMinHeight(UIUtils.dp2px(getActivity(), 48));
