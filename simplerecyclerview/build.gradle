@@ -46,9 +46,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:+'
-    compile 'com.android.support:design:+'
-    compile 'com.xdandroid:materialprogressview:+'
+    api 'com.android.support:recyclerview-v7:+'
+    api 'com.android.support:design:+'
+    api 'com.xdandroid:materialprogressview:+'
 }
 
 // Place it at the end of the file
