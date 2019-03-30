@@ -1,5 +1,7 @@
 # SimpleRecyclerView
 
+<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg"></a>
+
 [中文 README](https://github.com/xingda920813/SimpleRecyclerView/blob/master/README_zh.md)
 
 ### An enhancement to RecyclerView and SwipeRefreshLayout. Integrated with timehop/sticky-headers-recyclerview for sticky headers.
